@@ -1,6 +1,4 @@
 <script>
-import AppHome from "@/components/AppHome.vue";
-
 export default {
   name: "AppHeader",
   data() {
@@ -23,9 +21,6 @@ export default {
       this.fullscreenMenu = !this.fullscreenMenu;
     }
   },
-  components: {
-    AppHome
-  },
   mounted() {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
     window.addEventListener("load", this.checkScreen);
@@ -35,7 +30,6 @@ export default {
 </script>
 
 <template>
-  <!-- bg-grey-lighten-1 -->
   <v-card>
     <v-layout>
       <v-app-bar class="navbar bg-black container" elevation="4">
@@ -87,7 +81,12 @@ export default {
         </v-card>
       </v-app-bar>
 
-      <v-navigation-drawer class="w-100" v-model="fullscreenMenu" location="right" temporary>
+      <v-navigation-drawer
+        class="fullscreen w-75"
+        v-model="fullscreenMenu"
+        location="right"
+        temporary
+      >
         <v-list class="d-flex flex-column align-end mr-5 mt-5">
           <v-card class="w-100 d-flex flex-row justify-end" elevation="0">
             <v-list-item class="w-75">
@@ -126,16 +125,17 @@ export default {
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-      <v-main class="mt-5"><AppHome></AppHome></v-main>
+      <v-main class="mt-5">
+        <slot name="home"></slot>
+      </v-main>
     </v-layout>
   </v-card>
+  <!-- bg-grey-lighten-1 -->
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap");
-.logo_text {
-  font-family: "Dancing Script", cursive;
-  font-size: 2rem;
+.fullscreen {
+  height: 80vh;
 }
 .navbar {
   height: 5rem;
