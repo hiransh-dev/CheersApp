@@ -1,7 +1,7 @@
 <template>
   <AppHeader>
     <template v-slot:home>
-      <div class="main container">
+      <div class="home d-flex flex-column">
         <h1>Welcome to Cheers!</h1>
       </div>
     </template>
@@ -13,10 +13,16 @@ import AppHeader from "@/components/AppHeader.vue";
 
 export default {
   name: "AppHome",
+  data() {
+    return {};
+  },
   components: {
     AppHeader
   }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.home {
+}
+</style>

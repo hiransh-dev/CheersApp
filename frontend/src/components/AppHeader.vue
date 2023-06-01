@@ -5,7 +5,9 @@ export default {
     return {
       searchBar: false /* 0 is Hidden, 1 is Show */,
       screenSmall: true,
-      fullscreenMenu: false
+      fullscreenMenu: false,
+      dialog: false,
+      all_locations: ["Central London", "Ilford", "Barking", "Stratford"]
     };
   },
   methods: {
@@ -32,13 +34,13 @@ export default {
 <template>
   <v-card>
     <v-layout>
-      <v-app-bar class="navbar bg-black container" elevation="4">
+      <v-app-bar class="navbar container bg-black" elevation="4">
         <img class="logo_img" src="../assets/CheersLogo_nobg.png" />
-        <!-- <v-app-bar-title class="logo_text">Cheers!</v-app-bar-title> -->
+        <v-app-bar-title></v-app-bar-title>
         <v-card
           v-if="!screenSmall"
           style="padding-right: 5vw"
-          class="w-100 bg-black d-flex justify-end align-center"
+          class="bg-black d-flex justify-end align-center"
           elevation="0"
         >
           <v-responsive max-width="300">
@@ -71,7 +73,7 @@ export default {
             <v-icon>mdi-cart-outline</v-icon>
           </v-btn>
         </v-card>
-        <v-card class="w-100 bg-black d-flex justify-end" v-else elevation="0">
+        <v-card class="bg-black d-flex justify-end" v-else elevation="0">
           <v-btn v-show="!fullscreenMenu" @click.prevent="burgerClicked" icon>
             <v-icon>mdi-menu</v-icon>
           </v-btn>
@@ -126,7 +128,61 @@ export default {
         </v-list>
       </v-navigation-drawer>
       <v-main class="mt-5">
-        <slot name="home"></slot>
+        <div class="main container">
+          <v-btn @click="dialog = true">Select Location</v-btn>
+          <v-dialog
+            v-model="dialog"
+            fullscreen
+            :scrim="false"
+            transition="dialog-bottom-transition"
+          >
+            <v-card>
+              <v-toolbar class="bg-black" dark>
+                <v-btn icon dark @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+                <v-toolbar-title class="site_font">Choose Pub</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-toolbar-items>
+                  <v-btn variant="text" @click="dialog = false"> Save </v-btn>
+                </v-toolbar-items>
+              </v-toolbar>
+              <label class="site_font text-h4 text-center my-5 mx-5"
+                >Where do you want to place your order?</label
+              >
+              <v-list>
+                <v-list-item>
+                  <v-btn
+                    class="bg-green-darken-2 w-100 site_font btn_font"
+                    size="large"
+                    elevation="24"
+                    prepend-icon="mdi-navigation-variant"
+                  >
+                    Enable Location
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+              <v-divider></v-divider>
+              <v-list>
+                <v-list-item>
+                  <v-autocomplete
+                    class="mt-5"
+                    prepend-inner-icon="mdi-map-marker"
+                    label="Location Name"
+                    variant="outlined"
+                    :items="all_locations"
+                  ></v-autocomplete>
+                </v-list-item>
+                <v-list-item>
+                  <v-btn class="bg-black w-100 site_font btn_font" size="large" elevation="24">
+                    View all pubs
+                  </v-btn>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-dialog>
+          <slot name="home"></slot>
+        </div>
       </v-main>
     </v-layout>
   </v-card>
