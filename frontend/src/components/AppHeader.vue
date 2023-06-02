@@ -3,7 +3,7 @@
     <v-layout>
       <v-app-bar class="navbar container bg-black" elevation="4">
         <v-slide-x-transition>
-          <img class="logo_img" v-if="scrollValue" src="../assets/CheersLogo_nobg.png" />
+          <img class="logo_img" v-if="scrollValue" src="/CheersLogo_nobg.png" />
         </v-slide-x-transition>
         <v-app-bar-title></v-app-bar-title>
         <v-card
@@ -68,7 +68,7 @@
       </v-navigation-drawer>
 
       <v-main>
-        <v-parallax class="parallaxHeight" src="/cheers_banner.png" scale="0.5">
+        <v-parallax class="parallaxHeight" src="../src/assets/cheers_banner.png" scale="0.5">
           <div class="w-100 h-100 d-flex justify-center align-center">
             <div :class="cheersBannerImgSize">
               <v-img src="/CheersLogo_nobg.png"></v-img>
@@ -108,7 +108,7 @@
                 >Where do you want to place your order?</label
               >
 
-              <div class="desktop">
+              <div class="desktop" style="align-items: center">
                 <div class="desktop_container_small">
                   <v-list>
                     <v-list-item>
@@ -146,7 +146,7 @@
               </div>
             </v-card>
           </v-dialog>
-          <slot name="home"></slot>
+          <slot name="main"></slot>
         </div>
       </v-main>
     </v-layout>
