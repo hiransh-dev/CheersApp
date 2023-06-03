@@ -1,37 +1,38 @@
 <template>
-  <div class="desktop">
-    <div class="desktop_container">
-      <v-card class="my-2 w-100 d-flex flex-row justify-end" elevation="0">
-        <v-text-field
-          density="compact"
-          variant="outlined"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-        <v-btn icon="mdi-magnify" elevation="0"></v-btn>
+  <RouterLink :to="linkTo" class="router_link_decoration">
+    <div class="home">
+      <v-card class="home_card ma-1">
+        <v-img @click="linkTo = '/drinks'" src="../src/assets/drinks.png"></v-img>
+        <v-btn @click="linkTo = '/drinks'" class="bg-black" rounded="sm" size="x-large" block
+          >Drinks</v-btn
+        >
       </v-card>
-      <div class="home">
-        <v-card class="home_card ma-1">
-          <a @click="hello">
-            <v-img src="../src/assets/drinks.png"></v-img>
-          </a>
-          <v-btn class="bg-black" rounded="sm" size="x-large" block>Drinks</v-btn>
-        </v-card>
-        <v-card class="home_card ma-1">
-          <v-img src="../src/assets/food.png"></v-img>
-          <v-btn class="bg-black" rounded="sm" size="x-large" block>Food & Snacks</v-btn>
-        </v-card>
-        <v-card class="home_card ma-1">
-          <v-img src="../src/assets/soft_drinks.png"></v-img>
-          <v-btn class="bg-black" rounded="sm" size="x-large" block>Soft Drinks</v-btn>
-        </v-card>
-      </div>
+      <v-card class="home_card ma-1">
+        <v-img src="../src/assets/food.png"></v-img>
+        <v-btn @click="linkTo = '/food'" class="bg-black" rounded="sm" size="x-large" block
+          >Food & Snacks</v-btn
+        >
+      </v-card>
+      <v-card class="home_card ma-1">
+        <v-img src="../src/assets/soft_drinks.png"></v-img>
+        <v-btn @click="linkTo = '/softdrinks'" class="bg-black" rounded="sm" size="x-large" block
+          >Soft Drinks</v-btn
+        >
+      </v-card>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "HomeView",
+  data() {
+    return {
+      linkTo: "/"
+    };
+  }
+};
+</script>
 
 <style scoped>
 .home {

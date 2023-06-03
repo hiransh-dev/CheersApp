@@ -12,6 +12,9 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "format": "prettier --write src/"
   },
+  "server": {
+    "host": true
+  },
   "dependencies": {
     "@mdi/font": "^7.2.96",
     "axios": "^1.4.0",

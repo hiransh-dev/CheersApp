@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 .container {
   padding-left: 2vw;
   padding-right: 2vw;
@@ -13,6 +13,9 @@
 }
 .btn_font {
   font-size: 2rem;
+}
+.router_link_decoration {
+  text-decoration: none;
 }
 @media only screen and (min-width: 1024px) {
   .desktop {
