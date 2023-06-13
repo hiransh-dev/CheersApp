@@ -21,7 +21,7 @@
             <v-btn icon dark @click="dialog = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
-            <v-toolbar-title class="site_font">Select category</v-toolbar-title>
+            <v-toolbar-title class="site_font">Category</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-toolbar-items>
               <v-btn variant="text" @click="dialog = false"> Save </v-btn>
@@ -61,18 +61,10 @@
         </v-card>
       </v-dialog>
 
-      <div class="d-flex justify-center">
-        <v-card style="width: 100%" class="mt-4 mb-1">
-          <v-img src="../src/assets/menu/beers.jfif" cover>
-            <div class="w-100 h-100 d-flex justify-center align-center">
-              <label class="text-white text-h1">{{ categoryLabel }}</label>
-            </div>
-          </v-img>
-        </v-card>
-      </div>
       <!-- variant:popout REMOVED from expansion panel -->
-      <v-expansion-panels class="mb-4">
-        <v-expansion-panel elevation="8">
+      <v-expansion-panels class="my-4">
+        <!-- MENU SKELETON  -->
+        <!-- <v-expansion-panel elevation="8">
           <v-badge
             color="blue-darken-3"
             class="w-100 mb-4"
@@ -94,11 +86,45 @@
 
           <v-expansion-panel-text>
             <v-card class="d-flex flex-row align-center justify-end" elevation="0">
-              <v-btn class="ma-2 bg-red" @click="counter--" elevation="8" icon>
+              <v-btn class="ma-2 bg-red" @click="counter--" elevation="4" icon>
                 <v-icon>mdi-minus-thick</v-icon>
               </v-btn>
               <label class="mx-2 text-h6 site_font"> {{ counter }} </label>
-              <v-btn class="ma-2 bg-green" @click="counter++" elevation="8" icon>
+              <v-btn class="ma-2 bg-green" @click="counter++" elevation="4" icon>
+                <v-icon>mdi-plus-thick</v-icon>
+              </v-btn>
+            </v-card>
+          </v-expansion-panel-text>
+        </v-expansion-panel> -->
+        <!-- MENU SKELETON  -->
+
+        <v-expansion-panel v-for="menuItem of menuItems" :key="menuItem._id" elevation="8">
+          <v-badge
+            color="blue-darken-3"
+            class="w-100 mb-4"
+            style="position: absolute"
+            v-if="counter"
+            :content="counter"
+          >
+          </v-badge>
+
+          <v-expansion-panel-title>
+            <div class="w-100 d-flex flex-row justify-space-between align-center">
+              <div class="d-flex flex-column">
+                <label class="text-h6 site_font">{{ menuItem.title }}</label>
+                <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
+              </div>
+              <label class="text-h6 site_font mr-2">£ {{ menuItem.price }}</label>
+            </div>
+          </v-expansion-panel-title>
+
+          <v-expansion-panel-text>
+            <v-card class="d-flex flex-row align-center justify-end" elevation="0">
+              <v-btn class="ma-2 bg-red" @click="counter--" elevation="4" icon>
+                <v-icon>mdi-minus-thick</v-icon>
+              </v-btn>
+              <label class="mx-2 text-h6 site_font"> {{ counter }} </label>
+              <v-btn class="ma-2 bg-green" @click="counter++" elevation="4" icon>
                 <v-icon>mdi-plus-thick</v-icon>
               </v-btn>
             </v-card>
@@ -120,6 +146,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "DrinksView",
   data() {
@@ -129,7 +157,9 @@ export default {
       drinkTypeSelected: "",
       dialog: false,
       categoryLabel: "",
-      counter: 0
+      counter: 0,
+      menu: [],
+      menuItems: []
     };
   },
   methods: {
@@ -137,10 +167,26 @@ export default {
       this.dialog = false;
       if (drinkSelected) {
         this.categoryLabel = drinkSelected;
+        console.log(drinkSelected);
+        this.menuItems = [];
+        this.menuItems = this.menu.filter((item) => {
+          return item.subcategory === drinkSelected;
+        });
       } else {
         this.categoryLabel = "";
+        this.menuItems = this.menu;
       }
+    },
+    async getMenu() {
+      /*Try Catch later*/
+      const fullMenu = await axios.get("http://localhost:3000/api/menu");
+      this.menu = fullMenu.data;
+      this.menuItems = this.menu;
+      // console.log(fullMenu.data[0].title);
     }
+  },
+  mounted() {
+    this.getMenu();
   }
 };
 </script>

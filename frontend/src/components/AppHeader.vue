@@ -73,6 +73,7 @@
       </v-navigation-drawer>
       <v-main>
         <v-parallax class="parallaxHeight" src="../src/assets/cheers_banner.png" scale="0.5">
+          <!-- <v-parallax class="parallaxHeight" src="../../../w.jpg" scale="0.5"> -->
           <div class="w-100 h-100 d-flex justify-center align-center">
             <div :class="cheersBannerImgSize">
               <RouterLink to="/" class="router_link_decoration">
@@ -102,7 +103,7 @@
                     <v-btn icon dark @click="dialog = false">
                       <v-icon>mdi-close</v-icon>
                     </v-btn>
-                    <v-toolbar-title class="site_font">Choose Pub</v-toolbar-title>
+                    <v-toolbar-title class="site_font">Pubs</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                       <v-btn variant="text" @click="dialog = false"> Save </v-btn>
@@ -231,7 +232,7 @@ export default {
   align-items: center;
 }
 .logo_img {
-  height: 4.2rem;
+  height: 3.6rem;
 }
 .site_font {
   font-family: "Roboto", sans-serif;

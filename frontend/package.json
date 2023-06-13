@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "vite",
@@ -19,6 +19,7 @@
     "@mdi/font": "^7.2.96",
     "axios": "^1.4.0",
     "pinia": "^2.0.36",
+    "vee-validate": "^4.9.6",
     "vue": "^3.3.2",
     "vue-router": "^4.2.2",
     "vuetify": "^3.3.1"

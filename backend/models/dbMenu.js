@@ -8,9 +8,27 @@ const path = require("path");
 const MenuSchema = new Schema(
   {
     title: String,
-    desc: String,
-    imgsrc: String,
+    desc: String /*ABV & Units*/,
     price: Number,
+    category: {
+      type: String,
+      enum: ["Drinks", "Food", "Bar Snacks", "Soft Drinks"],
+    },
+    subcategory: {
+      type: String,
+      enum: [
+        "Beers",
+        "World Beers",
+        "Ale",
+        "Whiskey",
+        "Vodka",
+        "Rum",
+        // "Snacks",
+        // "Food",
+        // "Soft Drinks",
+      ],
+    },
+    // imgsrc: String,
     // change imgsrc to object later with url, filename for cloudinary
     // author
     // reviews
