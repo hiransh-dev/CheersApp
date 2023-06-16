@@ -31,7 +31,7 @@ app.get("/api/management/menu", async (req, res) => {
 });
 
 app.post("/api/management/menu", async (req, res) => {
-  // console.log(req.body);
+  console.log(req.body.menuItem);
   const new_menuItem = new MenuSchema(req.body.menuItem);
   await new_menuItem.save();
   res.send("saved " + new_menuItem._id); /* Change to json later */
