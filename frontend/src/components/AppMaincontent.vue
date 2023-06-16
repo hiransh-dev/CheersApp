@@ -4,7 +4,7 @@
     <div class="desktop">
       <div class="desktop_container">
         <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
-        <AppHeaderCards></AppHeaderCards>
+        <AppHeaderCards v-if="management === false"> </AppHeaderCards>
         <!-- RENDERING MAIN CONTENT HERE -->
         <RouterView></RouterView>
       </div>
@@ -16,6 +16,12 @@
 import AppHeaderCards from "@/components/AppHeaderCards.vue";
 import AppHeader from "@/components/AppHeader.vue";
 export default {
+  data() {
+    return {
+      management: false
+      /*Set with PINIA state later*/
+    };
+  },
   components: {
     AppHeaderCards,
     AppHeader
