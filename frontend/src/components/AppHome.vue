@@ -1,13 +1,19 @@
 <template>
-  <AppHeader>
-    <template v-slot:main>
-      <RouterView></RouterView>
-    </template>
-  </AppHeader>
+  <v-card>
+    <v-layout>
+      <AppNavbar></AppNavbar>
+      <v-main>
+        <AppMaincontent></AppMaincontent>
+      </v-main>
+    </v-layout>
+  </v-card>
+  <AppFooter></AppFooter>
 </template>
 
 <script>
-import AppHeader from "@/components/AppHeader.vue";
+import AppNavbar from "@/components/AppNavbar.vue";
+import AppMaincontent from "@/components/AppMaincontent.vue";
+import AppFooter from "@/components/AppFooter.vue";
 
 export default {
   name: "AppHome",
@@ -16,7 +22,9 @@ export default {
   },
   methods: {},
   components: {
-    AppHeader
+    AppNavbar,
+    AppMaincontent,
+    AppFooter
   }
 };
 </script>
