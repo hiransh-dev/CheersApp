@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
-import Drinks from "@/views/DrinksView.vue";
+import Menu from "@/views/MenuView.vue";
 import ManageMenu from "@/views/management/ManagementMenuView.vue";
 
 const routes = [
@@ -10,9 +10,9 @@ const routes = [
     component: Home
   },
   {
-    path: "/drinks",
-    name: "drinks",
-    component: Drinks
+    path: "/menu/drinks",
+    name: "drinksMenu",
+    component: Menu
   },
   {
     path: "/manage/menu",
@@ -23,7 +23,13 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: routes
+  routes: routes,
+  scrollBehavior() {
+    return {
+      el: "#searchbar",
+      top: 90
+    };
+  }
 });
 
 export default router;
