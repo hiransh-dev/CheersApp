@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import Drinks from "@/views/DrinksView.vue";
-import ManageDrinks from "@/views/management/ManagementDrinksView.vue";
+import ManageMenu from "@/views/management/ManagementMenuView.vue";
 
 const routes = [
   {
@@ -15,19 +15,15 @@ const routes = [
     component: Drinks
   },
   {
-    path: "/manage/drinks",
-    name: "managedrinks",
-    component: ManageDrinks
+    path: "/manage/menu",
+    name: "managemenu",
+    component: ManageMenu
   }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: routes
-  // scrollBehavior() {
-  //   // always scroll to top
-  //   return { top: 0 };
-  // }
 });
 
 export default router;
