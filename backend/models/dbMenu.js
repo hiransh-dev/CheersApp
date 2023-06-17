@@ -12,7 +12,7 @@ const MenuSchema = new Schema(
     price: Number,
     category: {
       type: String,
-      enum: ["Drinks", "Food", "Bar Snacks", "Soft Drinks"],
+      enum: ["Drinks", "Food", "Soft Drinks"],
     },
     subcategory: {
       type: String,
@@ -28,10 +28,6 @@ const MenuSchema = new Schema(
         // "Soft Drinks",
       ],
     },
-    // imgsrc: String,
-    // change imgsrc to object later with url, filename for cloudinary
-    // author
-    // reviews
   },
   {
     timestamps: true,
