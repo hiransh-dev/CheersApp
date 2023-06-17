@@ -12,9 +12,8 @@ import "@mdi/font/css/materialdesignicons.css";
 
 import App from "./App.vue";
 import router from "./router";
-
-//Vee-Validate
-// import veeValidatePlugin from "./includes/validation";
+// Vee-Validate
+import veeValidatePlugin from "./utils/validation";
 
 const app = createApp(App);
 const vuetify = createVuetify({
@@ -29,5 +28,5 @@ app.use(createPinia());
 app.use(router);
 
 app.use(vuetify);
-// app.use(veeValidatePlugin);
+app.use(veeValidatePlugin);
 app.mount("#app");
