@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const passportLocalMongoose = require("passport-local-mongoose");
 
+const path = require("path");
+const Orders = require(path.join(__dirname, "/dbOrders"));
+
 const UserSchema = new Schema(
   {
     email: {
@@ -24,10 +27,14 @@ const UserSchema = new Schema(
     },
     phoneNumber: {
       type: Number,
+      required: true,
     },
-    creationDate: {
-      type: String,
-    },
+    orderHistory: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Orders",
+      },
+    ],
   },
   {
     timestamps: true,

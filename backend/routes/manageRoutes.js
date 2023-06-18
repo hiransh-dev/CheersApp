@@ -23,6 +23,6 @@ const validateMenuSchema = (req, res, next) => {
 
 /* MANAGEMENT ROUTES */
 router.get("/menu", catchAsync(manageController.getMenu));
-router.post("/menu", catchAsync(manageController.setMenu));
+router.post("/menu", validateMenuSchema, catchAsync(manageController.setMenu));
 
 module.exports = router;

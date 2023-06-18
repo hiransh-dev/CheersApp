@@ -5,12 +5,22 @@ const Schema = mongoose.Schema;
 
 const MenuSchema = new Schema(
   {
-    title: String,
-    desc: String /*ABV & Units*/,
-    price: Number,
+    title: {
+      type: String,
+      required: true,
+    },
+    desc: {
+      type: String /*ABV & Units*/,
+      required: true,
+    },
+    price: {
+      type: Number /*ABV & Units*/,
+      required: true,
+    },
     category: {
       type: String,
       enum: ["Drinks", "Food", "Soft Drinks"],
+      required: true,
     },
     subcategory: {
       type: String,
@@ -24,6 +34,7 @@ const MenuSchema = new Schema(
         // "Bar Snacks",
         // "Food",
       ],
+      required: true,
     },
   },
   {
