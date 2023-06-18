@@ -1,7 +1,7 @@
 <template>
   <div class="desktop">
     <div class="desktop_container">
-      <!-- MOVE THIS TO HEADER CARDS later-->
+      <!-- SET-CATEGORY, HEADER CARD-->
       <v-card class="bg-yellow-darken-3 text-center desktop_container" elevation="24">
         <v-card-title class="site_font text-white"
           >What would you like to {{ categoryAction }}?</v-card-title
@@ -10,30 +10,35 @@
           v-if="setCategory !== ''"
           class="bg-black ma-2"
           size="large"
-          @click="dialog = true"
+          @click="dialogCategory = true"
           >{{ setCategory }}</v-btn
         >
-        <v-btn v-else class="bg-black ma-2" size="large" @click="dialog = true"
+        <v-btn v-else class="bg-black ma-2" size="large" @click="dialogCategory = true"
           >Select Category</v-btn
         >
       </v-card>
 
-      <v-dialog v-model="dialog" fullscreen :scrim="false" transition="dialog-bottom-transition">
+      <!-- CATEGORY DIALOG WINDOW -->
+      <v-dialog
+        v-model="dialogCategory"
+        fullscreen
+        :scrim="false"
+        transition="dialog-bottom-transition"
+      >
         <v-card>
           <v-toolbar class="bg-black" dark>
-            <v-btn icon dark @click="dialog = false">
+            <v-btn icon dark @click="dialogCategory = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
             <v-toolbar-title class="site_font">Category</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn variant="text" @click="dialog = false"> Save </v-btn>
-            </v-toolbar-items>
+            <!-- <v-toolbar-items>
+              <v-btn variant="text" @click="dialogCategory = false"> Save </v-btn>
+            </v-toolbar-items> -->
           </v-toolbar>
           <label class="site_font text-h4 text-center my-5 mx-5"
             >What would you like to {{ categoryAction }}?</label
           >
-
           <div class="desktop" style="align-items: center">
             <div class="desktop_container_small">
               <v-list>
@@ -79,7 +84,6 @@
             :content="menuItem.quantity"
           >
           </v-badge>
-
           <v-expansion-panel-title>
             <div class="w-100 d-flex flex-row justify-space-between align-center">
               <div class="d-flex flex-column">
@@ -89,7 +93,6 @@
               <label class="text-h6 site_font mr-2">£ {{ menuItem.price }}</label>
             </div>
           </v-expansion-panel-title>
-
           <v-expansion-panel-text>
             <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
               <v-btn
@@ -112,17 +115,113 @@
             </v-card>
           </v-expansion-panel-text>
         </v-expansion-panel>
-
         <div class="sticky ma-2">
           <v-slide-x-reverse-transition>
-            <v-badge color="blue-darken-3" :content="totalItemsCounter">
-              <v-btn class="bg-green-darken-4" size="x-large" icon>
+            <v-badge
+              color="blue-darken-3"
+              v-if="totalItemsCounter !== 0"
+              :content="totalItemsCounter"
+            >
+              <v-btn class="bg-green-darken-4" @click="dialogCart = true" size="x-large" icon>
                 <v-icon>mdi-cart</v-icon>
               </v-btn>
             </v-badge>
           </v-slide-x-reverse-transition>
         </div>
       </v-expansion-panels>
+
+      <!-- CART DIALOG WINDOW -->
+      <v-dialog
+        v-model="dialogCart"
+        fullscreen
+        :scrim="false"
+        transition="dialog-bottom-transition"
+      >
+        <v-card class="bg-black">
+          <v-toolbar class="bg-green-darken-4" dark>
+            <v-btn icon dark @click="dialogCart = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+            <v-toolbar-title class="site_font">Cart</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <!-- <v-toolbar-items>
+              <v-btn variant="text" @click="dialogCart = false"> Save </v-btn>
+            </v-toolbar-items> -->
+          </v-toolbar>
+          <label class="site_font text-h4 text-center my-5 mx-5">Confirm your order?</label>
+          <div class="desktop" style="align-items: center">
+            <div class="desktop_container_small">
+              <v-expansion-panels class="my-4 pa-2">
+                <v-expansion-panel
+                  class="bg-grey-darken-4"
+                  v-for="menuItem of menuItems"
+                  :key="menuItem._id"
+                  elevation="6"
+                >
+                  <div
+                    v-if="
+                      cartStore.cartItems.filter((cartItem) => cartItem.id === menuItem._id)
+                        .length === 1
+                    "
+                  >
+                    <v-badge
+                      color="blue-darken-3"
+                      class="w-100 mb-4"
+                      style="position: absolute"
+                      v-if="menuItem.quantity !== 0"
+                      :content="menuItem.quantity"
+                    >
+                    </v-badge>
+
+                    <v-expansion-panel-title>
+                      <div class="w-100 d-flex flex-row justify-space-between align-center">
+                        <div class="d-flex flex-column">
+                          <label class="text-h6 site_font">{{ menuItem.title }}</label>
+                          <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
+                        </div>
+                        <label class="text-h6 site_font mr-2">£ {{ menuItem.price }}</label>
+                      </div>
+                    </v-expansion-panel-title>
+
+                    <v-expansion-panel-text>
+                      <v-card
+                        class="d-flex flex-row align-center justify-end bg-transparent"
+                        elevation="0"
+                      >
+                        <v-btn
+                          class="ma-2 bg-red"
+                          @click="removingFromCart(menuItem._id, menuItem.quantity)"
+                          elevation="4"
+                          icon
+                        >
+                          <v-icon>mdi-minus-thick</v-icon>
+                        </v-btn>
+                        <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
+                        <v-btn
+                          class="ma-2 bg-green"
+                          @click="addingToCart(menuItem._id, menuItem.quantity)"
+                          elevation="4"
+                          icon
+                        >
+                          <v-icon>mdi-plus-thick</v-icon>
+                        </v-btn>
+                      </v-card>
+                    </v-expansion-panel-text>
+                  </div>
+                </v-expansion-panel>
+              </v-expansion-panels>
+              <label class="ma-2 text-h4 float-right site_font"
+                >Total: £ {{ cartStore.cartTotal }}</label
+              >
+              <div class="ma-2 mb-5">
+                <v-btn class="bg-blue w-100 site_font btn_font" size="x-large" elevation="24">
+                  Checkout
+                </v-btn>
+              </div>
+            </div>
+          </div>
+        </v-card>
+      </v-dialog>
     </div>
   </div>
 </template>
@@ -140,15 +239,16 @@ export default {
       category: "Drinks",
       subcategory: ["Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum"],
       setCategory: "",
-      dialog: false,
+      dialogCategory: false,
       menu: [],
       menuItems: [],
-      totalItemsCounter: "0"
+      totalItemsCounter: "0",
+      dialogCart: false
     };
   },
   methods: {
     selectedCategory(selected) {
-      this.dialog = false;
+      this.dialogCategory = false;
       if (selected) {
         this.setCategory = selected;
         // this.menuItems = [];
@@ -166,8 +266,8 @@ export default {
         return item._id === id;
       });
       this.menu[index].quantity = quantity + 1;
-      this.cartStore.updateCart(id, this.menu[index].quantity);
-      this.updateTotal();
+      this.cartStore.updateCart(id, this.menu[index].quantity, this.menu[index].price);
+      this.updateTotalItems();
     },
     removingFromCart(id, quantity) {
       const index = this.menu.findIndex((item) => {
@@ -175,11 +275,11 @@ export default {
       });
       if (this.menu[index].quantity !== 0) {
         this.menu[index].quantity = quantity - 1;
-        this.cartStore.updateCart(id, this.menu[index].quantity);
-        this.updateTotal();
+        this.cartStore.updateCart(id, this.menu[index].quantity, this.menu[index].price);
+        this.updateTotalItems();
       }
     },
-    updateTotal() {
+    updateTotalItems() {
       this.totalItemsCounter = 0;
       // can also use local menu array for state
       // this.menu.forEach((item) => {
@@ -201,7 +301,7 @@ export default {
         });
         /* Create a reference array which shares same data, for filtering category */
         this.menuItems = this.menu;
-        this.updateTotal();
+        this.updateTotalItems();
       } catch (e) {
         console.log(e);
       }
