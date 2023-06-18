@@ -1,6 +1,7 @@
 <template>
   <div class="desktop">
     <div class="desktop_container">
+      <!-- MOVE THIS TO HEADER CARDS -->
       <v-card class="bg-yellow-darken-3 text-center desktop_container" elevation="24">
         <v-card-title class="site_font text-white"
           >What would you like to {{ categoryAction }}?</v-card-title
@@ -42,7 +43,6 @@
                     class="bg-black w-100 site_font btn_font"
                     size="x-large"
                     elevation="24"
-                    :key="subType"
                   >
                     {{ subType }}
                   </v-btn>
@@ -69,8 +69,8 @@
             color="blue-darken-3"
             class="w-100 mb-4"
             style="position: absolute"
-            v-if="counter"
-            :content="counter"
+            v-if="menuItem.quantity !== 0"
+            :content="menuItem.quantity"
           >
           </v-badge>
 
@@ -86,11 +86,21 @@
 
           <v-expansion-panel-text>
             <v-card class="d-flex flex-row align-center justify-end" elevation="0">
-              <v-btn class="ma-2 bg-red" @click="counter--" elevation="4" icon>
+              <v-btn
+                class="ma-2 bg-red"
+                @click="removingFromCart(menuItem._id, menuItem.quantity)"
+                elevation="4"
+                icon
+              >
                 <v-icon>mdi-minus-thick</v-icon>
               </v-btn>
-              <label class="mx-2 text-h6 site_font"> {{ counter }} </label>
-              <v-btn class="ma-2 bg-green" @click="counter++" elevation="4" icon>
+              <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
+              <v-btn
+                class="ma-2 bg-green"
+                @click="addingToCart(menuItem._id, menuItem.quantity)"
+                elevation="4"
+                icon
+              >
                 <v-icon>mdi-plus-thick</v-icon>
               </v-btn>
             </v-card>
@@ -99,7 +109,7 @@
 
         <div class="sticky ma-2">
           <v-slide-x-reverse-transition>
-            <v-badge color="blue-darken-3" v-if="counter" :content="counter">
+            <v-badge color="blue-darken-3" :content="totalItemsCounter">
               <v-btn class="bg-green-darken-4" size="x-large" icon>
                 <v-icon>mdi-cart</v-icon>
               </v-btn>
@@ -113,6 +123,8 @@
 
 <script>
 import axios from "axios";
+import { mapStores } from "pinia";
+import useCartStore from "@/stores/cart";
 
 export default {
   name: "MenuView",
@@ -122,7 +134,8 @@ export default {
       subcategory: ["Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum"],
       dialog: false,
       categoryLabel: "",
-      counter: 0,
+      counter: [],
+      totalItemsCounter: "0",
       menu: [],
       menuItems: []
     };
@@ -134,18 +147,56 @@ export default {
         this.categoryLabel = selected;
         this.menuItems = [];
         this.menuItems = this.menu.filter((item) => {
+          console.log(this.menuItems);
           return item.subcategory === selected;
         });
       } else {
         this.categoryLabel = "";
         this.menuItems = this.menu;
+        console.log(this.menuItems);
       }
     },
+    addingToCart(id, quantity) {
+      const index = this.menuItems.findIndex((item) => {
+        return item._id === id;
+      });
+      this.menuItems[index].quantity = quantity + 1;
+      this.cartStore.updateCart(id, this.menuItems[index].quantity);
+      this.updateTotal();
+    },
+    removingFromCart(id, quantity) {
+      const index = this.menuItems.findIndex((item) => {
+        return item._id === id;
+      });
+      if (this.menuItems[index].quantity !== 0) {
+        this.menuItems[index].quantity = quantity - 1;
+        this.cartStore.updateCart(id, this.menuItems[index].quantity);
+        this.updateTotal();
+      }
+    },
+    updateTotal() {
+      this.totalItemsCounter = 0;
+      this.cartStore.cartItems.forEach((item) => {
+        this.totalItemsCounter = parseInt(this.totalItemsCounter + item.quantity);
+      });
+    },
     async getMenu() {
-      /*Try Catch later*/
-      const fullMenu = await axios.get(`/api/menu/${this.category}`);
-      this.menu = fullMenu.data;
-      this.menuItems = this.menu;
+      try {
+        const fullMenu = await axios.get(`/api/menu/${this.category}`);
+        this.menu = fullMenu.data;
+        this.menu.forEach((item) => {
+          item.quantity = 0;
+          this.cartStore.cartItems.forEach((cartItem) => {
+            if (cartItem.id === item._id) {
+              item.quantity = cartItem.quantity;
+            }
+          });
+        });
+        this.menuItems = this.menu;
+        this.updateTotal();
+      } catch (e) {
+        console.log(e);
+      }
     }
   },
   computed: {
@@ -155,7 +206,8 @@ export default {
       } else {
         return "drink";
       }
-    }
+    },
+    ...mapStores(useCartStore)
   },
   mounted() {
     this.getMenu();
