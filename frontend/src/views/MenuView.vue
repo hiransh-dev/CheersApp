@@ -1,17 +1,17 @@
 <template>
   <div class="desktop">
     <div class="desktop_container">
-      <!-- MOVE THIS TO HEADER CARDS -->
+      <!-- MOVE THIS TO HEADER CARDS later-->
       <v-card class="bg-yellow-darken-3 text-center desktop_container" elevation="24">
         <v-card-title class="site_font text-white"
           >What would you like to {{ categoryAction }}?</v-card-title
         >
         <v-btn
-          v-if="categoryLabel !== ''"
+          v-if="setCategory !== ''"
           class="bg-black ma-2"
           size="large"
           @click="dialog = true"
-          >{{ categoryLabel }}</v-btn
+          >{{ setCategory }}</v-btn
         >
         <v-btn v-else class="bg-black ma-2" size="large" @click="dialog = true"
           >Select Category</v-btn
@@ -130,52 +130,53 @@ export default {
   name: "MenuView",
   data() {
     return {
+      /* Grab Category & Sub from db later */
       category: "Drinks",
       subcategory: ["Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum"],
+      setCategory: "",
       dialog: false,
-      categoryLabel: "",
-      counter: [],
-      totalItemsCounter: "0",
       menu: [],
-      menuItems: []
+      menuItems: [],
+      totalItemsCounter: "0"
     };
   },
   methods: {
     selectedCategory(selected) {
       this.dialog = false;
       if (selected) {
-        this.categoryLabel = selected;
-        this.menuItems = [];
+        this.setCategory = selected;
+        // this.menuItems = [];
         this.menuItems = this.menu.filter((item) => {
-          console.log(this.menuItems);
           return item.subcategory === selected;
         });
       } else {
-        this.categoryLabel = "";
+        this.setCategory = "";
         this.menuItems = this.menu;
-        console.log(this.menuItems);
       }
     },
+    /* menuItem is a reference to menu array so any changes here will be reflected to data in menuItem as well */
     addingToCart(id, quantity) {
-      const index = this.menuItems.findIndex((item) => {
+      const index = this.menu.findIndex((item) => {
         return item._id === id;
       });
-      this.menuItems[index].quantity = quantity + 1;
-      this.cartStore.updateCart(id, this.menuItems[index].quantity);
+      this.menu[index].quantity = quantity + 1;
+      this.cartStore.updateCart(id, this.menu[index].quantity);
       this.updateTotal();
     },
     removingFromCart(id, quantity) {
-      const index = this.menuItems.findIndex((item) => {
+      const index = this.menu.findIndex((item) => {
         return item._id === id;
       });
-      if (this.menuItems[index].quantity !== 0) {
-        this.menuItems[index].quantity = quantity - 1;
-        this.cartStore.updateCart(id, this.menuItems[index].quantity);
+      if (this.menu[index].quantity !== 0) {
+        this.menu[index].quantity = quantity - 1;
+        this.cartStore.updateCart(id, this.menu[index].quantity);
         this.updateTotal();
       }
     },
     updateTotal() {
       this.totalItemsCounter = 0;
+      // can also use local menu array for state
+      // this.menu.forEach((item) => {
       this.cartStore.cartItems.forEach((item) => {
         this.totalItemsCounter = parseInt(this.totalItemsCounter + item.quantity);
       });
@@ -192,6 +193,7 @@ export default {
             }
           });
         });
+        /* Create a reference array which shares same data, for filtering category */
         this.menuItems = this.menu;
         this.updateTotal();
       } catch (e) {
