@@ -100,7 +100,7 @@ export default {
       this.res_on_submit = true;
       try {
         const addMenuItem = await axios.post(
-          "http://localhost:3000/api/management/menu",
+          "/api/management/menu",
           {
             menuItem: {
               title: this.title,
