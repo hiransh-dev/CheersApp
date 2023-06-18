@@ -154,7 +154,7 @@
               <v-expansion-panels class="my-4 pa-2">
                 <v-expansion-panel
                   class="bg-grey-darken-4"
-                  v-for="menuItem of menuItems"
+                  v-for="menuItem of menu"
                   :key="menuItem._id"
                   elevation="6"
                 >
