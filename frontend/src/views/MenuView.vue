@@ -50,11 +50,11 @@
                 <v-list-item>
                   <v-btn
                     @click="selectedCategory()"
-                    class="bg-red w-100 site_font btn_font"
+                    class="bg-yellow-darken-3 w-100 site_font btn_font"
                     size="x-large"
                     elevation="24"
                   >
-                    Clear
+                    Anything
                   </v-btn>
                 </v-list-item>
               </v-list>
@@ -63,8 +63,14 @@
         </v-card>
       </v-dialog>
 
+      <!-- MENU PANELS -->
       <v-expansion-panels class="my-4">
-        <v-expansion-panel v-for="menuItem of menuItems" :key="menuItem._id" elevation="8">
+        <v-expansion-panel
+          class="bg-grey-darken-4"
+          v-for="menuItem of menuItems"
+          :key="menuItem._id"
+          elevation="6"
+        >
           <v-badge
             color="blue-darken-3"
             class="w-100 mb-4"
@@ -85,7 +91,7 @@
           </v-expansion-panel-title>
 
           <v-expansion-panel-text>
-            <v-card class="d-flex flex-row align-center justify-end" elevation="0">
+            <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
               <v-btn
                 class="ma-2 bg-red"
                 @click="removingFromCart(menuItem._id, menuItem.quantity)"
