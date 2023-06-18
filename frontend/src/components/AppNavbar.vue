@@ -88,7 +88,6 @@ export default {
       this.fullscreenMenu = !this.fullscreenMenu;
     }
   },
-  computed: {},
   mounted() {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
     window.addEventListener("load", this.checkScreen);

@@ -3,8 +3,6 @@ const Schema = mongoose.Schema;
 
 //add mongoose paginate
 
-const path = require("path");
-
 const MenuSchema = new Schema(
   {
     title: String,
@@ -23,9 +21,8 @@ const MenuSchema = new Schema(
         "Whiskey",
         "Vodka",
         "Rum",
-        // "Snacks",
+        // "Bar Snacks",
         // "Food",
-        // "Soft Drinks",
       ],
     },
   },
