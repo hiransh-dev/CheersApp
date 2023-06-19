@@ -5,25 +5,23 @@
       <div class="desktop_container">
         <slot></slot>
         <!-- CART DIALOG WINDOW -->
-        <!-- RENDERING MAIN CONTENT HERE -->
+        <AppCart></AppCart>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import AppHeaderCards from "@/components/AppHeaderCards.vue";
 import AppHeader from "@/components/AppHeader.vue";
+import AppCart from "@/components/AppCart.vue";
+
 export default {
   data() {
-    return {
-      management: false
-      /*Set with PINIA state later*/
-    };
+    return {};
   },
   components: {
     AppHeader,
-    AppHeader
+    AppCart
   }
 };
 </script>

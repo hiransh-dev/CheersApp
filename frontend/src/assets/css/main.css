@@ -17,6 +17,12 @@
 .router_link_decoration {
   text-decoration: none;
 }
+.sticky {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+}
 @media only screen and (min-width: 1024px) {
   .desktop {
     width: 100%;
