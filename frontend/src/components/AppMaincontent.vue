@@ -3,10 +3,9 @@
   <div class="main container">
     <div class="desktop">
       <div class="desktop_container">
-        <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
-        <AppHeaderCards v-if="management === false"> </AppHeaderCards>
+        <slot></slot>
+        <!-- CART DIALOG WINDOW -->
         <!-- RENDERING MAIN CONTENT HERE -->
-        <RouterView></RouterView>
       </div>
     </div>
   </div>
@@ -23,7 +22,7 @@ export default {
     };
   },
   components: {
-    AppHeaderCards,
+    AppHeader,
     AppHeader
   }
 };
