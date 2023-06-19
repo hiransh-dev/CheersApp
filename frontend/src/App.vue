@@ -1,5 +1,5 @@
 <script>
-import AppHome from "./components/AppHome.vue";
+import AppHome from "@/layouts/AppHome.vue";
 
 export default {
   name: "App",

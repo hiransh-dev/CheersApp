@@ -3,7 +3,10 @@
     <v-layout>
       <AppNavbar></AppNavbar>
       <v-main>
-        <AppMaincontent></AppMaincontent>
+        <AppMaincontent>
+          <!-- RENDERING MAIN CONTENT HERE -->
+          <RouterView></RouterView>
+        </AppMaincontent>
       </v-main>
     </v-layout>
   </v-card>
