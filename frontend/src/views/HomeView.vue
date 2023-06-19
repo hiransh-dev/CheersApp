@@ -1,4 +1,6 @@
 <template>
+  <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
+  <AppHeaderCards> </AppHeaderCards>
   <RouterLink :to="linkTo" class="router_link_decoration">
     <div class="home">
       <v-card class="home_card ma-1">
@@ -32,12 +34,17 @@
 </template>
 
 <script>
+import AppHeaderCards from "@/components/AppHeaderCards.vue";
+
 export default {
   name: "HomeView",
   data() {
     return {
       linkTo: "/"
     };
+  },
+  components: {
+    AppHeaderCards
   }
 };
 </script>
