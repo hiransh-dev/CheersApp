@@ -64,6 +64,7 @@
     <v-text-field variant="outlined" label="Search Menu" single-line hide-details></v-text-field>
     <v-btn icon="mdi-magnify" elevation="0"></v-btn>
   </v-card>
+  <slot></slot>
 </template>
 
 <script>
