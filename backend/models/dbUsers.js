@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const passportLocalMongoose = require("passport-local-mongoose");
 
 const path = require("path");
 const Orders = require(path.join(__dirname, "/dbOrders"));
+
+const passportLocalMongoose = require("passport-local-mongoose");
 
 const UserSchema = new Schema(
   {
@@ -15,7 +16,6 @@ const UserSchema = new Schema(
     username: {
       type: String,
       required: true,
-      unique: true,
     },
     firstName: {
       type: String,
@@ -41,14 +41,7 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.pre("save", async function (doc) {
-  if (doc) {
-    /* Set username to same as email */
-    doc.username = doc.email;
-  }
-});
-
-UserSchema.virtual("fullname").get(() => {
+UserSchema.virtual("fullName").get(function () {
   return `${this.firstName} ${this.lastName}`;
 });
 

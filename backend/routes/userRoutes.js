@@ -1,9 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 const passport = require("passport");
 
 const catchAsync = require("../utils/catchAsync");
+const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 
 /* userRoute 's Controller */
 const userController = require("../controllers/userController");
@@ -33,6 +35,7 @@ router.post(
   passport.authenticate("local"),
   catchAsync(userController.loginUser)
 );
-// router.get("/logout", verifyLogin, userController.logout);
+/* Verify login before logout */
+router.get("/logout", userController.logout);
 
 module.exports = router;
