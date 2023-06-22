@@ -11,7 +11,6 @@ const MenuSchema = new Schema(
     },
     desc: {
       type: String /*ABV & Units*/,
-      required: true,
     },
     price: {
       type: Number /*ABV & Units*/,
@@ -31,10 +30,11 @@ const MenuSchema = new Schema(
         "Whiskey",
         "Vodka",
         "Rum",
+        "",
         // "Bar Snacks",
         // "Food",
       ],
-      required: true,
+      // required: true,
     },
   },
   {
