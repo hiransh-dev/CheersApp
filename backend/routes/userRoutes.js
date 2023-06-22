@@ -23,7 +23,7 @@ const validateUserSchema = (req, res, next) => {
   }
 };
 
-/* USER ROUTES */
+/* USER ROUTES  */
 router.post(
   "/register",
   validateUserSchema,

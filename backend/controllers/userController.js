@@ -1,5 +1,8 @@
 const User = require("../models/dbUsers");
 
+const path = require("path");
+const expressError = require(path.join(__dirname, "../utils/ExpressError"));
+
 // @desc    Register New User
 // @route   GET /api/user/register
 // @access  Public
@@ -17,15 +20,22 @@ module.exports.registerUser = async (req, res, next) => {
     phoneNumber,
   });
   newUser.username = newUser.email;
-  await User.register(newUser, password);
-  res.send("User Registered");
+  const userCreated = await User.register(newUser, password);
+  if (!userCreated) {
+    throw new expressError("Account creation failed", 400);
+  } else {
+    const { email, firstName, lastName } = userCreated;
+    return res.json({ email, firstName, lastName });
+  }
 };
 
 // @desc    Login User
 // @route   GET /api/user/login
 // @access  Public
 module.exports.loginUser = async (req, res, next) => {
-  res.send("User " + req.user.fullName + " Logged in");
+  const { email, firstName, lastName, fullName, phoneNumber } = req.user;
+  /* grab order history & phone number too? */
+  res.json({ email, firstName, lastName, phoneNumber, fullName });
 };
 
 // @desc    Logout User
@@ -36,7 +46,7 @@ module.exports.logout = (req, res) => {
     if (err) {
       return next(err);
     }
-    // req.flash("success", "Goodbye!");
-    res.redirect("/");
+    // console.log("success logout");
+    res.status(200).send("Logged out");
   });
 };
