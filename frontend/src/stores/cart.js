@@ -8,14 +8,14 @@ export default defineStore("cart", {
       menuItems: [],
       cartItems: [],
       cartTotal: 0,
-      dialogCart: false,
-      totalItemsCounter: 0
+      totalItemsCounter: 0,
+      category: ""
     };
   },
   actions: {
-    async fetchMenu() {
+    async fetchMenu(categoryParam) {
       try {
-        const fullMenu = await axios.get(`/api/menu/Drinks`);
+        const fullMenu = await axios.get("/api/menu/");
         this.menu = fullMenu.data;
         this.menu.forEach((item) => {
           item.quantity = 0;
@@ -25,11 +25,27 @@ export default defineStore("cart", {
             }
           });
         });
-        /* Create a reference array which shares same data, for filtering category */
-        this.menuItems = this.menu;
+        if (categoryParam) {
+          // console.log(categoryParam);
+          if (categoryParam === "drinks") {
+            this.category = "Drinks";
+          } else if (categoryParam === "food") {
+            this.category = "Food";
+          } else if (categoryParam === "softdrinks") {
+            this.category = "Soft Drinks";
+          } else {
+            console.log("Error: Invalid category in fetching Menu");
+          }
+          /* Create a reference array which shares same data, for filtering category */
+          // this.menuItems = this.menu;
+          // console.log(this.category);
+          this.menuItems = this.menu.filter((item) => {
+            return item.category === this.category;
+          });
+        }
         this.updateCartTotal();
       } catch (e) {
-        console.log(e);
+        console.log("Error in fetching Menu");
       }
     },
     updateCart(id, quantity, price) {

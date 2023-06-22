@@ -1,16 +1,20 @@
 <template>
   <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
   <AppHeaderCards>
-    <v-card class="bg-yellow-darken-3 text-center desktop_container" elevation="24">
+    <v-card
+      v-if="this.$route.params.category === 'drinks'"
+      class="bg-yellow-darken-3 text-center desktop_container"
+      elevation="24"
+    >
       <v-card-title class="site_font text-black"
         >What would you like to {{ categoryAction }}?</v-card-title
       >
       <v-btn
-        v-if="setCategory !== ''"
+        v-if="setSubCategory !== ''"
         class="bg-black ma-2"
         size="large"
         @click="dialogCategory = true"
-        >{{ setCategory }}</v-btn
+        >{{ setSubCategory }}</v-btn
       >
       <v-btn v-else class="bg-black ma-2" size="large" @click="dialogCategory = true"
         >Select Category</v-btn
@@ -22,6 +26,7 @@
   <!-- CATEGORY DIALOG WINDOW -->
   <v-dialog
     v-model="dialogCategory"
+    class="bg-grey-lighten-2"
     fullscreen
     :scrim="false"
     transition="dialog-bottom-transition"
@@ -45,7 +50,7 @@
           <v-list>
             <v-list-item v-for="subType of subcategory" :key="subType">
               <v-btn
-                @click="selectedCategory(subType)"
+                @click="selectedSubCategory(subType)"
                 class="bg-black w-100 site_font btn_font"
                 size="x-large"
                 elevation="24"
@@ -55,7 +60,7 @@
             </v-list-item>
             <v-list-item>
               <v-btn
-                @click="selectedCategory()"
+                @click="selectedSubCategory()"
                 class="bg-yellow-darken-3 w-100 site_font btn_font"
                 size="x-large"
                 elevation="24"
@@ -87,11 +92,18 @@
       </v-badge>
       <v-expansion-panel-title>
         <div class="w-100 d-flex flex-row justify-space-between align-center">
-          <div class="d-flex flex-column">
+          <div class="d-flex flex-column w-75">
             <label class="text-h6 site_font">{{ menuItem.title }}</label>
             <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
+            <div>
+              <v-chip class="mt-2" color="" v-if="setSubCategory === '' && menuItem.subcategory">
+                {{ menuItem.subcategory }}
+              </v-chip>
+            </div>
           </div>
-          <label class="text-h6 site_font mr-2">£ {{ menuItem.price }}</label>
+          <label class="price_font site_font mx-2" style="flex-wrap: nowrap"
+            >£ {{ menuItem.price }}</label
+          >
         </div>
       </v-expansion-panel-title>
       <v-expansion-panel-text>
@@ -118,24 +130,27 @@ export default {
   name: "MenuView",
   data() {
     return {
-      /* Grab Category & Sub from db later */
-      category: "Drinks",
+      /* Make *category/subcategory dynamic later */
       subcategory: ["Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum"],
-      setCategory: "",
-      dialogCategory: false
+      setSubCategory: "",
+      dialogCategory: false,
+      category: this.$route.params.category
     };
   },
   methods: {
-    selectedCategory(selected) {
+    selectedSubCategory(selected) {
       this.dialogCategory = false;
       if (selected) {
-        this.setCategory = selected;
+        this.setSubCategory = selected;
         this.cartStore.menuItems = this.cartStore.menu.filter((item) => {
           return item.subcategory === selected;
         });
       } else {
-        this.setCategory = "";
-        this.cartStore.menuItems = this.cartStore.menu;
+        this.setSubCategory = "";
+        // this.cartStore.menuItems = this.cartStore.menu;
+        this.cartStore.menuItems = this.cartStore.menu.filter((item) => {
+          return item.category === this.cartStore.category;
+        });
       }
     },
     addingToCart(id) {
@@ -147,7 +162,7 @@ export default {
   },
   computed: {
     categoryAction() {
-      if (this.category === "Food") {
+      if (this.$route.params.category === "food") {
         return "eat";
       } else {
         return "drink";
@@ -156,7 +171,14 @@ export default {
     ...mapStores(useCartStore)
   },
   mounted() {
-    this.cartStore.fetchMenu();
+    // console.log(this.$route.params.category);
+    this.cartStore.fetchMenu(this.category);
+  },
+  updated() {
+    if (this.category !== this.$route.params.category) {
+      this.cartStore.fetchMenu(this.$route.params.category);
+      this.category = this.$route.params.category;
+    }
   },
   components: {
     AppHeaderCards
@@ -164,4 +186,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.price_font {
+  font-size: 1rem;
+}
+</style>
