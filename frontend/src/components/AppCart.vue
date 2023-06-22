@@ -6,7 +6,7 @@
         v-if="cartStore.totalItemsCounter !== 0"
         :content="cartStore.totalItemsCounter"
       >
-        <v-btn class="bg-green-darken-4" @click="cartStore.dialogCart = true" size="x-large" icon>
+        <v-btn class="bg-green-darken-4" @click="pageStore.dialogCart = true" size="x-large" icon>
           <v-icon>mdi-cart</v-icon>
         </v-btn>
       </v-badge>
@@ -14,14 +14,14 @@
   </div>
   <!-- CART DIALOG WINDOW -->
   <v-dialog
-    v-model="cartStore.dialogCart"
+    v-model="pageStore.dialogCart"
     fullscreen
     :scrim="false"
     transition="dialog-bottom-transition"
   >
     <v-card class="bg-black">
       <v-toolbar class="bg-green-darken-4" dark>
-        <v-btn icon dark @click="cartStore.dialogCart = false">
+        <v-btn icon dark @click="pageStore.dialogCart = false">
           <v-icon>mdi-close</v-icon>
         </v-btn>
         <v-toolbar-title class="site_font">Cart</v-toolbar-title>
@@ -106,6 +106,7 @@
 <script>
 import { mapStores } from "pinia";
 import useCartStore from "@/stores/cart";
+import usePageStore from "@/stores/page";
 
 export default {
   methods: {
@@ -117,7 +118,8 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useCartStore)
+    ...mapStores(useCartStore),
+    ...mapStores(usePageStore)
   },
   mounted() {
     this.cartStore.fetchMenu();
