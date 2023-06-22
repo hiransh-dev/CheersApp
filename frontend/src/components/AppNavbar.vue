@@ -52,7 +52,7 @@
     <v-list class="mt-5" nav>
       <v-list-item
         prepend-icon="mdi-account"
-        title="Account"
+        :title="accountName"
         value="account"
         @click="pageStore.dialogAuth = true"
       ></v-list-item>
@@ -112,8 +112,9 @@
 
 <script>
 import { mapStores } from "pinia";
-import useCartStore from "@/stores/cart";
+// import useCartStore from "@/stores/cart";
 import usepageStore from "@/stores/page";
+import useauthStore from "@/stores/auth";
 
 export default {
   name: "AppHeader",
@@ -146,8 +147,16 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useCartStore),
-    ...mapStores(usepageStore)
+    // ...mapStores(useCartStore),
+    ...mapStores(usepageStore),
+    ...mapStores(useauthStore),
+    accountName() {
+      if (this.authStore.email && this.authStore.email !== "") {
+        return this.authStore.firstName;
+      } else {
+        return "Account";
+      }
+    }
   },
   mounted() {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
