@@ -28,11 +28,15 @@ const Joi = BaseJoi.extend(extension);
 const joiMenuSchema = Joi.object({
   menuItem: Joi.object({
     title: Joi.string().min(1).max(20).required().escapeHTML(),
-    desc: Joi.string().min(1).max(50).allow(null, "").escapeHTML(),
+    desc: Joi.string().min(1).max(150).allow(null, "").escapeHTML(),
     price: Joi.number().min(1).max(99).positive().precision(2).required(),
-    category: Joi.string().valid("Drinks", "Food", "Soft Drinks").escapeHTML(),
+    category: Joi.string()
+      .valid("Drinks", "Food", "Soft Drinks")
+      .required()
+      .escapeHTML(),
     subcategory: Joi.string()
-      .valid("Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum")
+      .valid("Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum", "")
+      .allow(null, "")
       .escapeHTML(),
   }).required(),
 });
