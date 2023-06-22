@@ -1,11 +1,10 @@
 const Menu = require("../models/dbMenu");
 
 // @desc    Fetch all items on menu
-// @route   GET /api/menu/:category
+// @route   GET /api/menu/
 // @access  Public
 module.exports.getMenu = async (req, res) => {
-  const selectedCategory = req.params.category;
-  const fullMenu = await Menu.find({ category: selectedCategory }).sort({
+  const fullMenu = await Menu.find({}).sort({
     subcategory: "ascending",
   });
   res.json(fullMenu);
