@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 /* manageRoute's Controller */
-const manageController = require("../controllers/menuController");
+const manageController = require("../controllers/manageController");
 
 /* Error Handling */
 const catchAsync = require("../utils/catchAsync");
@@ -22,7 +22,11 @@ const validateMenuSchema = (req, res, next) => {
 };
 
 /* MANAGEMENT ROUTES */
-router.get("/menu", catchAsync(manageController.getMenu));
-router.post("/menu", validateMenuSchema, catchAsync(manageController.setMenu));
+router.get("/menu", catchAsync(manageController.manageMenu));
+router.post(
+  "/menu",
+  validateMenuSchema,
+  catchAsync(manageController.addMenuItem)
+);
 
 module.exports = router;

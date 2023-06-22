@@ -6,6 +6,6 @@ const catchAsync = require("../utils/catchAsync");
 const menuController = require("../controllers/menuController");
 
 /* MENU ROUTES */
-router.get("/:category", catchAsync(menuController.getMenu));
+router.get("/", catchAsync(menuController.getMenu));
 
 module.exports = router;

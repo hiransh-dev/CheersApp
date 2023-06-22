@@ -8,7 +8,12 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 
+/* CORS */
+// const cors = require("cors");
+// app.use(cors());
+
 const expressError = require(path.join(__dirname, "/utils/ExpressError"));
+const catchAsync = require(path.join(__dirname, "/utils/catchAsync"));
 const mongoSanitize = require("express-mongo-sanitize");
 // const helmet = require("helmet");
 
@@ -20,8 +25,6 @@ const session = require("express-session");
 const passport = require("passport");
 const passportLocal = require("passport-local");
 const MongoStore = require("connect-mongo");
-const MongoStore = require("connect-mongo");
-const { func } = require("joi");
 
 const menuRoutes = require(path.join(__dirname, "/routes/menuRoutes"));
 const manageRoutes = require(path.join(__dirname, "/routes/manageRoutes"));
@@ -36,7 +39,7 @@ app.use(express.static("public"));
 
 /* Mongo Session Store */
 const store = new MongoStore({
-  url: process.env.DB_URL,
+  mongoUrl: process.env.DB_URL,
   secret: process.env.SESSION_SECRET,
   touchAfter: 24 * 60 * 60, //24 hours
 });
@@ -65,19 +68,19 @@ passport.use(new passportLocal(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 /* Main Routes */
 app.use("/api/menu", menuRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/management", manageRoutes);
+app.use("/api/manage", manageRoutes);
 
 /* Basic Route */
 app.get("/", (req, res) => {
   res.send("Backend API running");
-});
-
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
 });
 
 /* all, error, listen */
