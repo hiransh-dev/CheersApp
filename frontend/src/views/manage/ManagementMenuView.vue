@@ -83,11 +83,11 @@ export default {
       subcategory: "",
       schema: {
         title: "required|min:3|max:100",
-        desc: "required|min:3|max:100",
+        desc: "min:3|max:150",
         price: "required|min_value:1|max_value:100|numeric",
         category: "required|category:Drinks,Food,Soft Drinks",
-        subcategory: `required|category:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
-        // subcategory: ["Beers", "World Beers", "Ale", "Whiskey", "Vodka", "Rum"]
+        subcategory: `category:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
+        // subcategory: `required|category:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
       },
       res_on_submit: false,
       res_show_alert: false,
@@ -100,7 +100,7 @@ export default {
       this.res_on_submit = true;
       try {
         const addMenuItem = await axios.post(
-          "/api/management/menu",
+          "/api/manage/menu",
           {
             menuItem: {
               title: this.title,
