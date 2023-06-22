@@ -5,7 +5,13 @@
     <v-btn class="bg-black ma-2" size="large" @click="dialog = true">Choose Pub</v-btn>
   </v-card>
   <!-- SELECT PUB DIALOG -->
-  <v-dialog v-model="dialog" fullscreen :scrim="false" transition="dialog-bottom-transition">
+  <v-dialog
+    class="bg-grey-lighten-2"
+    v-model="dialog"
+    fullscreen
+    :scrim="false"
+    transition="dialog-bottom-transition"
+  >
     <v-card>
       <v-toolbar class="bg-black" dark>
         <v-btn icon dark @click="dialog = false">

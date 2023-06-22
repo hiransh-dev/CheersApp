@@ -4,6 +4,8 @@
     <div class="desktop">
       <div class="desktop_container">
         <slot></slot>
+        <!-- LOGIN/REGISTER DIALOG WINDOW -->
+        <AppAuth></AppAuth>
         <!-- CART DIALOG WINDOW -->
         <AppCart></AppCart>
       </div>
@@ -13,6 +15,7 @@
 
 <script>
 import AppHeader from "@/components/AppHeader.vue";
+import AppAuth from "@/components/AppAuth.vue";
 import AppCart from "@/components/AppCart.vue";
 
 export default {
@@ -21,6 +24,7 @@ export default {
   },
   components: {
     AppHeader,
+    AppAuth,
     AppCart
   }
 };
