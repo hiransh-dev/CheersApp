@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import Menu from "@/views/MenuView.vue";
-import ManageMenu from "@/views/management/ManagementMenuView.vue";
-import Manage from "@/views/management/ManagementView.vue";
+import ManageMenu from "@/views/manage/ManagementMenuView.vue";
+import Manage from "@/views/manage/ManagementView.vue";
 
 const routes = [
   {
@@ -10,9 +10,10 @@ const routes = [
     name: "home",
     component: Home
   },
+  /* MENU ROUTE */
   {
-    path: "/menu/drinks",
-    name: "drinksMenu",
+    path: "/menu/:category",
+    name: "menu",
     component: Menu
   },
   /* MANAGEMENT ROUTES */
@@ -23,7 +24,7 @@ const routes = [
   },
   {
     path: "/manage/menu",
-    name: "managemenu",
+    name: "manageMenu",
     component: ManageMenu
   }
 ];
