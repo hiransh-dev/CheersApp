@@ -12,7 +12,9 @@ import {
   numeric,
   min_value as minValue,
   max_value as maxValue,
-  one_of as oneOf
+  one_of as oneOf,
+  email as email,
+  confirmed as confirmed
 } from "@vee-validate/rules";
 
 export default {
@@ -29,6 +31,8 @@ export default {
     defineRule("max_value", maxValue);
     defineRule("category", oneOf);
     defineRule("subcategory", oneOf);
+    defineRule("email", email);
+    defineRule("confirmPassword", confirmed);
 
     configure({
       generateMessage: (ctx) => {
