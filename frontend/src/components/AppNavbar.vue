@@ -51,30 +51,61 @@
   >
     <v-list class="mt-5" nav>
       <v-list-item
+        prepend-icon="mdi-account"
+        title="Account"
+        value="account"
+        @click="pageStore.dialogAuth = true"
+      ></v-list-item>
+      <v-list-item
         prepend-icon="mdi-cart-outline"
         title="Cart"
         value="cart"
-        @click="cartStore.dialogCart = true"
+        @click="pageStore.dialogCart = true"
       ></v-list-item>
-      <v-list-item
-        prepend-icon="mdi-format-list-bulleted"
-        title="Orders"
-        value="orders"
-      ></v-list-item>
-      <v-list-item>
-        <v-btn
-          rounded="lg"
-          class="site_font mr-1 text-none font-weight-bold bg-yellow-darken-3"
-          elevation="0"
-          >Login
-        </v-btn>
-        <v-btn
-          rounded="lg"
-          class="site_font mx-1 text-none font-weight-bold bg-grey-darken-4"
-          elevation="0"
-          >Sign Up
-        </v-btn>
-      </v-list-item>
+      <RouterLink :to="'/menu/orders'" class="router_link_decoration">
+        <v-list-item
+          class="text-black"
+          prepend-icon="mdi-format-list-bulleted"
+          title="Orders"
+          value="orders"
+        ></v-list-item>
+      </RouterLink>
+      <v-divider thickness="4" color="yellow-darken-4"></v-divider>
+      <RouterLink
+        :to="{ name: 'menu', params: { category: 'drinks' } }"
+        class="router_link_decoration"
+      >
+        <v-list-item
+          class="text-black"
+          prepend-icon="mdi-glass-mug-variant"
+          title="Drinks"
+          value="drinks"
+        ></v-list-item>
+      </RouterLink>
+      <RouterLink
+        :to="{ name: 'menu', params: { category: 'food' } }"
+        class="router_link_decoration"
+      >
+        <v-list-item
+          class="text-black"
+          prepend-icon="mdi-hamburger"
+          title="Food"
+          value="food"
+        ></v-list-item>
+      </RouterLink>
+      <RouterLink
+        :to="{ name: 'menu', params: { category: 'softdrinks' } }"
+        class="router_link_decoration"
+      >
+        <v-list-item
+          class="text-black"
+          prepend-icon="mdi-beer"
+          title="Soft Drinks"
+          value="softdrinks"
+        ></v-list-item>
+      </RouterLink>
+      <v-divider thickness="4" color="yellow-darken-4"></v-divider>
+      <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout"></v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -82,6 +113,7 @@
 <script>
 import { mapStores } from "pinia";
 import useCartStore from "@/stores/cart";
+import usepageStore from "@/stores/page";
 
 export default {
   name: "AppHeader",
@@ -114,7 +146,8 @@ export default {
     }
   },
   computed: {
-    ...mapStores(useCartStore)
+    ...mapStores(useCartStore),
+    ...mapStores(usepageStore)
   },
   mounted() {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
