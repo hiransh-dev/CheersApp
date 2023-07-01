@@ -5,11 +5,24 @@ const Menu = require("../models/dbMenu");
 // @route   POST /api/order/
 // @access  Private
 module.exports.newOrder = async (req, res) => {
-  console.log(req.body.order);
-  // const order = req.body.order;
-  // const new_order = new Order();
-  // for (items of order) {
-
-  // }
-  // const placedOrder = await new_order.save();
+  const order = req.body.order;
+  const new_order = new Order();
+  let total = 0;
+  try {
+    for (let item of order.order) {
+      const menuItem = await Menu.findById(item.id);
+      if (menuItem) {
+        new_order.orderItems.push({ item: menuItem, quantity: item.quantity });
+        total = total + menuItem.price * item.quantity;
+      }
+    }
+    new_order.orderTotal = parseFloat(total);
+    new_order.orderStatus = 0;
+    new_order.paymentStatus = 1;
+    new_order.author = req.user;
+    const placedOrder = await new_order.save();
+    res.json(placedOrder);
+  } catch (e) {
+    console.log("Error creating order", e);
+  }
 };

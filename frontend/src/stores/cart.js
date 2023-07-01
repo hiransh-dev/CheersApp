@@ -91,19 +91,18 @@ export default defineStore("cart", {
     },
     async placeOrder() {
       const order = this.cartItems;
-      await axios.post(
+      const placedOrder = await axios.post(
         "/api/order/new",
-        {
-          order: {
-            order
-          }
-        },
+        { order: { order } },
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           }
         }
       );
+      if (placedOrder.status === 200) {
+        console.log(placedOrder.data);
+      }
     }
   }
 });
