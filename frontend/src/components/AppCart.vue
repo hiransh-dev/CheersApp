@@ -54,11 +54,11 @@
 
                 <v-expansion-panel-title>
                   <div class="w-100 d-flex flex-row justify-space-between align-center">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column w-75">
                       <label class="text-h6 site_font">{{ menuItem.title }}</label>
                       <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
                     </div>
-                    <label class="text-h6 site_font mr-2">£ {{ menuItem.price }}</label>
+                    <label class="text-h6 site_font mx-2">£ {{ menuItem.price }}</label>
                   </div>
                 </v-expansion-panel-title>
 
@@ -93,7 +93,12 @@
             >Total: £ {{ cartStore.cartTotal }}</label
           >
           <div class="ma-2 mb-5">
-            <v-btn class="bg-blue w-100 site_font btn_font" size="x-large" elevation="24">
+            <v-btn
+              @click="cartStore.placeOrder()"
+              class="bg-blue w-100 site_font btn_font"
+              size="x-large"
+              elevation="24"
+            >
               Checkout
             </v-btn>
           </div>

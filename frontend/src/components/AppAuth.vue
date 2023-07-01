@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="pageStore.dialogAuth" class="bg-grey-lighten-2" fullscreen :scrim="false">
-    <v-toolbar>
+    <v-toolbar class="bg-grey-lighten-2">
       <v-toolbar-title></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon dark @click="pageStore.dialogAuth = false">
