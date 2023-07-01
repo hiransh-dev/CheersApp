@@ -19,6 +19,7 @@ export default defineStore("cart", {
         this.menu = fullMenu.data;
         this.menu.forEach((item) => {
           item.quantity = 0;
+          /* Check if i can use find instead of On^2 */
           this.cartItems.forEach((cartItem) => {
             if (cartItem.id === item._id) {
               item.quantity = cartItem.quantity;
@@ -87,6 +88,22 @@ export default defineStore("cart", {
     },
     clearCart() {
       this.cart = [];
+    },
+    async placeOrder() {
+      const order = this.cartItems;
+      await axios.post(
+        "/api/order/new",
+        {
+          order: {
+            order
+          }
+        },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      );
     }
   }
 });

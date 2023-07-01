@@ -51,4 +51,18 @@ const joiUserSchema = Joi.object({
   }).required(),
 });
 
+// const joiOrdersSchema = Joi.object({
+//   order: Joi.object({
+//     orderId: Joi.array().Joi.string().required().escapeHTML(),
+//     // orderItems: Joi.object({
+//     //   // item: Joi.string().required().escapeHTML(),
+//     //   quantity: Joi.number().required(),
+//     // }),
+//     // orderTotal: Joi.number().required(),
+//     // // author: Joi.string().required().escapeHTML(),
+//     // paymentStatus: joi.boolean().required(),
+//     // orderStatus: joi.boolean().required(),
+//   }),
+// });
+
 module.exports = { joiMenuSchema, joiUserSchema };

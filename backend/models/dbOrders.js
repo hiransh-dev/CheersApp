@@ -1,3 +1,4 @@
+const { boolean } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -9,9 +10,15 @@ const OrderSchema = new Schema(
   {
     orderItems: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Menu",
-        required: true,
+        item: {
+          type: Schema.Types.ObjectId,
+          ref: "Menu",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     orderTotal: {
@@ -21,6 +28,18 @@ const OrderSchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: true,
+    },
+    paymentStatus: {
+      type: Boolean,
+      required: true,
+      // add paypal id later
+    },
+    orderStatus: {
+      // type: String,
+      // enum: ["Pending", "Completed"],
+      type: Boolean,
+      // 0 = pending, 1 = complete
       required: true,
     },
   },

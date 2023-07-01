@@ -28,7 +28,8 @@ const MongoStore = require("connect-mongo");
 
 const menuRoutes = require(path.join(__dirname, "/routes/menuRoutes"));
 const manageRoutes = require(path.join(__dirname, "/routes/manageRoutes"));
-const userRoutes = require(path.join(__dirname, "/routes/UserRoutes"));
+const userRoutes = require(path.join(__dirname, "/routes/userRoutes"));
+const orderRoutes = require(path.join(__dirname, "/routes/orderRoutes"));
 
 // TO SANITIZE MONGO QUERIES IN URL
 app.use(mongoSanitize());
@@ -76,6 +77,7 @@ app.use((req, res, next) => {
 /* Main Routes */
 app.use("/api/menu", menuRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/order", orderRoutes);
 app.use("/api/manage", manageRoutes);
 
 /* Basic Route */
