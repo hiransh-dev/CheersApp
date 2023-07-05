@@ -2,50 +2,56 @@
   <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
   <AppHeaderCards> </AppHeaderCards>
   <RouterLink :to="linkTo" class="router_link_decoration">
-    <div class="home">
-      <v-card class="home_card ma-1">
-        <v-img
-          @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
-          src="../src/assets/images/drinks.png"
-        ></v-img>
-        <v-btn
-          @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
-          class="bg-black"
-          rounded="sm"
-          size="x-large"
-          block
-          >Drinks</v-btn
-        >
-      </v-card>
-      <v-card class="home_card ma-1">
-        <v-img
-          @click="linkTo = { name: 'menu', params: { category: 'food' } }"
-          src="../src/assets/images/food.png"
-        ></v-img>
-        <v-btn
-          @click="linkTo = { name: 'menu', params: { category: 'food' } }"
-          class="bg-black"
-          rounded="sm"
-          size="x-large"
-          block
-          >Food & Snacks</v-btn
-        >
-      </v-card>
-      <v-card class="home_card ma-1">
-        <v-img
-          @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
-          src="../src/assets/images/soft_drinks.png"
-        ></v-img>
-        <v-btn
-          @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
-          class="bg-black"
-          rounded="sm"
-          size="x-large"
-          block
-          >Soft Drinks</v-btn
-        >
-      </v-card>
-    </div>
+    <v-row no-gutters>
+      <v-col cols="6">
+        <v-card class="ma-2" rounded="lg">
+          <v-img
+            @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
+            src="../src/assets/images/drinks.png"
+          ></v-img>
+          <v-btn
+            @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
+            class="bg-black site_font"
+            rounded="sm"
+            size="x-large"
+            block
+            >Drinks</v-btn
+          >
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card class="ma-2" rounded="lg">
+          <v-img
+            @click="linkTo = { name: 'menu', params: { category: 'food' } }"
+            src="../src/assets/images/food.png"
+          ></v-img>
+          <v-btn
+            @click="linkTo = { name: 'menu', params: { category: 'food' } }"
+            class="bg-black site_font"
+            rounded="sm"
+            size="x-large"
+            block
+            >Food & Snacks</v-btn
+          >
+        </v-card>
+      </v-col>
+      <v-col cols="6">
+        <v-card class="ma-2" rounded="lg">
+          <v-img
+            @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
+            src="../src/assets/images/soft_drinks.png"
+          ></v-img>
+          <v-btn
+            @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
+            class="bg-black site_font"
+            rounded="sm"
+            size="x-large"
+            block
+            >Soft Drinks</v-btn
+          >
+        </v-card>
+      </v-col>
+    </v-row>
   </RouterLink>
 </template>
 
@@ -66,19 +72,7 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  display: flex;
-  flex-direction: column;
-}
-@media only screen and (min-width: 1024px) {
-  .home {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  .home_card {
-    width: 24vw;
-  }
+.site_font {
+  font-size: 0.8rem;
 }
 </style>

@@ -3,22 +3,24 @@
   <AppHeaderCards>
     <v-card
       v-if="this.$route.params.category === 'drinks'"
-      class="bg-yellow-darken-3 text-center desktop_container"
-      elevation="24"
+      class="bg-yellow-darken-3 pa-2 text-center desktop_container"
+      rounded="lg"
+      elevation="6"
     >
-      <v-card-title class="site_font text-black"
-        >What would you like to {{ categoryAction }}?</v-card-title
-      >
+      <v-card-title class="site_font text-black">
+        What would you like to {{ categoryAction }}?
+      </v-card-title>
       <v-btn
         v-if="setSubCategory !== ''"
-        class="bg-black ma-2"
-        size="large"
+        class="bg-black site_font"
+        size="x-large"
         @click="dialogCategory = true"
+        block
         >{{ setSubCategory }}</v-btn
       >
-      <v-btn v-else class="bg-black ma-2" size="large" @click="dialogCategory = true"
-        >Select Category</v-btn
-      >
+      <v-btn v-else class="bg-black site_font" size="x-large" @click="dialogCategory = true" block>
+        Select Category
+      </v-btn>
     </v-card>
   </AppHeaderCards>
   <!-- SET-CATEGORY, HEADER CARD-->
@@ -53,7 +55,7 @@
                 @click="selectedSubCategory(subType)"
                 class="bg-black w-100 site_font btn_font"
                 size="x-large"
-                elevation="24"
+                elevation="12"
               >
                 {{ subType }}
               </v-btn>
@@ -63,7 +65,7 @@
                 @click="selectedSubCategory()"
                 class="bg-yellow-darken-3 w-100 site_font btn_font"
                 size="x-large"
-                elevation="24"
+                elevation="18"
               >
                 Anything
               </v-btn>
@@ -80,6 +82,7 @@
       class="bg-grey-darken-4"
       v-for="menuItem of cartStore.menuItems"
       :key="menuItem._id"
+      rounded="lg"
       elevation="6"
     >
       <v-badge

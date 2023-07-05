@@ -1,8 +1,8 @@
 <template>
   <!-- SELECT PUB CARD -->
-  <v-card class="bg-grey-darken-3 text-center desktop_container" elevation="24">
-    <v-card-title class="site_font text-white">Choose your pub location to order</v-card-title>
-    <v-btn class="bg-black ma-2" size="large" @click="dialog = true">Choose Pub</v-btn>
+  <v-card class="bg-green-darken-3 text-center pa-2 desktop_container" rounded="lg" elevation="24">
+    <v-card-title class="site_font text-black">Choose your pub location</v-card-title>
+    <v-btn class="bg-black site_font" size="x-large" @click="dialog = true" block>Choose Pub</v-btn>
   </v-card>
   <!-- SELECT PUB DIALOG -->
   <v-dialog
@@ -34,7 +34,7 @@
               <v-btn
                 class="bg-green-darken-2 w-100 site_font btn_font"
                 size="large"
-                elevation="24"
+                elevation="6"
                 prepend-icon="mdi-navigation-variant"
               >
                 Enable Location
@@ -56,7 +56,7 @@
               ></v-autocomplete>
             </v-list-item>
             <v-list-item class="desktop_container_small">
-              <v-btn class="bg-black w-100 site_font btn_font" size="large" elevation="24">
+              <v-btn class="bg-black w-100 site_font btn_font" size="large" elevation="6">
                 View all pubs
               </v-btn>
             </v-list-item>
@@ -66,7 +66,7 @@
     </v-card>
   </v-dialog>
   <!-- SEARCH  -->
-  <v-card id="searchbar" class="my-4 w-100 d-flex flex-row justify-end" elevation="12">
+  <v-card id="searchbar" class="my-4 w-100 d-flex flex-row justify-end" rounded="lg" elevation="6">
     <v-text-field variant="outlined" label="Search Menu" single-line hide-details></v-text-field>
     <v-btn icon="mdi-magnify" elevation="0"></v-btn>
   </v-card>
