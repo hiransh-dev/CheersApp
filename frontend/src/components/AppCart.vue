@@ -35,6 +35,7 @@
               class="bg-grey-darken-4"
               v-for="menuItem of cartStore.menu"
               :key="menuItem._id"
+              rounded="lg"
               elevation="6"
             >
               <div
@@ -97,7 +98,8 @@
               @click="checkout()"
               class="bg-blue w-100 site_font btn_font"
               size="x-large"
-              elevation="24"
+              rounded="lg"
+              elevation="12"
             >
               Checkout
             </v-btn>

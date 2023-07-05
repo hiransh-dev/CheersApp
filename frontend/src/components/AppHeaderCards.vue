@@ -9,14 +9,20 @@
   >
     <v-icon color="black" icon="mdi-glass-mug-variant" size="x-large"></v-icon>
     <v-card-title class="site_font text-black">Your pub location is:</v-card-title>
-    <v-btn class="bg-black site_font" size="x-large" @click="dialogSetPub = true" block>
+    <v-btn
+      class="bg-black site_font"
+      size="x-large"
+      rounded="lg"
+      @click="dialogSetPub = true"
+      block
+    >
       {{ pageStore.setPub }}
     </v-btn>
   </v-card>
   <v-card v-else class="bg-green-darken-3 text-center my-2 pa-2" rounded="lg" elevation="12">
     <v-icon color="black" icon="mdi-glass-mug-variant" size="x-large"></v-icon>
     <v-card-title class="site_font text-black">Choose your pub location</v-card-title>
-    <v-btn class="bg-black site_font" size="x-large" @click="dialogSetPub = true" block
+    <v-btn class="bg-black site_font" size="x-large" rounded="lg" @click="dialogSetPub = true" block
       >Choose Pub</v-btn
     >
   </v-card>
@@ -28,14 +34,26 @@
   >
     <v-icon color="black" icon="mdi-table-chair" size="x-large"></v-icon>
     <v-card-title class="site_font text-black">Your table no. is</v-card-title>
-    <v-btn class="bg-black site_font" size="x-large" @click="dialogSetTable = true" block>
+    <v-btn
+      class="bg-black site_font"
+      size="x-large"
+      rounded="lg"
+      @click="dialogSetTable = true"
+      block
+    >
       {{ pageStore.setTable }}
     </v-btn>
   </v-card>
   <v-card v-else class="bg-blue-darken-3 text-center my-2 pa-2" rounded="lg" elevation="12">
     <v-icon color="black" icon="mdi-table-chair" size="x-large"></v-icon>
     <v-card-title class="site_font text-black">Choose your Table</v-card-title>
-    <v-btn class="bg-black site_font" size="x-large" @click="dialogSetTable = true" block>
+    <v-btn
+      class="bg-black site_font"
+      size="x-large"
+      rounded="lg"
+      @click="dialogSetTable = true"
+      block
+    >
       Choose Table
     </v-btn>
   </v-card>
@@ -68,8 +86,9 @@
             <v-list-item>
               <v-btn
                 class="bg-green-darken-2 w-100 site_font btn_font"
-                size="large"
-                elevation="6"
+                size="x-large"
+                rounded="lg"
+                elevation="0"
                 prepend-icon="mdi-navigation-variant"
               >
                 Enable Location
@@ -88,6 +107,7 @@
                 prepend-inner-icon="mdi-map-marker"
                 label="Location Name"
                 variant="outlined"
+                rounded="lg"
                 :items="all_locations"
               ></v-autocomplete>
             </v-list-item>
@@ -129,7 +149,8 @@
                 @click="(pageStore.setTable = table), (dialogSetTable = false)"
                 class="bg-black w-100 site_font btn_font"
                 size="x-large"
-                elevation="12"
+                rounded="lg"
+                elevation="0"
               >
                 {{ table }}
               </v-btn>

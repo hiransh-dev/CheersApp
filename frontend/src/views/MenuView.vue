@@ -55,7 +55,8 @@
                 @click="selectedSubCategory(subType)"
                 class="bg-black w-100 site_font btn_font"
                 size="x-large"
-                elevation="12"
+                rounded="lg"
+                elevation="0"
               >
                 {{ subType }}
               </v-btn>
@@ -65,7 +66,8 @@
                 @click="selectedSubCategory()"
                 class="bg-yellow-darken-3 w-100 site_font btn_font"
                 size="x-large"
-                elevation="18"
+                rounded="lg"
+                elevation="0"
               >
                 Anything
               </v-btn>
