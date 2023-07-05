@@ -1,5 +1,5 @@
 <template>
-  <div class="footer container py-16 bg-black">
+  <div class="footer container py-16 px-5 bg-black">
     <p>&copy; Cheers Pubs</p>
   </div>
 </template>
