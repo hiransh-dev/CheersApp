@@ -94,7 +94,7 @@
           >
           <div class="ma-2 mb-5">
             <v-btn
-              @click="cartStore.placeOrder()"
+              @click="checkout()"
               class="bg-blue w-100 site_font btn_font"
               size="x-large"
               elevation="24"
@@ -104,6 +104,22 @@
           </div>
         </div>
       </div>
+      <!-- <v-snackbar v-model="notSetSnackbar" location="center" vertical> -->
+      <v-snackbar v-model="notSetSnackbar" vertical>
+        <div class="text-subtitle-1 pb-2">Uh oh!</div>
+
+        <p>Pub Location or Table Number not selected</p>
+
+        <template v-slot:actions>
+          <v-btn
+            color="yellow-darken-3"
+            variant="text"
+            @click="(notSetSnackbar = false), (pageStore.dialogCart = false)"
+          >
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </v-card>
   </v-dialog>
 </template>
@@ -114,12 +130,24 @@ import useCartStore from "@/stores/cart";
 import usePageStore from "@/stores/page";
 
 export default {
+  data() {
+    return {
+      notSetSnackbar: false
+    };
+  },
   methods: {
     addingToCart(id) {
       this.cartStore.addToCart(id);
     },
     removingFromCart(id) {
       this.cartStore.removeFromCart(id);
+    },
+    checkout() {
+      if (this.pageStore.setPub === "" && this.pageStore.setTable === 0) {
+        return (this.notSetSnackbar = true);
+      } else {
+        this.cartStore.placeOrder();
+      }
     }
   },
   computed: {
