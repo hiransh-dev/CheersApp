@@ -110,7 +110,7 @@
       <v-snackbar v-model="notSetSnackbar" vertical>
         <div class="text-subtitle-1 pb-2">Uh oh!</div>
 
-        <p>Pub Location or Table Number not selected</p>
+        <p>Table Number not selected</p>
 
         <template v-slot:actions>
           <v-btn
@@ -145,10 +145,10 @@ export default {
       this.cartStore.removeFromCart(id);
     },
     checkout() {
-      if (this.pageStore.setPub === "" && this.pageStore.setTable === 0) {
+      if (this.pageStore.setTable === 0) {
         return (this.notSetSnackbar = true);
       } else {
-        this.cartStore.placeOrder();
+        this.cartStore.placeOrder(this.pageStore.setTable);
       }
     }
   },
