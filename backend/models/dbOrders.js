@@ -32,14 +32,12 @@ const OrderSchema = new Schema(
     },
     paymentStatus: {
       type: Boolean,
-      required: true,
+      // required: true,
       // add paypal id later
     },
     orderStatus: {
-      // type: String,
-      // enum: ["Pending", "Completed"],
-      type: Boolean,
       // 0 = pending, 1 = complete
+      type: Boolean,
       required: true,
     },
   },
