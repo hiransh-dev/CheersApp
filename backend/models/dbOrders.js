@@ -25,6 +25,10 @@ const OrderSchema = new Schema(
       type: Number,
       required: true,
     },
+    tableNo: {
+      type: Number,
+      required: true,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",

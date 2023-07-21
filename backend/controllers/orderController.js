@@ -21,6 +21,7 @@ module.exports.newOrder = async (req, res) => {
         total = total + menuItem.price * item.quantity;
       }
     }
+    new_order.tableNo = req.body.order.tableNo;
     new_order.orderTotal = parseFloat(total);
     new_order.orderStatus = 0;
     new_order.paymentStatus = 1;

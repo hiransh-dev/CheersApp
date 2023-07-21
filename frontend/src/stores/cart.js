@@ -89,11 +89,11 @@ export default defineStore("cart", {
     clearCart() {
       this.cart = [];
     },
-    async placeOrder() {
+    async placeOrder(tableNo) {
       const order = this.cartItems;
       const placedOrder = await axios.post(
         "/api/order/new",
-        { order: { order } },
+        { order: { order, tableNo } },
         {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
