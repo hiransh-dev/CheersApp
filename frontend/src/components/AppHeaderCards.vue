@@ -2,7 +2,7 @@
   <!-- SELECT TABLE CARD -->
   <v-card
     v-if="pageStore.setTable !== 0"
-    class="bg-blue-darken-3 text-center my-2 pa-2"
+    class="bg-green-darken-3 text-center my-2 pa-2"
     rounded="lg"
     elevation="12"
   >
@@ -18,7 +18,7 @@
       {{ pageStore.setTable }}
     </v-btn>
   </v-card>
-  <v-card v-else class="bg-blue-darken-3 text-center my-2 pa-2" rounded="lg" elevation="12">
+  <v-card v-else class="bg-blue-grey-darken-3 text-center my-2 pa-2" rounded="lg" elevation="12">
     <v-icon color="black" icon="mdi-table-chair" size="x-large"></v-icon>
     <v-card-title class="site_font text-black">Choose your Table</v-card-title>
     <v-btn

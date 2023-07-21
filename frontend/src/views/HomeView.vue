@@ -5,7 +5,7 @@
     <RouterLink :to="linkTo" class="router_link_decoration">
       <v-row no-gutters>
         <v-col cols="6">
-          <v-card class="ma-2" rounded="lg">
+          <v-card class="my-2 ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
               src="../src/assets/images/drinks.png"
@@ -21,7 +21,7 @@
           </v-card>
         </v-col>
         <v-col cols="6">
-          <v-card class="ma-2" rounded="lg">
+          <v-card class="my-2 ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'food' } }"
               src="../src/assets/images/food.png"
@@ -37,7 +37,7 @@
           </v-card>
         </v-col>
         <v-col cols="6">
-          <v-card class="ma-2" rounded="lg">
+          <v-card class="ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
               src="../src/assets/images/soft_drinks.png"

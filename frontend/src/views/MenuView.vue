@@ -1,13 +1,14 @@
 <template>
-  <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
+  <!-- HEADER CARDS: SEARCH, SELECT SEATING etc -->
   <AppHeaderCards>
+    <!-- SET-CATEGORY, HEADER CARD-->
     <v-row no-gutters>
       <v-col cols="4">
         <RouterLink
           :to="{ name: 'menu', params: { category: 'drinks' } }"
           class="router_link_decoration"
         >
-          <v-card class="mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+          <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
             <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
           </v-card>
         </RouterLink>
@@ -17,7 +18,7 @@
           :to="{ name: 'menu', params: { category: 'food' } }"
           class="router_link_decoration"
         >
-          <v-card class="mx-2 mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+          <v-card class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
             <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
           </v-card>
         </RouterLink>
@@ -27,12 +28,13 @@
           :to="{ name: 'menu', params: { category: 'softdrinks' } }"
           class="router_link_decoration"
         >
-          <v-card class="mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+          <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
             <v-icon icon="mdi-beer" size="x-large"></v-icon>
           </v-card>
         </RouterLink>
       </v-col>
     </v-row>
+    <!-- SET-SUBCATEGORY, HEADER CARD-->
     <v-card
       v-if="this.$route.params.category === 'drinks'"
       class="my-2 bg-yellow-darken-3 pa-2 text-center desktop_container"
@@ -44,16 +46,24 @@
         v-if="setSubCategory !== ''"
         class="bg-black site_font"
         size="x-large"
+        rounded="lg"
         @click="dialogCategory = true"
         block
-        >{{ setSubCategory }}</v-btn
       >
-      <v-btn v-else class="bg-black site_font" size="x-large" @click="dialogCategory = true" block>
+        {{ setSubCategory }}
+      </v-btn>
+      <v-btn
+        v-else
+        class="bg-black site_font"
+        size="x-large"
+        rounded="lg"
+        @click="dialogCategory = true"
+        block
+      >
         Select Category
       </v-btn>
     </v-card>
   </AppHeaderCards>
-  <!-- SET-CATEGORY, HEADER CARD-->
 
   <!-- CATEGORY DIALOG WINDOW -->
   <v-dialog
