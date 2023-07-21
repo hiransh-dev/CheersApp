@@ -1,15 +1,45 @@
 <template>
   <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
   <AppHeaderCards>
+    <v-row no-gutters>
+      <v-col cols="4">
+        <RouterLink
+          :to="{ name: 'menu', params: { category: 'drinks' } }"
+          class="router_link_decoration"
+        >
+          <v-card class="mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
+          </v-card>
+        </RouterLink>
+      </v-col>
+      <v-col cols="4">
+        <RouterLink
+          :to="{ name: 'menu', params: { category: 'food' } }"
+          class="router_link_decoration"
+        >
+          <v-card class="mx-2 mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
+          </v-card>
+        </RouterLink>
+      </v-col>
+      <v-col cols="4">
+        <RouterLink
+          :to="{ name: 'menu', params: { category: 'softdrinks' } }"
+          class="router_link_decoration"
+        >
+          <v-card class="mb-2 pa-2 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-icon icon="mdi-beer" size="x-large"></v-icon>
+          </v-card>
+        </RouterLink>
+      </v-col>
+    </v-row>
     <v-card
       v-if="this.$route.params.category === 'drinks'"
-      class="bg-yellow-darken-3 pa-2 text-center desktop_container"
+      class="my-2 bg-yellow-darken-3 pa-2 text-center desktop_container"
       rounded="lg"
       elevation="6"
     >
-      <v-card-title class="site_font text-black">
-        What would you like to {{ categoryAction }}?
-      </v-card-title>
+      <v-card-title class="site_font text-black"> What would you like to drink? </v-card-title>
       <v-btn
         v-if="setSubCategory !== ''"
         class="bg-black site_font"
@@ -44,9 +74,7 @@
               <v-btn variant="text" @click="dialogCategory = false"> Save </v-btn>
             </v-toolbar-items> -->
       </v-toolbar>
-      <label class="site_font text-h4 text-center my-5 mx-5"
-        >What would you like to {{ categoryAction }}?</label
-      >
+      <label class="site_font text-h4 text-center my-5 mx-5">What would you like to drink?</label>
       <div class="desktop" style="align-items: center">
         <div class="desktop_container_small">
           <v-list>
@@ -166,13 +194,6 @@ export default {
     }
   },
   computed: {
-    categoryAction() {
-      if (this.$route.params.category === "food") {
-        return "eat";
-      } else {
-        return "drink";
-      }
-    },
     ...mapStores(useCartStore)
   },
   mounted() {
