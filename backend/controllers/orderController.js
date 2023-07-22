@@ -25,7 +25,7 @@ module.exports.newOrder = async (req, res) => {
     new_order.orderTotal = parseFloat(total);
     new_order.orderStatus = 0;
     new_order.paymentStatus = 1;
-    new_order.author = req.user;
+    new_order.author = req.user._id;
     // USER SIDE ORDER HISTORY
     const curUserOrder = await User.findById(req.user._id);
     curUserOrder.orderHistory.push(new_order);
@@ -36,4 +36,15 @@ module.exports.newOrder = async (req, res) => {
   } catch (e) {
     console.log("Error creating order", e);
   }
+};
+
+module.exports.getOrders = async (req, res) => {
+  const curUserOrder = await User.findById(req.user._id).populate({
+    path: "orderHistory",
+    populate: {
+      path: "orderItems.item",
+    },
+    options: { sort: { _id: -1 }, limit: 10 },
+  });
+  res.send(curUserOrder.orderHistory);
 };

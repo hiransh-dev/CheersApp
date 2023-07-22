@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const path = require("path");
 
 /* manageRoute's Controller */
 const orderController = require("../controllers/orderController");
@@ -7,6 +8,9 @@ const orderController = require("../controllers/orderController");
 /* Error Handling */
 const catchAsync = require("../utils/catchAsync");
 const expressError = require("../utils/ExpressError");
+
+// MIDDLEWARES
+const { isLoggedIn } = require(path.join(__dirname, "../utils/middleware.js"));
 
 /* JOI Schema for Middleware */
 const { joiOrderSchema } = require("../utils/joi_schema");
@@ -22,6 +26,7 @@ const validateOrderSchema = (req, res, next) => {
 };
 
 /* MANAGEMENT ROUTES */
-router.post("/new", catchAsync(orderController.newOrder));
+router.get("/", isLoggedIn, catchAsync(orderController.getOrders));
+router.post("/new", isLoggedIn, catchAsync(orderController.newOrder));
 
 module.exports = router;

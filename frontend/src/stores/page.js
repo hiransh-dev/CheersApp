@@ -5,6 +5,7 @@ export default defineStore("page", {
     return {
       dialogCart: false,
       dialogAuth: false,
+      dialogOrders: false,
       setTable: 0
     };
   },

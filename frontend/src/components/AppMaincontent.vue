@@ -8,6 +8,8 @@
         <AppAuth></AppAuth>
         <!-- CART DIALOG WINDOW -->
         <AppCart></AppCart>
+        <!-- ORDERS DIALOG WINDOW  -->
+        <AppOrders></AppOrders>
       </div>
     </div>
   </div>
@@ -17,6 +19,7 @@
 import AppHeader from "@/components/AppHeader.vue";
 import AppAuth from "@/components/AppAuth.vue";
 import AppCart from "@/components/AppCart.vue";
+import AppOrders from "@/components/AppOrders.vue";
 
 export default {
   data() {
@@ -25,7 +28,8 @@ export default {
   components: {
     AppHeader,
     AppAuth,
-    AppCart
+    AppCart,
+    AppOrders
   }
 };
 </script>
