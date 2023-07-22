@@ -1,16 +1,9 @@
 <template>
   <v-app-bar class="navbar container bg-black" elevation="4">
     <v-app-bar-title>
-      <v-fade-transition mode="in-out" hide-on-leave="true">
-        <RouterLink v-show="!scrollValue" to="/" class="router_link_decoration text-white"
-          >Cheers!
-        </RouterLink>
-      </v-fade-transition>
-      <v-fade-transition mode="out-in" hide-on-leave="true">
-        <RouterLink v-show="scrollValue" to="/" class="router_link_decoration">
-          <img class="mt-2 logo_img" src="/CheersLogo_nobg_small.png" />
-        </RouterLink>
-      </v-fade-transition>
+      <RouterLink v-show="!scrollValue" to="/" class="router_link_decoration text-white"
+        >Cheers!
+      </RouterLink>
     </v-app-bar-title>
     <v-card
       v-if="!screenSmall"
@@ -62,6 +55,7 @@
         prepend-icon="mdi-format-list-bulleted"
         title="Orders"
         value="orders"
+        @click="pageStore.dialogOrders = true"
       ></v-list-item>
       <v-list-item
         v-if="authStore.email && authStore.email !== ''"
@@ -130,7 +124,6 @@
 
 <script>
 import { mapStores } from "pinia";
-// import useCartStore from "@/stores/cart";
 import usepageStore from "@/stores/page";
 import useauthStore from "@/stores/auth";
 
@@ -157,13 +150,6 @@ export default {
     burgerClicked() {
       this.fullscreenMenu = !this.fullscreenMenu;
     },
-    scrolled() {
-      if (window.scrollY <= 240) {
-        return (this.scrollValue = false);
-      } else {
-        return (this.scrollValue = true);
-      }
-    },
     fnLogout() {
       this.authStore.fnAuthLogout();
       this.notSetSnackbar = true;
@@ -184,7 +170,6 @@ export default {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
     window.addEventListener("load", this.checkScreen);
     window.addEventListener("resize", this.checkScreen);
-    window.addEventListener("scroll", this.scrolled);
     this.authStore.checkLogin();
   }
 };
