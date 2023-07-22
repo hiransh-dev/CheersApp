@@ -314,7 +314,6 @@ export default {
         this.res_alert_variant = "error";
         this.res_show_alert = true;
         this.res_on_submit = false;
-        // console.log(e);
       }
     },
     async fnLogin() {
@@ -363,6 +362,15 @@ export default {
       } catch (e) {
         console.log(e);
       }
+    },
+    setTab() {
+      if (this.authStore.email && this.authStore.email !== "") {
+        this.tab = "loggedin";
+      } else {
+        this.tab = "login";
+        this.res_show_alert = false;
+        this.res_on_submit = false;
+      }
     }
   },
   computed: {
@@ -371,6 +379,12 @@ export default {
     phoneLength() {
       return "Phone Number: " + this.regPhone.length + "/10";
     }
+  },
+  mounted() {
+    this.setTab();
+  },
+  updated() {
+    this.setTab();
   }
 };
 </script>

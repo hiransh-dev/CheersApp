@@ -57,19 +57,19 @@
         @click="pageStore.dialogAuth = true"
       ></v-list-item>
       <v-list-item
-        prepend-icon="mdi-cart-outline"
-        title="Cart"
-        value="cart"
-        @click="pageStore.dialogCart = true"
+        v-if="authStore.email && authStore.email !== ''"
+        class="text-black"
+        prepend-icon="mdi-format-list-bulleted"
+        title="Orders"
+        value="orders"
       ></v-list-item>
-      <RouterLink :to="'/menu/orders'" class="router_link_decoration">
-        <v-list-item
-          class="text-black"
-          prepend-icon="mdi-format-list-bulleted"
-          title="Orders"
-          value="orders"
-        ></v-list-item>
-      </RouterLink>
+      <v-list-item
+        v-if="authStore.email && authStore.email !== ''"
+        prepend-icon="mdi-logout"
+        title="Logout"
+        value="logout"
+        @click="fnLogout()"
+      ></v-list-item>
       <v-divider thickness="4" color="yellow-darken-4"></v-divider>
       <RouterLink
         :to="{ name: 'menu', params: { category: 'drinks' } }"
@@ -105,9 +105,27 @@
         ></v-list-item>
       </RouterLink>
       <v-divider thickness="4" color="yellow-darken-4"></v-divider>
-      <v-list-item prepend-icon="mdi-logout" title="Logout" value="logout"></v-list-item>
+      <v-btn
+        rounded="lg"
+        class="text-white bg-grey-darken-4 my-1"
+        size="x-large"
+        elevation="6"
+        @click="pageStore.dialogCart = true"
+        block
+        icon
+      >
+        <v-icon class="mx-2">mdi-cart</v-icon>
+        View Cart
+      </v-btn>
     </v-list>
   </v-navigation-drawer>
+  <v-snackbar v-model="notSetSnackbar" vertical>
+    <div class="text-subtitle-1 pb-2">Logged out!</div>
+    <p>You've been logged out</p>
+    <template v-slot:actions>
+      <v-btn color="yellow-darken-3" variant="text" @click="notSetSnackbar = false"> Close </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script>
@@ -123,7 +141,8 @@ export default {
       screenSmall: true,
       fullscreenMenu: false,
       dialog: false,
-      scrollValue: false
+      scrollValue: false,
+      notSetSnackbar: false
     };
   },
   methods: {
@@ -144,10 +163,13 @@ export default {
       } else {
         return (this.scrollValue = true);
       }
+    },
+    fnLogout() {
+      this.authStore.fnAuthLogout();
+      this.notSetSnackbar = true;
     }
   },
   computed: {
-    // ...mapStores(useCartStore),
     ...mapStores(usepageStore),
     ...mapStores(useauthStore),
     accountName() {
@@ -163,6 +185,7 @@ export default {
     window.addEventListener("load", this.checkScreen);
     window.addEventListener("resize", this.checkScreen);
     window.addEventListener("scroll", this.scrolled);
+    this.authStore.checkLogin();
   }
 };
 </script>

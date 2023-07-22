@@ -109,9 +109,7 @@
       <!-- <v-snackbar v-model="notSetSnackbar" location="center" vertical> -->
       <v-snackbar v-model="notSetSnackbar" vertical>
         <div class="text-subtitle-1 pb-2">Uh oh!</div>
-
         <p>Table Number not selected</p>
-
         <template v-slot:actions>
           <v-btn
             color="yellow-darken-3"

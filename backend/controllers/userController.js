@@ -38,6 +38,15 @@ module.exports.loginUser = async (req, res, next) => {
   res.json({ email, firstName, lastName, phoneNumber, fullName });
 };
 
+// @desc    Check for Logged in User
+// @route   GET /api/user/logout
+// @access  Private
+module.exports.checkUser = (req, res) => {
+  const { email, firstName, lastName, fullName, phoneNumber } = req.user;
+  /* grab order history & phone number too? */
+  res.json({ email, firstName, lastName, phoneNumber, fullName });
+};
+
 // @desc    Logout User
 // @route   GET /api/user/logout
 // @access  Private
@@ -46,7 +55,6 @@ module.exports.logout = (req, res) => {
     if (err) {
       return next(err);
     }
-    // console.log("success logout");
     res.status(200).send("Logged out");
   });
 };
