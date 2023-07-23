@@ -13,7 +13,6 @@ export default defineStore("orders", {
         const allOrders = await axios.get("/api/order/");
         if (allOrders.status === 200) {
           for (let order of allOrders.data) {
-            console.log(order);
             this.userOrders.push(order);
           }
         }
