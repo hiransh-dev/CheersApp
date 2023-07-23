@@ -12,18 +12,18 @@ const isNotLoggedIn = (req, res, next) => {
   next();
 };
 
-const isAuthor = (req, res, next) => {
-  if (req.body.userId !== req.user._id) {
-    return res.send("User is not the author");
-  }
-  next();
-};
+// const isAuthor = (req, res, next) => {
+//   if (req.body.userId !== req.user._id) {
+//     return res.send("User is not the author");
+//   }
+//   next();
+// };
 
-const isAdmin = (req, res, next) => {
-  if (x) {
-  }
-  next();
-};
+// const isAdmin = (req, res, next) => {
+//   if (x) {
+//   }
+//   next();
+// };
 
 module.exports = {
   isLoggedIn,

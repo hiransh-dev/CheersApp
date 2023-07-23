@@ -44,8 +44,8 @@ router.post(
   catchAsync(userController.loginUser)
 );
 // Get current login
-router.get("/check", isLoggedIn, catchAsync(userController.checkUser));
+router.get("/check", isLoggedIn, userController.checkUser);
 /* Verify login before logout */
-router.get("/logout", userController.logout);
+router.get("/logout", isLoggedIn, userController.logout);
 
 module.exports = router;

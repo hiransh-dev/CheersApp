@@ -92,7 +92,7 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
   const { message = "Unknown Error", statusCode = 500 } = err;
-  res.status(statusCode).send(message);
+  console.log(message, statusCode, err.stack);
 });
 
 app.listen(port, () => {
