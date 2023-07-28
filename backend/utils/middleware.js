@@ -12,22 +12,40 @@ const isNotLoggedIn = (req, res, next) => {
   next();
 };
 
-// const isAuthor = (req, res, next) => {
-//   if (req.body.userId !== req.user._id) {
-//     return res.send("User is not the author");
-//   }
-//   next();
-// };
+const isNotManagement = (req, res, next) => {
+  if (req.user) {
+    if (req.user.isAdmin === true || req.user.isStaff === true) {
+      return res.send("Cannot use Management Account");
+    }
+  }
+  next();
+};
 
-// const isAdmin = (req, res, next) => {
-//   if (x) {
-//   }
-//   next();
-// };
+const isUserAdmin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    if (req.user.isAdmin === true) {
+      next();
+    } else {
+      console.log("User is not an Admin"); /* REMOVE LATER */
+      return res.send("User is not an Admin");
+    }
+  } else {
+    console.log("User is not an Admin"); /* REMOVE LATER */
+    return res.send("User is not an Admin");
+  }
+};
+
+const isUserStaff = (req, res, next) => {
+  if (!req.user && (req.user.isStaff === false || req.user.isAdmin === false)) {
+    return res.send("User is not a Staff member");
+  }
+  next();
+};
 
 module.exports = {
   isLoggedIn,
   isNotLoggedIn,
-  //   isAuthor,
-  //   isAdmin,
+  isUserAdmin,
+  isUserStaff,
+  isNotManagement,
 };
