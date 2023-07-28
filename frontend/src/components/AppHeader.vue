@@ -1,13 +1,13 @@
 <template>
-  <v-parallax class="parallaxHeight" src="../src/assets/images/cheers_banner.png" scale="0.5">
-    <div class="w-100 h-100 d-flex justify-center align-center">
-      <div class="parallaxWidth">
+  <div class="desktop_container">
+    <v-parallax class="parallaxHeight" src="../src/assets/images/cheers_banner.png">
+      <div class="w-100 h-100 d-flex justify-center align-center">
         <RouterLink to="/" class="router_link_decoration">
           <v-img class="mx-2" src="../src/assets/images/CheersLogo_nobg.png"></v-img>
         </RouterLink>
       </div>
-    </div>
-  </v-parallax>
+    </v-parallax>
+  </div>
 </template>
 
 <script>
@@ -30,10 +30,8 @@ export default {
 }
 @media only screen and (min-width: 1024px) {
   .parallaxHeight {
-    height: 80vh;
-  }
-  .parallaxWidth {
-    widows: 75vw;
+    height: 50vh;
+    max-height: 40rem;
   }
 }
 </style>

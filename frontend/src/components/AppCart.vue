@@ -19,91 +19,88 @@
     :scrim="false"
     transition="dialog-bottom-transition"
   >
-    <v-card class="bg-black">
+    <v-card class="container">
       <v-toolbar class="bg-green-darken-4" dark>
-        <v-btn icon dark @click="pageStore.dialogCart = false">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
         <v-toolbar-title class="site_font">Cart</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-toolbar-items>
+          <v-btn icon dark @click="pageStore.dialogCart = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar-items>
       </v-toolbar>
-      <label class="site_font text-h4 text-center my-5 mx-5">Confirm your order?</label>
-      <div class="desktop" style="align-items: center">
-        <div class="desktop_container_small">
-          <v-expansion-panels class="my-4 pa-2">
-            <v-expansion-panel
-              class="bg-grey-darken-4"
-              v-for="menuItem of cartStore.menu"
-              :key="menuItem._id"
-              rounded="lg"
-              elevation="6"
-            >
-              <div
-                v-if="
-                  cartStore.cartItems.filter((cartItem) => cartItem.id === menuItem._id).length ===
-                  1
-                "
-              >
-                <v-badge
-                  color="blue-darken-3"
-                  class="w-100 mb-4"
-                  style="position: absolute"
-                  v-if="menuItem.quantity !== 0"
-                  :content="menuItem.quantity"
-                >
-                </v-badge>
-
-                <v-expansion-panel-title>
-                  <div class="w-100 d-flex flex-row justify-space-between align-center">
-                    <div class="d-flex flex-column w-75">
-                      <label class="text-h6 site_font">{{ menuItem.title }}</label>
-                      <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
-                    </div>
-                    <label class="text-h6 site_font mx-2">£ {{ menuItem.price }}</label>
-                  </div>
-                </v-expansion-panel-title>
-
-                <v-expansion-panel-text>
-                  <v-card
-                    class="d-flex flex-row align-center justify-end bg-transparent"
-                    elevation="0"
-                  >
-                    <v-btn
-                      class="ma-2 bg-red"
-                      @click="removingFromCart(menuItem._id, menuItem.quantity)"
-                      elevation="4"
-                      icon
-                    >
-                      <v-icon>mdi-minus-thick</v-icon>
-                    </v-btn>
-                    <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
-                    <v-btn
-                      class="ma-2 bg-green"
-                      @click="addingToCart(menuItem._id, menuItem.quantity)"
-                      elevation="4"
-                      icon
-                    >
-                      <v-icon>mdi-plus-thick</v-icon>
-                    </v-btn>
-                  </v-card>
-                </v-expansion-panel-text>
-              </div>
-            </v-expansion-panel>
-          </v-expansion-panels>
-          <label class="ma-2 text-h4 float-right site_font"
-            >Total: £ {{ cartStore.cartTotal }}</label
+      <label class="site_font text-h4 text-center ma-5">Confirm your order?</label>
+      <div class="desktop_container w-100">
+        <v-expansion-panels class="px-2">
+          <v-expansion-panel
+            class="bg-grey-lighten-1"
+            v-for="menuItem of cartStore.menu"
+            :key="menuItem._id"
+            rounded="lg"
+            elevation="6"
           >
-          <div class="ma-2 mb-5">
-            <v-btn
-              @click="checkout()"
-              class="bg-blue w-100 site_font btn_font"
-              size="x-large"
-              rounded="lg"
-              elevation="12"
+            <div
+              v-if="
+                cartStore.cartItems.filter((cartItem) => cartItem.id === menuItem._id).length === 1
+              "
             >
-              Checkout
-            </v-btn>
-          </div>
+              <v-badge
+                color="blue-darken-3"
+                class="w-100 mb-4"
+                style="position: absolute"
+                v-if="menuItem.quantity !== 0"
+                :content="menuItem.quantity"
+              >
+              </v-badge>
+
+              <v-expansion-panel-title>
+                <div class="w-100 d-flex flex-row justify-space-between align-center">
+                  <div class="d-flex flex-column w-75">
+                    <label class="text-h6 site_font">{{ menuItem.title }}</label>
+                    <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
+                  </div>
+                  <label class="text-h6 site_font mx-2">£ {{ menuItem.price }}</label>
+                </div>
+              </v-expansion-panel-title>
+
+              <v-expansion-panel-text>
+                <v-card
+                  class="d-flex flex-row align-center justify-end bg-transparent"
+                  elevation="0"
+                >
+                  <v-btn
+                    class="ma-2 bg-red"
+                    @click="removingFromCart(menuItem._id, menuItem.quantity)"
+                    elevation="4"
+                    icon
+                  >
+                    <v-icon>mdi-minus-thick</v-icon>
+                  </v-btn>
+                  <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
+                  <v-btn
+                    class="ma-2 bg-green"
+                    @click="addingToCart(menuItem._id, menuItem.quantity)"
+                    elevation="4"
+                    icon
+                  >
+                    <v-icon>mdi-plus-thick</v-icon>
+                  </v-btn>
+                </v-card>
+              </v-expansion-panel-text>
+            </div>
+          </v-expansion-panel>
+        </v-expansion-panels>
+        <label class="ma-2 text-h4 float-right site_font">Total: £ {{ cartStore.cartTotal }}</label>
+        <div class="ma-2 mb-5">
+          <v-btn
+            @click="checkout()"
+            class="bg-blue w-100 site_font btn_font"
+            size="x-large"
+            rounded="lg"
+            elevation="12"
+          >
+            Checkout
+          </v-btn>
         </div>
       </div>
       <!-- <v-snackbar v-model="notSetSnackbar" location="center" vertical> -->
@@ -142,17 +139,20 @@ export default {
     removingFromCart(id) {
       this.cartStore.removeFromCart(id);
     },
-    checkout() {
-      if (this.pageStore.setTable === 0) {
+    async checkout() {
+      if (!this.pageStore.setTable || this.pageStore.setTable === 0) {
         return (this.notSetSnackbar = true);
       } else {
-        this.cartStore.placeOrder(this.pageStore.setTable);
+        const orderCheckoutStatus = await this.cartStore.placeOrder(this.pageStore.setTable);
+        if (orderCheckoutStatus) {
+          this.pageStore.setGlobalSnackbar("Confirmed", "Your order has been placed");
+        }
       }
     }
   },
   computed: {
     ...mapStores(useCartStore),
-    ...mapStores(usePageStore)
+    ...mapStores(usePageStore),
   },
   mounted() {
     this.cartStore.fetchMenu();

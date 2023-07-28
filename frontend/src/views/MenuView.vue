@@ -1,92 +1,92 @@
 <template>
-  <!-- HEADER CARDS: SEARCH, SELECT SEATING etc -->
-  <AppHeaderCards>
-    <!-- SET-CATEGORY, HEADER CARD-->
-    <v-row no-gutters>
-      <v-col cols="4">
-        <RouterLink
-          :to="{ name: 'menu', params: { category: 'drinks' } }"
-          class="router_link_decoration"
-        >
-          <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
-            <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
-          </v-card>
-        </RouterLink>
-      </v-col>
-      <v-col cols="4">
-        <RouterLink
-          :to="{ name: 'menu', params: { category: 'food' } }"
-          class="router_link_decoration"
-        >
-          <v-card class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
-            <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
-          </v-card>
-        </RouterLink>
-      </v-col>
-      <v-col cols="4">
-        <RouterLink
-          :to="{ name: 'menu', params: { category: 'softdrinks' } }"
-          class="router_link_decoration"
-        >
-          <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
-            <v-icon icon="mdi-beer" size="x-large"></v-icon>
-          </v-card>
-        </RouterLink>
-      </v-col>
-    </v-row>
-    <!-- SET-SUBCATEGORY, HEADER CARD-->
-    <v-card
-      v-if="this.$route.params.category === 'drinks'"
-      class="my-2 bg-yellow-darken-3 pa-2 text-center desktop_container"
-      rounded="lg"
-      elevation="6"
-    >
-      <v-card-title class="site_font text-black"> What would you like to drink? </v-card-title>
-      <v-btn
-        v-if="setSubCategory !== ''"
-        class="bg-black site_font"
-        size="x-large"
+  <div class="desktop_container">
+    <!-- HEADER CARDS: SEARCH, SELECT SEATING etc -->
+    <AppHeaderCards>
+      <!-- SET-CATEGORY, HEADER CARD-->
+      <v-row no-gutters>
+        <v-col cols="4">
+          <RouterLink
+            :to="{ name: 'menu', params: { category: 'drinks' } }"
+            class="router_link_decoration"
+          >
+            <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+              <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
+            </v-card>
+          </RouterLink>
+        </v-col>
+        <v-col cols="4">
+          <RouterLink
+            :to="{ name: 'menu', params: { category: 'food' } }"
+            class="router_link_decoration"
+          >
+            <v-card class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+              <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
+            </v-card>
+          </RouterLink>
+        </v-col>
+        <v-col cols="4">
+          <RouterLink
+            :to="{ name: 'menu', params: { category: 'softdrinks' } }"
+            class="router_link_decoration"
+          >
+            <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+              <v-icon icon="mdi-beer" size="x-large"></v-icon>
+            </v-card>
+          </RouterLink>
+        </v-col>
+      </v-row>
+      <!-- SET-SUBCATEGORY, HEADER CARD-->
+      <v-card
+        v-if="this.$route.params.category === 'drinks'"
+        class="my-2 bg-yellow-darken-3 pa-2 text-center desktop_container"
         rounded="lg"
-        @click="dialogCategory = true"
-        block
+        elevation="6"
       >
-        {{ setSubCategory }}
-      </v-btn>
-      <v-btn
-        v-else
-        class="bg-black site_font"
-        size="x-large"
-        rounded="lg"
-        @click="dialogCategory = true"
-        block
-      >
-        Select Category
-      </v-btn>
-    </v-card>
-  </AppHeaderCards>
-
-  <!-- CATEGORY DIALOG WINDOW -->
-  <v-dialog
-    v-model="dialogCategory"
-    class="bg-grey-lighten-2"
-    fullscreen
-    :scrim="false"
-    transition="dialog-bottom-transition"
-  >
-    <v-card>
-      <v-toolbar class="bg-black" dark>
-        <v-btn icon dark @click="dialogCategory = false">
-          <v-icon>mdi-close</v-icon>
+        <v-card-title class="site_font text-black"> What would you like to drink? </v-card-title>
+        <v-btn
+          v-if="setSubCategory !== ''"
+          class="bg-black site_font"
+          size="x-large"
+          rounded="lg"
+          @click="dialogCategory = true"
+          block
+        >
+          {{ setSubCategory }}
         </v-btn>
-        <v-toolbar-title class="site_font">Category</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <!-- <v-toolbar-items>
-              <v-btn variant="text" @click="dialogCategory = false"> Save </v-btn>
-            </v-toolbar-items> -->
-      </v-toolbar>
-      <label class="site_font text-h4 text-center my-5 mx-5">What would you like to drink?</label>
-      <div class="desktop" style="align-items: center">
-        <div class="desktop_container_small">
+        <v-btn
+          v-else
+          class="bg-black site_font"
+          size="x-large"
+          rounded="lg"
+          @click="dialogCategory = true"
+          block
+        >
+          Select Category
+        </v-btn>
+      </v-card>
+    </AppHeaderCards>
+
+    <!-- CATEGORY DIALOG WINDOW -->
+    <v-dialog
+      v-model="dialogCategory"
+      class="bg-grey-lighten-2"
+      fullscreen
+      :scrim="false"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="container">
+        <v-toolbar class="bg-black" dark>
+          <!-- <v-btn icon dark @click="dialogCategory = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn> -->
+          <v-toolbar-title class="site_font">Category</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn variant="text" @click="dialogCategory = false"> Save </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <label class="site_font text-h4 text-center my-5 mx-5">What would you like to drink?</label>
+        <div class="desktop_container w-100">
           <v-list>
             <v-list-item v-for="subType of subcategory" :key="subType">
               <v-btn
@@ -112,56 +112,56 @@
             </v-list-item>
           </v-list>
         </div>
-      </div>
-    </v-card>
-  </v-dialog>
+      </v-card>
+    </v-dialog>
 
-  <!-- MENU PANELS -->
-  <v-expansion-panels class="my-4">
-    <v-expansion-panel
-      class="bg-grey-darken-4"
-      v-for="menuItem of cartStore.menuItems"
-      :key="menuItem._id"
-      rounded="lg"
-      elevation="6"
-    >
-      <v-badge
-        color="blue-darken-3"
-        class="w-100 mb-4"
-        style="position: absolute"
-        v-if="menuItem.quantity !== 0"
-        :content="menuItem.quantity"
+    <!-- MENU PANELS -->
+    <v-expansion-panels class="my-4">
+      <v-expansion-panel
+        class="bg-grey-lighten-1"
+        v-for="menuItem of cartStore.menuItems"
+        :key="menuItem._id"
+        rounded="lg"
+        elevation="6"
       >
-      </v-badge>
-      <v-expansion-panel-title>
-        <div class="w-100 d-flex flex-row justify-space-between align-center">
-          <div class="d-flex flex-column w-75">
-            <label class="text-h6 site_font">{{ menuItem.title }}</label>
-            <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
-            <div>
-              <v-chip class="mt-2" color="" v-if="setSubCategory === '' && menuItem.subcategory">
-                {{ menuItem.subcategory }}
-              </v-chip>
+        <v-badge
+          color="blue-darken-3"
+          class="w-100 mb-4"
+          style="position: absolute"
+          v-if="menuItem.quantity !== 0"
+          :content="menuItem.quantity"
+        >
+        </v-badge>
+        <v-expansion-panel-title>
+          <div class="w-100 d-flex flex-row justify-space-between align-center">
+            <div class="d-flex flex-column w-75">
+              <label class="text-h6 site_font">{{ menuItem.title }}</label>
+              <label class="mt-2 text-grey site_font">{{ menuItem.desc }}</label>
+              <div>
+                <v-chip class="mt-2" color="" v-if="setSubCategory === '' && menuItem.subcategory">
+                  {{ menuItem.subcategory }}
+                </v-chip>
+              </div>
             </div>
+            <label class="price_font site_font mx-2" style="flex-wrap: nowrap"
+              >£ {{ menuItem.price }}</label
+            >
           </div>
-          <label class="price_font site_font mx-2" style="flex-wrap: nowrap"
-            >£ {{ menuItem.price }}</label
-          >
-        </div>
-      </v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
-          <v-btn class="ma-2 bg-red" @click="removingFromCart(menuItem._id)" elevation="4" icon>
-            <v-icon>mdi-minus-thick</v-icon>
-          </v-btn>
-          <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
-          <v-btn class="ma-2 bg-green" @click="addingToCart(menuItem._id)" elevation="4" icon>
-            <v-icon>mdi-plus-thick</v-icon>
-          </v-btn>
-        </v-card>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-  </v-expansion-panels>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
+            <v-btn class="ma-2 bg-red" @click="removingFromCart(menuItem._id)" elevation="4" icon>
+              <v-icon>mdi-minus-thick</v-icon>
+            </v-btn>
+            <label class="mx-2 text-h6 site_font">{{ menuItem.quantity }}</label>
+            <v-btn class="ma-2 bg-green" @click="addingToCart(menuItem._id)" elevation="4" icon>
+              <v-icon>mdi-plus-thick</v-icon>
+            </v-btn>
+          </v-card>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </div>
 </template>
 
 <script>
@@ -222,8 +222,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.price_font {
-  font-size: 1rem;
-}
-</style>
+<style scoped></style>

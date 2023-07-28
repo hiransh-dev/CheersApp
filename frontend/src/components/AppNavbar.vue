@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar class="navbar container bg-black" elevation="4">
+  <v-app-bar class="navbar bg-black" elevation="4">
     <v-app-bar-title>
       <RouterLink v-show="!scrollValue" to="/" class="router_link_decoration text-white"
         >Cheers!
@@ -7,24 +7,23 @@
     </v-app-bar-title>
     <v-card
       v-if="!screenSmall"
-      style="padding-right: 5vw"
+      style="margin-right: 1rem"
       class="bg-black d-flex justify-end align-center"
       elevation="0"
     >
-      <v-btn class="bg-transparent ma-1" elevation="0" icon>
+      <v-btn class="bg-transparent ma-1" @click="pageStore.dialogCart = true" elevation="0" icon>
         <v-icon>mdi-cart-outline</v-icon>
       </v-btn>
-      <v-btn class="bg-transparent ma-1" elevation="0" icon>
+      <v-btn class="bg-transparent ma-1" @click="pageStore.dialogOrders = true" elevation="0" icon>
         <v-icon>mdi-format-list-bulleted</v-icon>
       </v-btn>
       <v-btn
         rounded="lg"
         class="site_font text-none text-black font-weight-bold ma-1 bg-yellow-darken-3"
-        >Login
-      </v-btn>
-      <v-btn rounded="lg" class="site_font text-none font-weight-bold ma-1 bg-grey-darken-4"
-        >Sign Up</v-btn
+        @click="pageStore.dialogAuth = true"
       >
+        {{ accountName }}
+      </v-btn>
     </v-card>
     <v-card class="bg-transparent d-flex justify-end" v-else elevation="0">
       <v-btn v-show="!fullscreenMenu" @click.prevent="burgerClicked" icon>

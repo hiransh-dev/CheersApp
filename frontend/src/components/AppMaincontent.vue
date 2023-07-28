@@ -1,15 +1,16 @@
 <template>
-  <AppHeader></AppHeader>
-  <div class="main container">
-    <div class="desktop">
-      <div class="desktop_container">
-        <slot></slot>
-        <!-- LOGIN/REGISTER DIALOG WINDOW -->
-        <AppAuth></AppAuth>
-        <!-- CART DIALOG WINDOW -->
-        <AppCart></AppCart>
-        <!-- ORDERS DIALOG WINDOW  -->
-        <AppOrders></AppOrders>
+  <div class="main">
+    <div class="header_container">
+      <AppHeader></AppHeader>
+    </div>
+    <div class="container">
+      <slot></slot>
+      <!-- LOGIN/REGISTER DIALOG WINDOW -->
+      <AppAuth></AppAuth>
+      <!-- CART DIALOG WINDOW -->
+      <AppCart></AppCart>
+      <!-- ORDERS DIALOG WINDOW  -->
+      <AppOrders></AppOrders>
       </div>
     </div>
   </div>
@@ -29,7 +30,7 @@ export default {
     AppHeader,
     AppAuth,
     AppCart,
-    AppOrders
+    AppOrders,
   }
 };
 </script>

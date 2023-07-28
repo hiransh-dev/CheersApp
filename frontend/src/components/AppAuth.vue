@@ -7,7 +7,7 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-container class="bg-grey-lighten-2">
+    <v-container>
       <v-card class="pa-2 bg-grey-lighten-2 text-center" elevation="8">
         <v-row justify="center" v-if="!authStore.email && authStore.email === ''">
           <v-col cols="6">
@@ -73,7 +73,7 @@
           <v-card-text>
             <veeForm @submit="fnRegister" :validation-schema="schema">
               <v-row>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="regEmail" name="Email" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-email"
@@ -87,7 +87,7 @@
                     ></v-text-field>
                   </veeField>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="regPhone" name="Phone" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-phone"
@@ -102,7 +102,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="regfName" name="Firstname" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-badge-account"
@@ -115,7 +115,7 @@
                     ></v-text-field>
                   </veeField>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="reglName" name="Lastname" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-badge-account"
@@ -130,7 +130,7 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="regPassword" name="Password" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-form-textbox-password"
@@ -144,7 +144,7 @@
                     ></v-text-field>
                   </veeField>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="regcPassword" name="Confirm" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-form-textbox-password"
@@ -182,7 +182,7 @@
           <v-card-text>
             <veeForm @submit="fnLogin">
               <v-row>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-email"
@@ -196,7 +196,7 @@
                     ></v-text-field>
                   </veeField>
                 </v-col>
-                <v-col cols="12" sm="4">
+                <v-col cols="12" md="6" sm="4">
                   <veeField id="loginPassword" name="Password" v-slot="{ field, errorMessage }">
                     <v-text-field
                       prepend-inner-icon="mdi-form-textbox-password"
@@ -331,7 +331,7 @@ export default {
             }
           }
         );
-        if (userLoggedIn.status === 200) {
+        if (userLoggedIn.status === 200 && userLoggedIn.data.email) {
           this.authStore.email = userLoggedIn.data.email;
           this.authStore.firstName = userLoggedIn.data.firstName;
           this.authStore.lastName = userLoggedIn.data.lastName;
@@ -340,15 +340,19 @@ export default {
           this.res_alert_message = `Welcome Back ${userLoggedIn.data.fullName}.`;
           this.res_alert_variant = "success";
           this.res_show_alert = true;
-          // this.res_on_submit = false;
+          this.res_on_submit = false;
           this.tab = "loggedin";
+        } else {
+          this.res_alert_message = userLoggedIn.data;
+          this.res_alert_variant = "error";
+          this.res_show_alert = true;
+          this.res_on_submit = false;
         }
       } catch (e) {
         this.res_alert_message = "Something went wrong. Please try again.";
         this.res_alert_variant = "error";
         this.res_show_alert = true;
         this.res_on_submit = false;
-        console.log(e);
       }
     },
     async fnLogout() {

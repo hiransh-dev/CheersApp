@@ -39,11 +39,11 @@
     :scrim="false"
     transition="dialog-bottom-transition"
   >
-    <v-card>
+    <v-card class="container">
       <v-toolbar class="bg-black" dark>
-        <v-btn icon dark @click="dialogSetTable = false">
+        <!-- <v-btn icon dark @click="dialogSetTable = false">
           <v-icon>mdi-close</v-icon>
-        </v-btn>
+        </v-btn> -->
         <v-toolbar-title class="site_font">Table</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -51,22 +51,20 @@
         </v-toolbar-items>
       </v-toolbar>
       <label class="site_font text-h4 text-center my-5 mx-5">Choose your table</label>
-      <div class="desktop" style="align-items: center">
-        <div class="desktop_container_small">
-          <v-list>
-            <v-list-item v-for="table of tables" :key="table">
-              <v-btn
-                @click="(pageStore.setTable = table), (dialogSetTable = false)"
-                class="bg-black w-100 site_font btn_font"
-                size="x-large"
-                rounded="lg"
-                elevation="0"
-              >
-                {{ table }}
-              </v-btn>
-            </v-list-item>
-          </v-list>
-        </div>
+      <div class="desktop_container w-100">
+        <v-list>
+          <v-list-item v-for="table of tables" :key="table">
+            <v-btn
+              @click="(pageStore.setTable = table), (dialogSetTable = false)"
+              class="bg-black w-100 site_font btn_font"
+              size="x-large"
+              rounded="lg"
+              elevation="0"
+            >
+              {{ table }}
+            </v-btn>
+          </v-list-item>
+        </v-list>
       </div>
     </v-card>
   </v-dialog>
@@ -89,9 +87,7 @@ export default {
   name: "AppHeader",
   data() {
     return {
-      dialogSetPub: false,
       dialogSetTable: false,
-      all_locations: ["Central London", "Ilford", "Barking", "Stratford"],
       tables: 32
     };
   },
