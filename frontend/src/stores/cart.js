@@ -100,8 +100,8 @@ export default defineStore("cart", {
           }
         }
       );
-      if (placedOrder.status === 200) {
-        console.log(placedOrder.data);
+      if (placedOrder.status === 200 && placedOrder.data) {
+        return placedOrder.data;
       }
     }
   }

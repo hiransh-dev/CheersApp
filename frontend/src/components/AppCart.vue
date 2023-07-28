@@ -125,6 +125,7 @@
 import { mapStores } from "pinia";
 import useCartStore from "@/stores/cart";
 import usePageStore from "@/stores/page";
+import useOrdersStore from "@/stores/orders";
 
 export default {
   data() {
@@ -146,6 +147,7 @@ export default {
         const orderCheckoutStatus = await this.cartStore.placeOrder(this.pageStore.setTable);
         if (orderCheckoutStatus) {
           this.pageStore.setGlobalSnackbar("Confirmed", "Your order has been placed");
+          this.ordersStore.fetchOrders();
         }
       }
     }
@@ -153,6 +155,7 @@ export default {
   computed: {
     ...mapStores(useCartStore),
     ...mapStores(usePageStore),
+    ...mapStores(useOrdersStore)
   },
   mounted() {
     this.cartStore.fetchMenu();

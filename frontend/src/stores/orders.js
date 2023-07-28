@@ -10,8 +10,9 @@ export default defineStore("orders", {
   actions: {
     async fetchOrders() {
       try {
+        this.userOrders = [];
         const allOrders = await axios.get("/api/order/");
-        if (allOrders.status === 200) {
+        if (allOrders.status === 200 && allOrders.data) {
           for (let order of allOrders.data) {
             this.userOrders.push(order);
           }
