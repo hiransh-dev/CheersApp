@@ -35,6 +35,16 @@ const UserSchema = new Schema(
         ref: "Orders",
       },
     ],
+    isAdmin: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    isStaff: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   {
     timestamps: true,
