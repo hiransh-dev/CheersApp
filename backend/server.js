@@ -70,7 +70,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
+  // res.locals.currentUser = req.user;
+  // console.log(req.user);
   next();
 });
 

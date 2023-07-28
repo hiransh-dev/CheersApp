@@ -33,17 +33,28 @@ module.exports.registerUser = async (req, res, next) => {
 // @route   GET /api/user/login
 // @access  Public
 module.exports.loginUser = async (req, res, next) => {
-  const { email, firstName, lastName, fullName, phoneNumber } = req.user;
-  /* grab order history & phone number too? */
-  res.json({ email, firstName, lastName, phoneNumber, fullName });
+  const checkManagementUser = await User.findById(req.user._id);
+  if (
+    checkManagementUser.isAdmin === true ||
+    checkManagementUser.isStaff === true
+  ) {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+    });
+    return res.send("Cannot use management account. Go to Management Login.");
+  } else {
+    const { email, firstName, lastName, fullName, phoneNumber } = req.user;
+    return res.json({ email, firstName, lastName, phoneNumber, fullName });
+  }
 };
 
 // @desc    Check for Logged in User
-// @route   GET /api/user/logout
+// @route   GET /api/user/check
 // @access  Private
 module.exports.checkUser = (req, res) => {
   const { email, firstName, lastName, fullName, phoneNumber } = req.user;
-  /* grab order history & phone number too? */
   res.json({ email, firstName, lastName, phoneNumber, fullName });
 };
 

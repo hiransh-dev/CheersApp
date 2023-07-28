@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
 const path = require("path");
-
 const passport = require("passport");
-
-const catchAsync = require("../utils/catchAsync");
-const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 
 /* userRoute 's Controller */
 const userController = require("../controllers/userController");
 
+/* Error Handling */
+const catchAsync = require("../utils/catchAsync");
+const expressError = require(path.join(__dirname, "../utils/ExpressError"));
+
 // MIDDLEWARES
-const { isNotLoggedIn, isLoggedIn } = require(path.join(
+const { isNotLoggedIn, isLoggedIn, isNotManagement } = require(path.join(
   __dirname,
   "../utils/middleware.js"
 ));
@@ -30,22 +30,23 @@ const validateUserSchema = (req, res, next) => {
 };
 
 /* USER ROUTES  */
+// REGISTER ROUTE
 router.post(
   "/register",
   validateUserSchema,
   isNotLoggedIn,
   catchAsync(userController.registerUser)
 );
-/* post name=username,name=password */
+// LOGIN ROUTE
 router.post(
   "/login",
   isNotLoggedIn,
   passport.authenticate("local"),
   catchAsync(userController.loginUser)
 );
-// Get current login
+// CHECK FOR LOGGED IN USER ROUTE
 router.get("/check", isLoggedIn, userController.checkUser);
-/* Verify login before logout */
+// LOGOUT ROUTE
 router.get("/logout", isLoggedIn, userController.logout);
 
 module.exports = router;
