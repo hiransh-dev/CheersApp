@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import Menu from "@/views/MenuView.vue";
-import ManageMenu from "@/views/manage/ManagementMenuView.vue";
 import Manage from "@/views/manage/ManagementView.vue";
+import ManageMenu from "@/views/manage/ManagementMenu.vue";
+import ManageLogin from "@/views/manage/ManagementLogin.vue";
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     path: "/manage",
     name: "manage",
     component: Manage
+  },
+  {
+    path: "/manage/login",
+    name: "manage/login",
+    component: ManageLogin
   },
   {
     path: "/manage/menu",
