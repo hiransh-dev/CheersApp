@@ -11,7 +11,8 @@
       <AppCart></AppCart>
       <!-- ORDERS DIALOG WINDOW  -->
       <AppOrders></AppOrders>
-      </div>
+      <!-- ALERTS FOR THE APP -->
+      <AppAlerts></AppAlerts>
     </div>
   </div>
 </template>
@@ -21,6 +22,7 @@ import AppHeader from "@/components/AppHeader.vue";
 import AppAuth from "@/components/AppAuth.vue";
 import AppCart from "@/components/AppCart.vue";
 import AppOrders from "@/components/AppOrders.vue";
+import AppAlerts from "@/components/AppAlerts.vue";
 
 export default {
   data() {
@@ -31,6 +33,7 @@ export default {
     AppAuth,
     AppCart,
     AppOrders,
+    AppAlerts
   }
 };
 </script>
