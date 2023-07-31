@@ -139,7 +139,7 @@ export default {
   },
   methods: {
     checkScreen() {
-      if (window.innerWidth <= 1024) {
+      if (window.innerWidth <= 768) {
         this.screenSmall = true;
       } else {
         this.screenSmall = false;
