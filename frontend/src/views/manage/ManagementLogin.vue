@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="desktop_container w-100">
     <v-card
       v-if="managementStore.username && managementStore.username !== ''"
       class="bg-blue-grey-darken-3 text-center my-2 pa-2"
@@ -31,7 +31,7 @@
       <v-card-text>
         <veeForm @submit="fnManagementLogin">
           <v-row>
-            <v-col cols="12" md="6" sm="4">
+            <v-col cols="12">
               <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
                 <v-text-field
                   prepend-inner-icon="mdi-email"
@@ -45,7 +45,7 @@
                 ></v-text-field>
               </veeField>
             </v-col>
-            <v-col cols="12" md="6" sm="4">
+            <v-col cols="12">
               <veeField id="loginPassword" name="Password" v-slot="{ field, errorMessage }">
                 <v-text-field
                   prepend-inner-icon="mdi-form-textbox-password"
