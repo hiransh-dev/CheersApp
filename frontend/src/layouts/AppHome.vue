@@ -14,8 +14,8 @@
 </template>
 
 <script>
+import AppMaincontent from "@/layouts/AppMaincontent.vue";
 import AppNavbar from "@/components/AppNavbar.vue";
-import AppMaincontent from "@/components/AppMaincontent.vue";
 import AppFooter from "@/components/AppFooter.vue";
 
 export default {
