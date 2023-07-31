@@ -9,10 +9,10 @@ const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 module.exports.registerUser = async (req, res, next) => {
   const { email, password, firstName, lastName, phoneNumber } =
     req.body.registerUser;
-  const userExists = await User.findOne({ email });
-  if (userExists) {
-    return res.send("User Exists");
-  }
+  // const userExists = await User.findOne({ email });
+  // if (userExists) {
+  //   return res.send("User Exists");
+  // }
   const newUser = new User({
     email,
     firstName,
@@ -54,8 +54,13 @@ module.exports.loginUser = async (req, res, next) => {
 // @route   GET /api/user/check
 // @access  Private
 module.exports.checkUser = (req, res) => {
-  const { email, firstName, lastName, fullName, phoneNumber } = req.user;
-  res.json({ email, firstName, lastName, phoneNumber, fullName });
+  if (req.user.isAdmin === true || req.user.isStaff === true) {
+    const { username, isAdmin, isStaff } = req.user;
+    res.json({ username, isAdmin, isStaff });
+  } else {
+    const { email, firstName, lastName, fullName, phoneNumber } = req.user;
+    return res.json({ email, firstName, lastName, phoneNumber, fullName });
+  }
 };
 
 // @desc    Logout User
