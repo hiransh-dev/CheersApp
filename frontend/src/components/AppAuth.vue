@@ -9,7 +9,7 @@
     </v-toolbar>
     <v-container>
       <v-card class="pa-2 bg-grey-lighten-2 text-center" elevation="8">
-        <v-row justify="center" v-if="!authStore.email && authStore.email === ''">
+        <v-row justify="center" v-if="tab === 'login'">
           <v-col cols="6">
             <v-btn
               block
@@ -39,7 +39,7 @@
             </v-btn>
           </v-col>
         </v-row>
-        <v-row justify="center" v-if="authStore.email && authStore.email !== ''">
+        <v-row justify="center" v-if="tab === 'loggedin'">
           <v-col cols="12">
             <v-btn
               block
@@ -245,6 +245,26 @@
             </v-list>
           </v-card-text>
         </v-card>
+        <v-card
+          class="bg-grey-lighten-2"
+          v-if="authStore.isAdmin === true || authStore.isStaff === true"
+        >
+          <v-card-text>
+            <v-list class="bg-grey-lighten-2">
+              <v-list-item>
+                <label class="text-h3 text-yellow-darken-3"
+                  >You're logged in with a management account</label
+                >
+              </v-list-item>
+              <v-list-item>
+                <label class="text-h5">Username: {{ authStore.username }}</label>
+              </v-list-item>
+              <v-list-item>
+                <label class="text-h5">Access Type: {{ managementAccessType }}</label>
+              </v-list-item>
+            </v-list>
+          </v-card-text>
+        </v-card>
       </v-slide-y-reverse-transition>
     </v-container>
   </v-dialog>
@@ -368,7 +388,10 @@ export default {
       }
     },
     setTab() {
-      if (this.authStore.email && this.authStore.email !== "") {
+      if (
+        (this.authStore.email && this.authStore.email !== "") ||
+        (this.authStore.username && this.authStore.username !== "")
+      ) {
         this.tab = "loggedin";
       } else {
         this.tab = "login";
@@ -382,6 +405,15 @@ export default {
     ...mapStores(useauthStore),
     phoneLength() {
       return "Phone Number: " + this.regPhone.length + "/10";
+    },
+    managementAccessType() {
+      if (this.authStore.isAdmin === true) {
+        return "Admin";
+      } else if (this.authStore.isStaff === true) {
+        return "Staff";
+      } else {
+        return "";
+      }
     }
   },
   mounted() {
