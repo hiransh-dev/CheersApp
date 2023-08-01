@@ -17,11 +17,7 @@
       <v-btn class="bg-transparent ma-1" @click="pageStore.dialogOrders = true" elevation="0" icon>
         <v-icon>mdi-format-list-bulleted</v-icon>
       </v-btn>
-      <v-btn
-        rounded="lg"
-        class="site_font text-none text-black font-weight-bold ma-1 bg-yellow-darken-3"
-        @click="pageStore.dialogAuth = true"
-      >
+      <v-btn rounded="lg" :class="navbarBtnColorAcc" @click="pageStore.dialogAuth = true">
         {{ accountName }}
       </v-btn>
     </v-card>
@@ -41,61 +37,70 @@
     location="right"
     temporary
   >
-    <v-list class="mt-5" nav>
+    <v-list class="mt-5" style="font-size: 1.2rem; color: black" nav>
       <v-list-item
-        prepend-icon="mdi-account"
-        :title="accountName"
-        value="account"
+        v-if="accountName === 'Management'"
         @click="pageStore.dialogAuth = true"
-      ></v-list-item>
+        class="text-black d-flex align-center pa-2"
+        value="management"
+      >
+        <v-icon color="blue-darken-3" size="x-large">mdi-badge-account</v-icon>
+        <label class="ml-4 text-blue-darken-3">{{ accountName }}</label>
+      </v-list-item>
+      <v-list-item
+        v-else
+        @click="pageStore.dialogAuth = true"
+        class="text-black d-flex align-center pa-2"
+        value="account"
+      >
+        <v-icon color="black" size="x-large">mdi-account</v-icon>
+        <label class="ml-4">{{ accountName }}</label>
+      </v-list-item>
       <v-list-item
         v-if="authStore.email && authStore.email !== ''"
-        class="text-black"
-        prepend-icon="mdi-format-list-bulleted"
-        title="Orders"
-        value="orders"
         @click="pageStore.dialogOrders = true"
-      ></v-list-item>
+        class="text-black d-flex align-center pa-2"
+        value="orders"
+      >
+        <v-icon color="black" size="x-large">mdi-format-list-bulleted</v-icon>
+        <label class="ml-4">Orders</label>
+      </v-list-item>
       <v-list-item
         v-if="authStore.email && authStore.email !== ''"
-        prepend-icon="mdi-logout"
-        title="Logout"
-        value="logout"
         @click="fnLogout()"
-      ></v-list-item>
+        class="text-black d-flex align-center pa-2"
+        value="logout"
+      >
+        <v-icon color="black" size="x-large">mdi-logout</v-icon>
+        <label class="ml-4">Logout</label>
+      </v-list-item>
       <v-divider thickness="4" color="yellow-darken-4"></v-divider>
       <RouterLink
         :to="{ name: 'menu', params: { category: 'drinks' } }"
         class="router_link_decoration"
       >
-        <v-list-item
-          class="text-black"
-          prepend-icon="mdi-glass-mug-variant"
-          title="Drinks"
-          value="drinks"
-        ></v-list-item>
+        <v-list-item class="text-black d-flex flex-row align-center pa-2" value="drinks">
+          <v-icon color="black" size="x-large">mdi-glass-mug-variant</v-icon>
+          <label class="ml-4">Drinks</label>
+        </v-list-item>
       </RouterLink>
       <RouterLink
         :to="{ name: 'menu', params: { category: 'food' } }"
         class="router_link_decoration"
       >
-        <v-list-item
-          class="text-black"
-          prepend-icon="mdi-hamburger"
-          title="Food"
-          value="food"
-        ></v-list-item>
+        <v-list-item class="text-black d-flex align-center pa-2" value="food">
+          <v-icon color="black" size="x-large">mdi-hamburger</v-icon>
+          <label class="ml-4">Food</label>
+        </v-list-item>
       </RouterLink>
       <RouterLink
         :to="{ name: 'menu', params: { category: 'softdrinks' } }"
         class="router_link_decoration"
       >
-        <v-list-item
-          class="text-black"
-          prepend-icon="mdi-beer"
-          title="Soft Drinks"
-          value="softdrinks"
-        ></v-list-item>
+        <v-list-item class="text-black d-flex align-center pa-2" value="softdrinks">
+          <v-icon color="black" size="x-large">mdi-beer</v-icon>
+          <label class="ml-4">Soft Drinks</label>
+        </v-list-item>
       </RouterLink>
       <v-divider thickness="4" color="yellow-darken-4"></v-divider>
       <v-btn
@@ -160,8 +165,21 @@ export default {
     accountName() {
       if (this.authStore.email && this.authStore.email !== "") {
         return this.authStore.firstName;
+      } else if (
+        this.authStore.username &&
+        this.authStore.username !== "" &&
+        (this.authStore.isAdmin === true || this.authStore.isStaff === true)
+      ) {
+        return "Management";
       } else {
         return "Account";
+      }
+    },
+    navbarBtnColorAcc() {
+      if (this.accountName === "Management") {
+        return "site_font text-none text-black font-weight-bold ma-1 bg-blue-darken-3";
+      } else {
+        return "site_font text-none text-black font-weight-bold ma-1 bg-yellow-darken-3";
       }
     }
   },
