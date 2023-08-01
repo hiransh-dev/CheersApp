@@ -1,6 +1,6 @@
 <template>
   <v-dialog v-model="pageStore.dialogOrders" fullscreen transition="dialog-bottom-transition">
-    <v-card class="bg-white">
+    <v-card class="container bg-white">
       <v-toolbar class="bg-blue-darken-4">
         <v-toolbar-title class="site_font">Order History</v-toolbar-title>
         <v-spacer></v-spacer>
@@ -10,10 +10,10 @@
           </v-btn>
         </v-toolbar-items>
       </v-toolbar>
-      <label class="site_font text-h4 text-center my-5 mx-5">View your Orders</label>
-      <div class="container" v-if="ordersStore.userOrders">
+      <label class="site_font text-h4 text-center ma-5">View your Orders</label>
+      <div class="desktop_container w-100 px-2" v-if="ordersStore.userOrders">
         <v-card
-          class="bg-grey-darken-4 ma-1"
+          class="bg-grey-darken-4 my-1"
           v-for="order in ordersStore.userOrders"
           :key="order"
           elevation="8"
