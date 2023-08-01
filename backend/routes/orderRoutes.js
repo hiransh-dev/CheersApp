@@ -10,7 +10,7 @@ const catchAsync = require("../utils/catchAsync");
 const expressError = require("../utils/ExpressError");
 
 // MIDDLEWARES
-const { isLoggedIn, isNotManagement } = require(path.join(
+const { isLoggedIn, isNotManagement, isManagement } = require(path.join(
   __dirname,
   "../utils/middleware.js"
 ));
@@ -40,6 +40,12 @@ router.post(
   isLoggedIn,
   isNotManagement,
   catchAsync(orderController.newOrder)
+);
+router.get(
+  "/pending",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.pendingOrders)
 );
 
 module.exports = router;

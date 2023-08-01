@@ -53,3 +53,15 @@ module.exports.newOrder = async (req, res) => {
     res.send("Order has been placed.");
   }
 };
+
+module.exports.pendingOrders = async (req, res) => {
+  const allPendingOrders = await Order.find({ orderStatus: false })
+    .populate({
+      path: "orderItems.item",
+    })
+    .populate({
+      path: "author",
+      select: "firstName lastName email phoneNumber",
+    });
+  res.json(allPendingOrders);
+};
