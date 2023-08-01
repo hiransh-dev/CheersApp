@@ -37,7 +37,7 @@
     location="right"
     temporary
   >
-    <v-list class="mt-5" style="font-size: 1.2rem; color: black" nav>
+    <v-list class="mt-5" style="font-size: 1rem; color: black" nav>
       <v-list-item
         v-if="accountName === 'Management'"
         @click="pageStore.dialogAuth = true"
@@ -187,6 +187,9 @@ export default {
     /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
     window.addEventListener("load", this.checkScreen);
     window.addEventListener("resize", this.checkScreen);
+    this.authStore.checkLogin();
+  },
+  updated() {
     this.authStore.checkLogin();
   }
 };
