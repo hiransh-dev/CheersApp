@@ -23,7 +23,7 @@ const isNotManagement = (req, res, next) => {
 
 const isManagement = (req, res, next) => {
   if (req.user) {
-    if (req.user.isAdmin === false || req.user.isStaff === false) {
+    if (req.user.isAdmin === false && req.user.isStaff === false) {
       return res.send("Cannot use User/Customer Account");
     }
   }
