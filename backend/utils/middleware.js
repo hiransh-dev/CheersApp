@@ -21,6 +21,15 @@ const isNotManagement = (req, res, next) => {
   next();
 };
 
+const isManagement = (req, res, next) => {
+  if (req.user) {
+    if (req.user.isAdmin === false || req.user.isStaff === false) {
+      return res.send("Cannot use User/Customer Account");
+    }
+  }
+  next();
+};
+
 const isUserAdmin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     if (req.user.isAdmin === true) {
@@ -35,17 +44,10 @@ const isUserAdmin = (req, res, next) => {
   }
 };
 
-const isUserStaff = (req, res, next) => {
-  if (!req.user && (req.user.isStaff === false || req.user.isAdmin === false)) {
-    return res.send("User is not a Staff member");
-  }
-  next();
-};
-
 module.exports = {
   isLoggedIn,
   isNotLoggedIn,
   isUserAdmin,
-  isUserStaff,
   isNotManagement,
+  isManagement,
 };
