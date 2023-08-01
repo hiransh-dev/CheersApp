@@ -7,266 +7,270 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-container>
-      <v-card class="pa-2 bg-grey-lighten-2 text-center" elevation="8">
-        <v-row justify="center" v-if="tab === 'login'">
-          <v-col cols="6">
-            <v-btn
-              block
-              rounded="lg"
-              @click="tab = 'login'"
-              class=""
-              :class="{
-                'text-black bg-yellow-darken-3': tab === 'login',
-                'bg-grey-darken-4': tab === 'register'
-              }"
-              size="large"
-              >Login
-            </v-btn>
-          </v-col>
-          <v-col cols="6">
-            <v-btn
-              block
-              rounded="lg"
-              @click="tab = 'register'"
-              class=""
-              :class="{
-                'text-black bg-yellow-darken-3': tab === 'register',
-                'bg-grey-darken-4': tab === 'login'
-              }"
-              size="large"
-              >Sign up
-            </v-btn>
-          </v-col>
-        </v-row>
-        <v-row justify="center" v-if="tab === 'loggedin'">
-          <v-col cols="12">
-            <v-btn
-              block
-              rounded="lg"
-              @click="fnLogout()"
-              class="text-black bg-yellow-darken-3"
-              size="large"
-              >Logout
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-card>
-      <div class="mt-5">
-        <v-slide-y-transition>
-          <v-alert
-            class="site_font"
-            v-if="res_show_alert"
-            :type="res_alert_variant"
-            :title="res_alert_variant"
-            closable
-          >
-            {{ res_alert_message }}
-          </v-alert>
-        </v-slide-y-transition>
+    <div class="container">
+      <div class="desktop_container w-100">
+        <v-container>
+          <v-card class="pa-2 bg-transparent text-center" elevation="0">
+            <v-row justify="center" v-if="tab !== 'loggedin'">
+              <v-col cols="6">
+                <v-btn
+                  block
+                  rounded="lg"
+                  @click="tab = 'login'"
+                  class=""
+                  :class="{
+                    'text-black bg-yellow-darken-3': tab === 'login',
+                    'bg-grey-darken-4': tab === 'register'
+                  }"
+                  size="large"
+                  >Login
+                </v-btn>
+              </v-col>
+              <v-col cols="6">
+                <v-btn
+                  block
+                  rounded="lg"
+                  @click="tab = 'register'"
+                  class=""
+                  :class="{
+                    'text-black bg-yellow-darken-3': tab === 'register',
+                    'bg-grey-darken-4': tab === 'login'
+                  }"
+                  size="large"
+                  >Sign up
+                </v-btn>
+              </v-col>
+            </v-row>
+            <v-row justify="center" v-if="tab === 'loggedin'">
+              <v-col cols="12">
+                <v-btn
+                  block
+                  rounded="lg"
+                  @click="fnLogout()"
+                  class="text-black bg-yellow-darken-3"
+                  size="large"
+                  >Logout
+                </v-btn>
+              </v-col>
+            </v-row>
+          </v-card>
+          <div class="mt-5">
+            <v-slide-y-transition>
+              <v-alert
+                class="site_font"
+                v-if="res_show_alert"
+                :type="res_alert_variant"
+                :title="res_alert_variant"
+                closable
+              >
+                {{ res_alert_message }}
+              </v-alert>
+            </v-slide-y-transition>
+          </div>
+        </v-container>
+        <!-- REGISTER PANEL -->
+        <v-container class="bg-grey-lighten-2">
+          <v-slide-y-reverse-transition mode="out-in" hide-on-leave="true">
+            <v-card class="bg-grey-lighten-2" v-if="tab === 'register' && !authStore.email">
+              <v-card-text>
+                <veeForm @submit="fnRegister" :validation-schema="schema">
+                  <v-row>
+                    <v-col cols="12">
+                      <veeField id="regEmail" name="Email" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-email"
+                          variant="outlined"
+                          label="Email"
+                          type="email"
+                          v-bind="field"
+                          v-model="regEmail"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                    <v-col cols="12">
+                      <veeField id="regPhone" name="Phone" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-phone"
+                          variant="outlined"
+                          :label="phoneLength"
+                          v-bind="field"
+                          v-model="regPhone"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
+                      <veeField id="regfName" name="Firstname" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-badge-account"
+                          variant="outlined"
+                          label="First Name"
+                          v-bind="field"
+                          v-model="regfName"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                    <v-col cols="12">
+                      <veeField id="reglName" name="Lastname" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-badge-account"
+                          variant="outlined"
+                          label="Last Name"
+                          v-bind="field"
+                          v-model="reglName"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col cols="12">
+                      <veeField id="regPassword" name="Password" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-form-textbox-password"
+                          variant="outlined"
+                          label="Password"
+                          type="password"
+                          v-bind="field"
+                          v-model="regPassword"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                    <v-col cols="12">
+                      <veeField id="regcPassword" name="Confirm" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-form-textbox-password"
+                          variant="outlined"
+                          label="Confirm Password"
+                          type="password"
+                          v-bind="field"
+                          v-model="regcPassword"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                    type="submit"
+                    block
+                    rounded="lg"
+                    class="text-white bg-grey-darken-4 my-1"
+                    size="x-large"
+                    elevation="6"
+                    :disabled="res_on_submit"
+                    :loading="res_on_submit"
+                    >Submit
+                  </v-btn>
+                </veeForm>
+              </v-card-text>
+            </v-card>
+          </v-slide-y-reverse-transition>
+        </v-container>
+        <!-- LOGIN PANEL -->
+        <v-container class="bg-grey-lighten-2">
+          <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
+            <v-card class="bg-grey-lighten-2" v-if="tab === 'login' && !authStore.email">
+              <v-card-text>
+                <veeForm @submit="fnLogin">
+                  <v-row>
+                    <v-col cols="12">
+                      <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-email"
+                          variant="outlined"
+                          label="Email"
+                          type="email"
+                          v-bind="field"
+                          v-model="loginEmail"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                    <v-col cols="12">
+                      <veeField id="loginPassword" name="Password" v-slot="{ field, errorMessage }">
+                        <v-text-field
+                          prepend-inner-icon="mdi-form-textbox-password"
+                          variant="outlined"
+                          label="Password"
+                          type="password"
+                          v-bind="field"
+                          v-model="loginPassword"
+                          :error-messages="errorMessage"
+                          required
+                        ></v-text-field>
+                      </veeField>
+                    </v-col>
+                  </v-row>
+                  <v-btn
+                    type="submit"
+                    block
+                    rounded="lg"
+                    class="text-white bg-grey-darken-4 my-1"
+                    size="x-large"
+                    elevation="6"
+                    :disabled="res_on_submit"
+                    :loading="res_on_submit"
+                    >Submit
+                  </v-btn>
+                </veeForm>
+              </v-card-text>
+            </v-card>
+          </v-slide-y-reverse-transition>
+        </v-container>
+        <!-- USER LOGGED IN - PANEL -->
+        <v-container class="bg-grey-lighten-2">
+          <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
+            <v-card class="bg-grey-lighten-2" v-if="authStore.email && authStore.email !== ''">
+              <v-card-text>
+                <v-list class="bg-grey-lighten-2">
+                  <v-list-item>
+                    <label class="text-h3">Hello, {{ authStore.fullName }}</label>
+                  </v-list-item>
+                  <v-list-item>
+                    <label class="text-h5">Email: {{ authStore.email }}</label>
+                  </v-list-item>
+                  <v-list-item>
+                    <label class="text-h5">Phone: {{ authStore.phone }}</label>
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+            <v-card
+              class="bg-grey-lighten-2"
+              v-if="authStore.isAdmin === true || authStore.isStaff === true"
+            >
+              <v-card-text>
+                <v-list class="bg-grey-lighten-2">
+                  <v-list-item>
+                    <label class="text-h3 text-yellow-darken-3"
+                      >You're logged in with a management account</label
+                    >
+                  </v-list-item>
+                  <v-list-item>
+                    <label class="text-h5">Username: {{ authStore.username }}</label>
+                  </v-list-item>
+                  <v-list-item>
+                    <label class="text-h5">Access Type: {{ managementAccessType }}</label>
+                  </v-list-item>
+                </v-list>
+              </v-card-text>
+            </v-card>
+          </v-slide-y-reverse-transition>
+        </v-container>
       </div>
-    </v-container>
-    <!-- REGISTER PANEL -->
-    <v-container class="bg-grey-lighten-2">
-      <v-slide-y-reverse-transition mode="out-in" hide-on-leave="true">
-        <v-card class="bg-grey-lighten-2" v-if="tab === 'register' && !authStore.email">
-          <v-card-text>
-            <veeForm @submit="fnRegister" :validation-schema="schema">
-              <v-row>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="regEmail" name="Email" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-email"
-                      variant="outlined"
-                      label="Email"
-                      type="email"
-                      v-bind="field"
-                      v-model="regEmail"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="regPhone" name="Phone" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-phone"
-                      variant="outlined"
-                      :label="phoneLength"
-                      v-bind="field"
-                      v-model="regPhone"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="regfName" name="Firstname" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-badge-account"
-                      variant="outlined"
-                      label="First Name"
-                      v-bind="field"
-                      v-model="regfName"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="reglName" name="Lastname" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-badge-account"
-                      variant="outlined"
-                      label="Last Name"
-                      v-bind="field"
-                      v-model="reglName"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="regPassword" name="Password" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-form-textbox-password"
-                      variant="outlined"
-                      label="Password"
-                      type="password"
-                      v-bind="field"
-                      v-model="regPassword"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="regcPassword" name="Confirm" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-form-textbox-password"
-                      variant="outlined"
-                      label="Confirm Password"
-                      type="password"
-                      v-bind="field"
-                      v-model="regcPassword"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-              </v-row>
-              <v-btn
-                type="submit"
-                block
-                rounded="lg"
-                class="text-white bg-grey-darken-4 my-1"
-                size="x-large"
-                elevation="6"
-                :disabled="res_on_submit"
-                :loading="res_on_submit"
-                >Submit
-              </v-btn>
-            </veeForm>
-          </v-card-text>
-        </v-card>
-      </v-slide-y-reverse-transition>
-    </v-container>
-    <!-- LOGIN PANEL -->
-    <v-container class="bg-grey-lighten-2">
-      <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
-        <v-card class="bg-grey-lighten-2" v-if="tab === 'login' && !authStore.email">
-          <v-card-text>
-            <veeForm @submit="fnLogin">
-              <v-row>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-email"
-                      variant="outlined"
-                      label="Email"
-                      type="email"
-                      v-bind="field"
-                      v-model="loginEmail"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-                <v-col cols="12" md="6" sm="4">
-                  <veeField id="loginPassword" name="Password" v-slot="{ field, errorMessage }">
-                    <v-text-field
-                      prepend-inner-icon="mdi-form-textbox-password"
-                      variant="outlined"
-                      label="Password"
-                      type="password"
-                      v-bind="field"
-                      v-model="loginPassword"
-                      :error-messages="errorMessage"
-                      required
-                    ></v-text-field>
-                  </veeField>
-                </v-col>
-              </v-row>
-              <v-btn
-                type="submit"
-                block
-                rounded="lg"
-                class="text-white bg-grey-darken-4 my-1"
-                size="x-large"
-                elevation="6"
-                :disabled="res_on_submit"
-                :loading="res_on_submit"
-                >Submit
-              </v-btn>
-            </veeForm>
-          </v-card-text>
-        </v-card>
-      </v-slide-y-reverse-transition>
-    </v-container>
-    <!-- USER LOGGED IN - PANEL -->
-    <v-container class="bg-grey-lighten-2">
-      <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
-        <v-card class="bg-grey-lighten-2" v-if="authStore.email && authStore.email !== ''">
-          <v-card-text>
-            <v-list class="bg-grey-lighten-2">
-              <v-list-item>
-                <label class="text-h3">Hello, {{ authStore.fullName }}</label>
-              </v-list-item>
-              <v-list-item>
-                <label class="text-h5">Email: {{ authStore.email }}</label>
-              </v-list-item>
-              <v-list-item>
-                <label class="text-h5">Phone: {{ authStore.phone }}</label>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-        <v-card
-          class="bg-grey-lighten-2"
-          v-if="authStore.isAdmin === true || authStore.isStaff === true"
-        >
-          <v-card-text>
-            <v-list class="bg-grey-lighten-2">
-              <v-list-item>
-                <label class="text-h3 text-yellow-darken-3"
-                  >You're logged in with a management account</label
-                >
-              </v-list-item>
-              <v-list-item>
-                <label class="text-h5">Username: {{ authStore.username }}</label>
-              </v-list-item>
-              <v-list-item>
-                <label class="text-h5">Access Type: {{ managementAccessType }}</label>
-              </v-list-item>
-            </v-list>
-          </v-card-text>
-        </v-card>
-      </v-slide-y-reverse-transition>
-    </v-container>
+    </div>
   </v-dialog>
 </template>
 
