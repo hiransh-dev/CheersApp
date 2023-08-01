@@ -103,20 +103,6 @@
           </v-btn>
         </div>
       </div>
-      <!-- <v-snackbar v-model="notSetSnackbar" location="center" vertical> -->
-      <v-snackbar v-model="notSetSnackbar" vertical>
-        <div class="text-subtitle-1 pb-2">Uh oh!</div>
-        <p>Table Number not selected</p>
-        <template v-slot:actions>
-          <v-btn
-            color="yellow-darken-3"
-            variant="text"
-            @click="(notSetSnackbar = false), (pageStore.dialogCart = false)"
-          >
-            Close
-          </v-btn>
-        </template>
-      </v-snackbar>
     </v-card>
   </v-dialog>
 </template>
@@ -129,9 +115,7 @@ import useOrdersStore from "@/stores/orders";
 
 export default {
   data() {
-    return {
-      notSetSnackbar: false
-    };
+    return {};
   },
   methods: {
     addingToCart(id) {
@@ -142,11 +126,11 @@ export default {
     },
     async checkout() {
       if (!this.pageStore.setTable || this.pageStore.setTable === 0) {
-        return (this.notSetSnackbar = true);
+        this.pageStore.setGlobalSnackbar("Uh oh!", "Table Number not selected");
       } else {
         const orderCheckoutStatus = await this.cartStore.placeOrder(this.pageStore.setTable);
         if (orderCheckoutStatus) {
-          this.pageStore.setGlobalSnackbar("Confirmed", "Your order has been placed");
+          this.pageStore.setGlobalSnackbar("Order Status", orderCheckoutStatus);
           this.ordersStore.fetchOrders();
         }
       }

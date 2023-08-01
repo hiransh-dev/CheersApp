@@ -49,6 +49,7 @@ module.exports.newOrder = async (req, res) => {
     // SAVE BOTH
     const placedOrder = await new_order.save();
     await curUserOrder.save();
-    res.json(placedOrder);
+    // res.json(placedOrder);
+    res.send("Order has been placed.");
   }
 };
