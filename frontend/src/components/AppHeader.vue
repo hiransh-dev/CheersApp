@@ -1,11 +1,12 @@
 <template>
-  <div class="desktop_container">
-    <v-parallax class="parallaxHeight" src="../src/assets/images/cheers_banner.png">
-      <div class="w-100 h-100 d-flex justify-center align-center">
-        <RouterLink to="/" class="router_link_decoration">
-          <v-img class="mx-2" src="../src/assets/images/CheersLogo_nobg.png"></v-img>
-        </RouterLink>
-      </div>
+  <div class="desktop_container w-100">
+    <v-parallax
+      class="parallaxHeight d-flex align-center"
+      src="../src/assets/images/cheers_banner.png"
+    >
+      <RouterLink to="/" class="router_link_decoration">
+        <v-img class="mx-2" src="../src/assets/images/CheersLogo_nobg.png"></v-img>
+      </RouterLink>
     </v-parallax>
   </div>
 </template>
@@ -14,24 +15,16 @@
 export default {
   name: "AppHeader",
   data() {
-    return {
-      parallaxImgRatio: "1"
-    };
+    return {};
   }
 };
 </script>
 
 <style scoped>
 .parallaxHeight {
-  height: 40vh;
+  height: 50vh;
 }
 .parallaxWidth {
   widows: 50vw;
-}
-@media only screen and (min-width: 1024px) {
-  .parallaxHeight {
-    height: 50vh;
-    max-height: 40rem;
-  }
 }
 </style>

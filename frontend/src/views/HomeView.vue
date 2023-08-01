@@ -1,6 +1,6 @@
 <template>
   <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
-  <div class="desktop_container">
+  <div class="desktop_container w-100">
     <AppHeaderCards> </AppHeaderCards>
     <RouterLink :to="linkTo" class="router_link_decoration">
       <v-row no-gutters>
