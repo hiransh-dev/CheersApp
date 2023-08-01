@@ -42,7 +42,6 @@ export default defineStore("auth", {
           this.username = checkLoggedIn.data.username;
           this.isAdmin = checkLoggedIn.data.isAdmin;
           this.isStaff = checkLoggedIn.data.isStaff;
-          console.log(checkLoggedIn.data);
         } else {
           this.clearAuth;
         }
