@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="header_container">
+    <div v-if="this.$route.name !== 'manage'" class="header_container">
       <AppHeader></AppHeader>
     </div>
     <div class="container">
