@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/HomeView.vue";
 import Menu from "@/views/MenuView.vue";
 import Manage from "@/views/manage/ManagementView.vue";
-import ManageMenu from "@/views/manage/ManagementMenu.vue";
 import ManageLogin from "@/views/manage/ManagementLogin.vue";
+import axios from "axios";
 
 const routes = [
   {
@@ -19,19 +19,30 @@ const routes = [
   },
   /* MANAGEMENT ROUTES */
   {
+    path: "/manage/login",
+    name: "manageLogin",
+    component: ManageLogin,
+    beforeEnter: async () => {
+      const isManagement = await axios.get("/api/user/check");
+      if (isManagement.data.isAdmin === true || isManagement.data.isStaff === true) {
+        return { name: "manage" };
+      } else {
+        return true;
+      }
+    }
+  },
+  {
     path: "/manage",
     name: "manage",
-    component: Manage
-  },
-  {
-    path: "/manage/login",
-    name: "manage/login",
-    component: ManageLogin
-  },
-  {
-    path: "/manage/menu",
-    name: "manageMenu",
-    component: ManageMenu
+    component: Manage,
+    beforeEnter: async () => {
+      const isManagement = await axios.get("/api/user/check");
+      if (isManagement.data.isAdmin === true || isManagement.data.isStaff === true) {
+        return true;
+      } else {
+        return { name: "manageLogin" };
+      }
+    }
   }
 ];
 
