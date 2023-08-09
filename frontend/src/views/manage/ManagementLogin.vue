@@ -1,17 +1,5 @@
 <template>
   <div class="desktop_container w-100">
-    <v-card
-      v-if="managementStore.username && managementStore.username !== ''"
-      class="bg-blue-grey-darken-3 text-center my-2 pa-2"
-      rounded="lg"
-      elevation="4"
-    >
-      <v-icon color="black" icon="mdi-table-chair" size="x-large"></v-icon>
-      <v-card-title class="site_font text-black">Username</v-card-title>
-      <v-card-text class="bg-black site_font">
-        {{ managementStore.username }}
-      </v-card-text>
-    </v-card>
     <!-- LOGIN PANEL -->
     <div class="my-5">
       <v-slide-y-transition>
@@ -79,8 +67,6 @@
 
 <script>
 import axios from "axios";
-import { mapStores } from "pinia";
-import useManagementStore from "@/stores/management";
 
 export default {
   data() {
@@ -110,21 +96,16 @@ export default {
           }
         );
         if (managementUserLoggedIn.status === 200 && managementUserLoggedIn.data.username) {
-          this.managementStore.username = managementUserLoggedIn.username;
           if (managementUserLoggedIn.data.isAdmin === true) {
-            this.managementStore.userStatus = "Admin";
-            this.res_alert_message = "Welcome Back Admin.";
-            this.res_alert_variant = "success";
             this.res_show_alert = true;
             this.res_on_submit = false;
+            this.$router.push("/manage");
           } else if (managementUserLoggedIn.data.isStaff === true) {
-            this.managementStore.userStatus = "Staff";
-            this.res_alert_message = `Welcome back + ${this.managementStore.username}.`;
-            this.res_alert_variant = "success";
             this.res_show_alert = true;
             this.res_on_submit = false;
+            this.$router.push("/manage");
           } else {
-            this.res_alert_message = "Something went wrong. Account Creation Failed.";
+            this.res_alert_message = "Something went wrong. Account login Failed.";
             this.res_alert_variant = "error";
             this.res_show_alert = true;
             this.res_on_submit = false;
@@ -137,15 +118,12 @@ export default {
         }
       } catch (e) {
         console.log(e);
-        this.res_alert_message = "Something went wrong. Account Creation Failed.";
+        this.res_alert_message = "Something went wrong. Account Login Failed.";
         this.res_alert_variant = "error";
         this.res_show_alert = true;
         this.res_on_submit = false;
       }
     }
-  },
-  computed: {
-    ...mapStores(useManagementStore)
   }
 };
 </script>
