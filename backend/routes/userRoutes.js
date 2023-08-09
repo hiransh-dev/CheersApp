@@ -11,10 +11,12 @@ const catchAsync = require("../utils/catchAsync");
 const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 
 // MIDDLEWARES
-const { isNotLoggedIn, isLoggedIn, isManagement } = require(path.join(
-  __dirname,
-  "../utils/middleware.js"
-));
+const {
+  isNotLoggedIn,
+  isLoggedIn,
+  isManagement,
+  isUserAdmin,
+} = require(path.join(__dirname, "../utils/middleware.js"));
 
 /* JOI Schema for Middleware */
 const { joiUserSchema } = require("../utils/joi_schema");
@@ -48,6 +50,22 @@ router.post(
 router.get("/check", isLoggedIn, userController.checkUser);
 // LOGOUT ROUTE
 router.get("/logout", isLoggedIn, userController.logout);
+
+/* MANAGEMENT ROUTES */
+// STAFF/ADMIN LOGIN ROUTE
+router.post(
+  "/managementlogin",
+  isNotLoggedIn,
+  passport.authenticate("local"),
+  catchAsync(userController.managementLogin)
+);
+// STAFF REGISTER ROUTE
+router.post(
+  "/registerstaff",
+  isLoggedIn,
+  isUserAdmin,
+  catchAsync(userController.managementRegister)
+);
 // GET ALL USERS
 router.get(
   "/allusers",

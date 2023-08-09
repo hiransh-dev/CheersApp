@@ -84,7 +84,7 @@ export default {
       this.res_on_submit = true;
       try {
         const managementUserLoggedIn = await axios.post(
-          "/api/manage/login",
+          "/api/user/managementlogin",
           {
             username: this.loginEmail,
             password: this.loginPassword

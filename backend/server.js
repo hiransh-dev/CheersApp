@@ -27,7 +27,6 @@ const passportLocal = require("passport-local");
 const MongoStore = require("connect-mongo");
 
 const menuRoutes = require(path.join(__dirname, "/routes/menuRoutes"));
-const manageRoutes = require(path.join(__dirname, "/routes/manageRoutes"));
 const userRoutes = require(path.join(__dirname, "/routes/userRoutes"));
 const orderRoutes = require(path.join(__dirname, "/routes/orderRoutes"));
 
@@ -79,7 +78,6 @@ app.use((req, res, next) => {
 app.use("/api/menu", menuRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/order", orderRoutes);
-app.use("/api/manage", manageRoutes);
 
 /* Basic Route */
 app.get("/", (req, res) => {

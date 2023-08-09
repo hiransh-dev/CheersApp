@@ -9,10 +9,6 @@ const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 module.exports.registerUser = async (req, res, next) => {
   const { email, password, firstName, lastName, phoneNumber } =
     req.body.registerUser;
-  // const userExists = await User.findOne({ email });
-  // if (userExists) {
-  //   return res.send("User Exists");
-  // }
   const newUser = new User({
     email,
     firstName,
@@ -75,9 +71,60 @@ module.exports.logout = (req, res) => {
   });
 };
 
+// @desc    LOGIN FOR ADMIN/STAFF
+// @route   POST /api/user/managementlogin/
+// @access  MANAGEMENT
+module.exports.managementLogin = async (req, res) => {
+  const { username, isAdmin, isStaff } = req.user;
+  const managementLoginUser = await User.findById(req.user._id);
+  if (
+    managementLoginUser.isAdmin === true ||
+    managementLoginUser.isStaff === true
+  ) {
+    return res.json({ username, isAdmin, isStaff });
+  } else {
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+    });
+    return res.send(
+      "User/Customers cannot login into Management Section. Go to User Login."
+    );
+  }
+};
+
+// @desc    LOGIN FOR ADMIN/STAFF
+// @route   POST /api/user/registerstaff/
+// @access  ADMIN
+module.exports.managementRegister = async (req, res) => {
+  const { email, password, firstName, lastName, phoneNumber } =
+    req.body.registerStaff;
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    return res.send("User Exists");
+  }
+  const newStaff = new User({
+    email,
+    username: email,
+    firstName,
+    lastName,
+    phoneNumber,
+    isStaff: true,
+  });
+  // newStaff.username = newStaff.email;
+  const newStaffCreated = User.register(newStaff, password);
+  if (!newStaffCreated) {
+    throw new expressError("Staff Account creation failed", 400);
+  } else {
+    const { email, firstName, lastName, isStaff } = newStaffCreated;
+    res.json({ email, firstName, lastName, isStaff });
+  }
+};
+
 // @desc    Get All Users
 // @route   GET /api/user/allusers
-// @access  ADMIN
+// @access  MANAGEMENT
 module.exports.allusers = async (req, res) => {
   const allUsersInfo = await User.find({});
   res.json(allUsersInfo);
