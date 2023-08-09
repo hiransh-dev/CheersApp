@@ -84,7 +84,14 @@ module.exports.acceptOrder = async (req, res) => {
 // @route   POST /api/order/allorders
 // @access  ADMIN
 module.exports.showAllOrders = async (req, res) => {
-  const allOrders = await Order.find({ orderStatus: true })
+  const dateOrders = new Date(req.params.date);
+  const allOrders = await Order.find({
+    orderStatus: true,
+    createdAt: {
+      $gte: dateOrders.setHours(0, 0, 0, 0),
+      $lt: dateOrders.setHours(23, 59, 59, 999),
+    },
+  })
     .populate({
       path: "orderItems.item",
     })

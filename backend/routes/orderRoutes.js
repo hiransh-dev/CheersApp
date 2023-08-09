@@ -54,7 +54,7 @@ router.post(
   catchAsync(orderController.acceptOrder)
 );
 router.get(
-  "/allorders",
+  "/allorders/:date",
   isLoggedIn,
   isManagement,
   catchAsync(orderController.showAllOrders)
