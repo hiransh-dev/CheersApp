@@ -3,6 +3,7 @@ import Home from "@/views/HomeView.vue";
 import Menu from "@/views/MenuView.vue";
 import Manage from "@/views/manage/ManagementView.vue";
 import ManageLogin from "@/views/manage/ManagementLogin.vue";
+import Error from "@/views/ErrorView.vue";
 import axios from "axios";
 
 const routes = [
@@ -43,6 +44,11 @@ const routes = [
         return { name: "manageLogin" };
       }
     }
+  },
+  {
+    path: "/:pathMatch(.*)",
+    name: "error",
+    component: Error
   }
 ];
 
