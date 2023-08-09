@@ -11,7 +11,7 @@ const catchAsync = require("../utils/catchAsync");
 const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 
 // MIDDLEWARES
-const { isNotLoggedIn, isLoggedIn, isNotManagement } = require(path.join(
+const { isNotLoggedIn, isLoggedIn, isManagement } = require(path.join(
   __dirname,
   "../utils/middleware.js"
 ));
@@ -48,5 +48,19 @@ router.post(
 router.get("/check", isLoggedIn, userController.checkUser);
 // LOGOUT ROUTE
 router.get("/logout", isLoggedIn, userController.logout);
+// GET ALL USERS
+router.get(
+  "/allusers",
+  isLoggedIn,
+  isManagement,
+  catchAsync(userController.allusers)
+);
+// GET ALL USERS
+router.get(
+  "/managementusers",
+  isLoggedIn,
+  isManagement,
+  catchAsync(userController.managementUser)
+);
 
 module.exports = router;

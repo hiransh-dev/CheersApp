@@ -74,3 +74,21 @@ module.exports.logout = (req, res) => {
     res.status(200).send("Logged out");
   });
 };
+
+// @desc    Get All Users
+// @route   GET /api/user/allusers
+// @access  ADMIN
+module.exports.allusers = async (req, res) => {
+  const allUsersInfo = await User.find({});
+  res.json(allUsersInfo);
+};
+
+// @desc    Get Management
+// @route   GET /api/user/management
+// @access  ADMIN
+module.exports.managementUser = async (req, res) => {
+  const getManagementUsersInfo = await User.find({
+    isStaff: true,
+  });
+  res.json(getManagementUsersInfo);
+};
