@@ -47,5 +47,17 @@ router.get(
   isManagement,
   catchAsync(orderController.pendingOrders)
 );
+router.post(
+  "/accept",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.acceptOrder)
+);
+router.get(
+  "/allorders",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.showAllOrders)
+);
 
 module.exports = router;

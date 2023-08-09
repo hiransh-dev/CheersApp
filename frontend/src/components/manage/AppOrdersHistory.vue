@@ -2,7 +2,7 @@
   <div class="d-flex flex-row flex-wrap">
     <v-card
       class="d-flex flex-column ma-2 pa-2 bg-blue-darken-4"
-      v-for="order of pendingOrders"
+      v-for="order of orderHistory"
       :key="order._id"
     >
       <v-card-title>
@@ -12,8 +12,11 @@
       </v-card-title>
       <v-card-subtitle>{{ order._id }}</v-card-subtitle>
       <v-card-text>
+        <v-divider thickness="4" color="black"></v-divider>
         Customer Name: {{ order.author.firstName }} {{ order.author.lastName }} <br />
-        Phone Number: {{ order.author.phoneNumber }}
+        Phone Number: {{ order.author.phoneNumber }} <br />
+        <v-divider thickness="4" color="black"></v-divider>
+        Ordered on: {{ readDate(order.createdAt) }}
         <v-list rounded="lg" class="my-2 bg-black">
           <v-list-item v-for="orderItem of order.orderItems" :key="orderItem">
             <label>
@@ -23,12 +26,6 @@
           </v-list-item>
         </v-list>
       </v-card-text>
-      <v-card-actions class="align-self-end">
-        <v-btn variant="tonal"> View Order </v-btn>
-        <v-btn class="bg-green-darken-4" variant="tonal" @click="acceptPendingOrder(order._id)">
-          Order Fulfilled
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </div>
 </template>
@@ -41,31 +38,22 @@ import usePageStore from "@/stores/page";
 export default {
   data() {
     return {
-      pendingOrders: []
+      orderHistory: []
     };
   },
   methods: {
-    async getPendingOrders() {
-      const allPendingOrders = await axios.get("/api/order/pending");
-      this.pendingOrders = allPendingOrders.data;
+    async getOrderHistory() {
+      const OrderHistory = await axios.get("/api/order/allorders");
+      this.orderHistory = OrderHistory.data;
     },
-    async acceptPendingOrder(id) {
-      const acceptedOrder = await axios.post(
-        "/api/order/accept",
-        { id },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
-        }
-      );
-      this.pageStore.setGlobalSnackbar("Order Status", acceptedOrder.data);
-      this.pendingOrders = [];
-      this.getPendingOrders();
+    readDate(date) {
+      const fullDate = new Date(date);
+      const readableDate = `${fullDate.toDateString()}, ${fullDate.getHours()}:${fullDate.getMinutes()}`;
+      return readableDate;
     }
   },
   mounted() {
-    this.getPendingOrders();
+    this.getOrderHistory();
   },
   computed: {
     ...mapStores(usePageStore)

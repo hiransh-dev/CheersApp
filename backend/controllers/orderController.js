@@ -37,7 +37,6 @@ module.exports.newOrder = async (req, res) => {
       });
       total = total + menuItem.price * item.quantity;
     }
-
     new_order.tableNo = req.body.order.tableNo;
     new_order.orderTotal = parseFloat(total);
     new_order.orderStatus = 0;
@@ -54,6 +53,9 @@ module.exports.newOrder = async (req, res) => {
   }
 };
 
+// @desc    Fetch all items on menu
+// @route   POST /api/order/new
+// @access  ADMIN
 module.exports.pendingOrders = async (req, res) => {
   const allPendingOrders = await Order.find({ orderStatus: false })
     .populate({
@@ -62,6 +64,34 @@ module.exports.pendingOrders = async (req, res) => {
     .populate({
       path: "author",
       select: "firstName lastName email phoneNumber",
-    });
+    })
+    .sort({ _id: -1 });
   res.json(allPendingOrders);
+};
+
+// @desc    Fetch all items on menu
+// @route   POST /api/order/accept
+// @access  ADMIN
+module.exports.acceptOrder = async (req, res) => {
+  const id = req.body.id;
+  const acceptedOrder = await Order.findByIdAndUpdate(id, {
+    orderStatus: true,
+  });
+  res.send("Order has been marked as fulfilled.");
+};
+
+// @desc    Fetch all items on menu
+// @route   POST /api/order/allorders
+// @access  ADMIN
+module.exports.showAllOrders = async (req, res) => {
+  const allOrders = await Order.find({ orderStatus: true })
+    .populate({
+      path: "orderItems.item",
+    })
+    .populate({
+      path: "author",
+      select: "firstName lastName email phoneNumber",
+    })
+    .sort({ _id: -1 });
+  res.json(allOrders);
 };
