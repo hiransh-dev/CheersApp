@@ -4,6 +4,13 @@
     <v-navigation-drawer class="bg-black">
       <v-list>
         <v-list-item>
+          <v-card class="bg-yellow-darken-3" elevation="8">
+            <v-card-title class="text-center">
+              {{ authStore.username }}
+            </v-card-title>
+          </v-card>
+        </v-list-item>
+        <v-list-item>
           <v-btn @click="mainContentComponent = 'AppOrdersPending'" variant="outlined" block>
             Pending Orders
           </v-btn>
