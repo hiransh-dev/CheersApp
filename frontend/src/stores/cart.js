@@ -27,7 +27,6 @@ export default defineStore("cart", {
           });
         });
         if (categoryParam) {
-          // console.log(categoryParam);
           if (categoryParam === "drinks") {
             this.category = "Drinks";
           } else if (categoryParam === "food") {
@@ -37,9 +36,6 @@ export default defineStore("cart", {
           } else {
             console.log("Error: Invalid category in fetching Menu");
           }
-          /* Create a reference array which shares same data, for filtering category */
-          // this.menuItems = this.menu;
-          // console.log(this.category);
           this.menuItems = this.menu.filter((item) => {
             return item.category === this.category;
           });
@@ -52,17 +48,14 @@ export default defineStore("cart", {
     updateCart(id, quantity, price) {
       if (this.cartItems.filter((item) => item.id === id)) {
         this.cartItems = this.cartItems.filter((item) => item.id !== id);
-        /* Verify price from backend after checkout is clicked */
         this.updateCartTotal();
       }
       if (quantity !== 0) {
         this.cartItems.push({ id, quantity, price });
-        /* Verify price from backend after checkout is clicked */
         this.updateCartTotal();
       }
     },
     updateCartTotal() {
-      /* Verify price from backend after checkout is clicked */
       this.cartTotal = 0;
       this.totalItemsCounter = 0;
       this.cartItems.forEach((item) => {
