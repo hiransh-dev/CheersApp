@@ -1,5 +1,5 @@
 <template>
-  <div class="desktop_container">
+  <div class="desktop_container w-100">
     <!-- HEADER CARDS: SEARCH, SELECT SEATING etc -->
     <AppHeaderCards>
       <!-- SET-CATEGORY, HEADER CARD-->
@@ -76,9 +76,6 @@
     >
       <v-card class="container">
         <v-toolbar class="bg-black" dark>
-          <!-- <v-btn icon dark @click="dialogCategory = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn> -->
           <v-toolbar-title class="site_font">Category</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
@@ -125,10 +122,18 @@
         elevation="6"
       >
         <v-badge
+          icon="mdi-exclamation-thick"
+          color="red-darken-3"
+          class="w-100 mb-4"
+          style="position: absolute"
+          v-if="menuItem.outofstock === true"
+        >
+        </v-badge>
+        <v-badge
           color="blue-darken-3"
           class="w-100 mb-4"
           style="position: absolute"
-          v-if="menuItem.quantity !== 0"
+          v-if="menuItem.quantity !== 0 && menuItem.outofstock === false"
           :content="menuItem.quantity"
         >
         </v-badge>
@@ -148,7 +153,12 @@
             >
           </div>
         </v-expansion-panel-title>
-        <v-expansion-panel-text>
+        <v-expansion-panel-text v-if="menuItem.outofstock === true">
+          <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
+            <label>Out of Stock!</label>
+          </v-card>
+        </v-expansion-panel-text>
+        <v-expansion-panel-text v-if="menuItem.outofstock === false">
           <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
             <v-btn class="ma-2 bg-red" @click="removingFromCart(menuItem._id)" elevation="4" icon>
               <v-icon>mdi-minus-thick</v-icon>
@@ -190,7 +200,6 @@ export default {
         });
       } else {
         this.setSubCategory = "";
-        // this.cartStore.menuItems = this.cartStore.menu;
         this.cartStore.menuItems = this.cartStore.menu.filter((item) => {
           return item.category === this.cartStore.category;
         });
@@ -207,7 +216,6 @@ export default {
     ...mapStores(useCartStore)
   },
   mounted() {
-    // console.log(this.$route.params.category);
     this.cartStore.fetchMenu(this.category);
   },
   updated() {
