@@ -7,7 +7,7 @@ const path = require("path");
 const menuController = require("../controllers/menuController");
 
 // MIDDLEWARES
-const { isLoggedIn, isUserAdmin } = require(path.join(
+const { isLoggedIn, isManagement, isUserAdmin } = require(path.join(
   __dirname,
   "../utils/middleware.js"
 ));
@@ -26,15 +26,20 @@ const validateMenuSchema = (req, res, next) => {
 
 /* MENU ROUTES */
 router.get("/", catchAsync(menuController.getMenu));
-// FULL MENU VIEW MANAGEMENT ROUTE
-router.get("/menu", catchAsync(menuController.manageMenu));
 // ADD NEW ITEM IN MENU ROUTE
 router.post(
-  "/menu/new",
+  "/new",
   isLoggedIn,
   isUserAdmin,
   validateMenuSchema,
   catchAsync(menuController.addMenuItem)
+);
+// MARK ITEM AS OUT OF STOCK
+router.post(
+  "/markstock",
+  isLoggedIn,
+  isManagement,
+  catchAsync(menuController.markStock)
 );
 
 module.exports = router;

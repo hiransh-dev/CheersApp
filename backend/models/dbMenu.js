@@ -23,6 +23,7 @@ const MenuSchema = new Schema(
     },
     subcategory: {
       type: String,
+      required: true,
       enum: [
         "Beers",
         "World Beers",
@@ -34,12 +35,40 @@ const MenuSchema = new Schema(
         // "Bar Snacks",
         // "Food",
       ],
-      // required: true,
+    },
+    outofstock: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
   },
   {
     timestamps: true,
   }
 );
+
+// const subCategorySchema = new Schema(
+//   {
+//     title: {
+//       type: String,
+//       required: true,
+//     },
+//     category: {
+//       type: String,
+//       enum: ["Drinks", "Food", "Soft Drinks"],
+//       required: true,
+//     },
+//     subcategory: {
+//       type: String,
+//       required: true,
+//     },
+//   },
+//   {
+//     timestamps: true,
+//   }
+// );
+
+// const Menu = mongoose.model("Menu", MenuSchema);
+// const SubCategoryMenu = mongoose.model("SubCategoryMenu", subCategorySchema);
 
 module.exports = mongoose.model("Menu", MenuSchema);
