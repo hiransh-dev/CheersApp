@@ -30,12 +30,16 @@ module.exports.newOrder = async (req, res) => {
   let total = 0;
   for (let item of order.order) {
     const menuItem = await Menu.findById(item.id);
-    if (menuItem) {
+    if (menuItem && menuItem.outofstock === false) {
       new_order.orderItems.push({
         item: menuItem,
         quantity: item.quantity,
       });
       total = total + menuItem.price * item.quantity;
+    } else {
+      return res.send(
+        "One of the items in your order is unavailable: " + menuItem.title
+      );
     }
     new_order.tableNo = req.body.order.tableNo;
     new_order.orderTotal = parseFloat(total);
