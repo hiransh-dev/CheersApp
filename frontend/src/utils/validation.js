@@ -14,7 +14,8 @@ import {
   max_value as maxValue,
   one_of as oneOf,
   email as email,
-  confirmed as confirmed
+  confirmed as confirmed,
+  regex as regex
 } from "@vee-validate/rules";
 
 export default {
@@ -33,6 +34,7 @@ export default {
     defineRule("subcategory", oneOf);
     defineRule("email", email);
     defineRule("confirmPassword", confirmed);
+    defineRule("regex", regex);
 
     configure({
       generateMessage: (ctx) => {
