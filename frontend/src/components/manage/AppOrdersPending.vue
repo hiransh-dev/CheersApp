@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column w-100">
     <div class="d-flex flex-row">
       <div class="d-flex flex-column">
         <v-card class="ma-2 pa-2 bg-black">

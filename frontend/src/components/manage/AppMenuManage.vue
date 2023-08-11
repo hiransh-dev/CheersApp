@@ -37,7 +37,7 @@
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="this.category = 'drinks'"
+              @click="(this.category = 'drinks'), this.cartStore.fetchMenu(this.category)"
               rounded="lg"
             >
               <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
@@ -46,7 +46,7 @@
           <v-col cols="4">
             <v-card
               class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="this.category = 'food'"
+              @click="(this.category = 'food'), this.cartStore.fetchMenu(this.category)"
               rounded="lg"
             >
               <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
@@ -55,7 +55,7 @@
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="this.category = 'softdrinks'"
+              @click="(this.category = 'softdrinks'), this.cartStore.fetchMenu(this.category)"
               rounded="lg"
             >
               <v-icon icon="mdi-beer" size="x-large"></v-icon>
@@ -211,7 +211,7 @@
         </v-expansion-panels>
       </div>
       <div class="desktop_container w-100">
-        <label class="text-h3">Marked out of Stock</label>
+        <label class="text-h3">Marked Out of Stock</label>
         <!-- MENU PANELS -->
         <v-expansion-panels class="my-4">
           <v-expansion-panel
