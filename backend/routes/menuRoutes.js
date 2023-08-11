@@ -25,8 +25,9 @@ const validateMenuSchema = (req, res, next) => {
 };
 
 /* MENU ROUTES */
+// GET MENU
 router.get("/", catchAsync(menuController.getMenu));
-// ADD NEW ITEM IN MENU ROUTE
+// ADD NEW ITEM IN MENU
 router.post(
   "/new",
   isLoggedIn,
@@ -41,5 +42,18 @@ router.post(
   isManagement,
   catchAsync(menuController.markStock)
 );
-
+// GET DELETED ITEMS FROM MENU
+router.get(
+  "/deleted",
+  isLoggedIn,
+  isManagement,
+  catchAsync(menuController.getDeletedMenu)
+);
+// DELETE ITEM IN MENU
+router.post(
+  "/delete",
+  isLoggedIn,
+  isUserAdmin,
+  catchAsync(menuController.itemDelete)
+);
 module.exports = router;
