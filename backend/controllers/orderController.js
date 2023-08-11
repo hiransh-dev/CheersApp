@@ -3,7 +3,7 @@ const User = require("../models/dbUsers");
 const Menu = require("../models/dbMenu");
 
 // @desc    Fetch all items on menu
-// @route   POST /api/order/
+// @route   GET /api/order/
 // @access  Private
 module.exports.getOrders = async (req, res) => {
   if (req.user) {
@@ -58,7 +58,7 @@ module.exports.newOrder = async (req, res) => {
 };
 
 // @desc    Fetch all items on menu
-// @route   POST /api/order/new
+// @route   GET /api/order/new
 // @access  ADMIN
 module.exports.pendingOrders = async (req, res) => {
   const allPendingOrders = await Order.find({ orderStatus: false })
@@ -85,8 +85,8 @@ module.exports.acceptOrder = async (req, res) => {
 };
 
 // @desc    Fetch all items on menu
-// @route   POST /api/order/allorders
-// @access  ADMIN
+// @route   GET /api/order/allorders/:date
+// @access  MANAGEMENT
 module.exports.showAllOrders = async (req, res) => {
   const dateOrders = new Date(req.params.date);
   const allOrders = await Order.find({
@@ -104,5 +104,19 @@ module.exports.showAllOrders = async (req, res) => {
       select: "firstName lastName email phoneNumber",
     })
     .sort({ _id: -1 });
+  res.json(allOrders);
+};
+
+// @desc    Fetch all items on menu
+// @route   POST /api/order/chart/:date
+// @access  MANAGEMENT
+module.exports.chart = async (req, res) => {
+  const dateOrders = new Date();
+  const allOrders = await Order.find({
+    orderStatus: true,
+    createdAt: {
+      $gte: dateOrders.setDate(dateOrders.getDate() - 7),
+    },
+  }).select("orderTotal");
   res.json(allOrders);
 };

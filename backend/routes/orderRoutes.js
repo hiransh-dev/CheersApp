@@ -59,5 +59,11 @@ router.get(
   isManagement,
   catchAsync(orderController.showAllOrders)
 );
+router.get(
+  "/chart",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.chart)
+);
 
 module.exports = router;
