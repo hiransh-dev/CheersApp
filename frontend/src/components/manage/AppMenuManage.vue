@@ -1,7 +1,8 @@
 <template>
   <div class="d-flex flex-column w-100 align-center">
     <v-card
-      class="ma-10 bg-black d-flex justify-center align-center"
+      v-if="authStore.isAdmin === true"
+      class="ma-2 mb-4 bg-black d-flex justify-center align-center w-100"
       style="height: 8rem; width: auto; padding: 1rem"
       @click="dialogAddNew = true"
     >
@@ -17,13 +18,13 @@
     >
       <v-card class="container">
         <v-toolbar class="bg-black" dark>
-          <v-toolbar-title class="site_font">Category</v-toolbar-title>
+          <v-toolbar-title class="site_font">Add Menu Item</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn variant="text" @click="dialogAddNew = false"> Close </v-btn>
           </v-toolbar-items>
         </v-toolbar>
-        <label class="site_font text-h4 text-center my-5 mx-5">Select Sub Category</label>
+        <label class="site_font text-h4 text-center my-5 mx-5">Add new Item to Menu</label>
         <div class="desktop_container w-100">
           <AppMenuNew></AppMenuNew>
         </div>
@@ -68,7 +69,7 @@
           rounded="lg"
           elevation="6"
         >
-          <v-card-title class="site_font text-black"> What would you like to drink? </v-card-title>
+          <v-card-title class="site_font text-black"> Select sub category </v-card-title>
           <v-btn
             v-if="setSubCategory !== ''"
             class="bg-black site_font"
@@ -101,9 +102,6 @@
         >
           <v-card class="container">
             <v-toolbar class="bg-black" dark>
-              <!-- <v-btn icon dark @click="dialogCategory = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn> -->
               <v-toolbar-title class="site_font">Category</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
@@ -275,6 +273,7 @@
 import { mapStores } from "pinia";
 import useCartStore from "@/stores/cart";
 import usePageStore from "@/stores/page";
+import useAuthStore from "@/stores/Auth";
 import axios from "axios";
 import AppMenuNew from "@/components/manage/AppMenuNew.vue";
 
@@ -328,17 +327,18 @@ export default {
   },
   computed: {
     ...mapStores(useCartStore),
-    ...mapStores(usePageStore)
+    ...mapStores(usePageStore),
+    ...mapStores(useAuthStore)
   },
   mounted() {
     this.cartStore.fetchMenu(this.category);
     this.itemOutofStock();
   },
   updated() {
-    this.outOfStockMenuItems = [];
-    this.cartStore.menuItems = [];
-    this.cartStore.fetchMenu(this.category);
-    this.itemOutofStock();
+    // this.outOfStockMenuItems = [];
+    // this.cartStore.menuItems = [];
+    // this.cartStore.fetchMenu(this.category);
+    // this.itemOutofStock();
   },
   components: {
     AppMenuNew

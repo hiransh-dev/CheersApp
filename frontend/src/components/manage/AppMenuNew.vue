@@ -116,9 +116,14 @@ export default {
             }
           }
         );
-        if (addMenuItem.status === 200) {
+        if (addMenuItem.status === 200 && addMenuItem.data.title) {
           this.res_alert_message = `New Menu Item Added. \nTitle: ${addMenuItem.data.title}, \nDescription: ${addMenuItem.data.desc}, \nPrice: ${addMenuItem.data.price}, \nCategory: ${addMenuItem.data.category}, \nSub-category: ${addMenuItem.data.subcategory} `;
           this.res_alert_variant = "success";
+          this.res_show_alert = true;
+          this.res_on_submit = false;
+        } else {
+          this.res_alert_message = `${addMenuItem.data}`;
+          this.res_alert_variant = "error";
           this.res_show_alert = true;
           this.res_on_submit = false;
         }
