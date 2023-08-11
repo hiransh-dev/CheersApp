@@ -119,24 +119,39 @@ module.exports.chart = async (req, res) => {
       $gte: dateOrders.setDate(dateOrders.getDate() - 7),
     },
   }).select("orderTotal createdAt");
-  let tempDate1;
-  let tempTotal1 = 0;
-  for (let i = allOrders.length - 1; i >= 0; i--) {
-    let tempTotal2 = 0;
+  // let tempDate1;
+  // let tempTotal1 = 0;
+  // for (let i = allOrders.length - 1; i >= 0; i--) {
+  //   let tempTotal2 = 0;
+  //   let tempDate2 = new Date(allOrders[i].createdAt).getDate();
+  //   if (tempDate1 !== tempDate2) {
+  //     for (let j = allOrders.length - 1; j >= 0; j--) {
+  //       let tempDate3 = new Date(allOrders[j].createdAt).getDate();
+  //       if (tempDate2 === tempDate3) {
+  //         tempTotal2 = tempTotal2 + allOrders[j].orderTotal;
+  //       }
+  //     }
+  //   }
+  //   if (tempTotal2 !== tempTotal1) {
+  //     ordersTotalArr.unshift(tempTotal2);
+  //     tempTotal1 = tempTotal2;
+  //   }
+  //   temp1 = new Date(allOrders[i].createdAt).getDate();
+  // }
+  let tempDate1 = new Date(allOrders[0].createdAt).getDate();
+  let tempTotal = 0;
+  for (let i = 0; i < allOrders.length; i++) {
     let tempDate2 = new Date(allOrders[i].createdAt).getDate();
-    if (tempDate1 !== tempDate2) {
-      for (let j = allOrders.length - 1; j >= 0; j--) {
-        let tempDate3 = new Date(allOrders[j].createdAt).getDate();
-        if (tempDate2 === tempDate3) {
-          tempTotal2 = tempTotal2 + allOrders[j].orderTotal;
-        }
-      }
+    if (tempDate1 === tempDate2) {
+      tempTotal = parseFloat(tempTotal + allOrders[i].orderTotal);
+    } else {
+      ordersTotalArr.push(tempTotal);
+      tempTotal = allOrders[i].orderTotal;
+      tempDate1 = new Date(allOrders[i].createdAt).getDate();
     }
-    if (tempTotal2 !== tempTotal1) {
-      ordersTotalArr.unshift(tempTotal2);
-      tempTotal1 = tempTotal2;
+    if (i === allOrders.length - 1) {
+      ordersTotalArr.push(tempTotal);
     }
-    temp1 = new Date(allOrders[i].createdAt).getDate();
   }
   res.json(ordersTotalArr);
 };
