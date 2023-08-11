@@ -62,6 +62,7 @@ router.post(
 // STAFF REGISTER ROUTE
 router.post(
   "/registerstaff",
+  validateUserSchema,
   isLoggedIn,
   isUserAdmin,
   catchAsync(userController.managementRegister)

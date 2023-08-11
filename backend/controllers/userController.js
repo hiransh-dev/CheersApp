@@ -9,19 +9,29 @@ const expressError = require(path.join(__dirname, "../utils/ExpressError"));
 module.exports.registerUser = async (req, res, next) => {
   const { email, password, firstName, lastName, phoneNumber } =
     req.body.registerUser;
+  const userExists = await User.findOne({ email });
+  if (userExists) {
+    return res.send("User Already Exists");
+  }
   const newUser = new User({
     email,
+    username: email,
     firstName,
     lastName,
     phoneNumber,
   });
-  newUser.username = newUser.email;
+  // newUser.username = newUser.email;
   const userCreated = await User.register(newUser, password);
   if (!userCreated) {
-    throw new expressError("Account creation failed", 400);
+    return res.send("Account Creation Failed");
   } else {
-    const { email, firstName, lastName } = userCreated;
-    return res.json({ email, firstName, lastName });
+    const {
+      email,
+      firstName,
+      lastName,
+      message = "Account has been created.",
+    } = userCreated;
+    return res.json({ email, firstName, lastName, message });
   }
 };
 
@@ -97,12 +107,12 @@ module.exports.managementLogin = async (req, res) => {
 // @desc    LOGIN FOR ADMIN/STAFF
 // @route   POST /api/user/registerstaff/
 // @access  ADMIN
-module.exports.managementRegister = async (req, res) => {
+module.exports.managementRegister = async (req, res, next) => {
   const { email, password, firstName, lastName, phoneNumber } =
-    req.body.registerStaff;
+    req.body.registerUser;
   const userExists = await User.findOne({ email });
   if (userExists) {
-    return res.send("User Exists");
+    return res.send("User Already Exists");
   }
   const newStaff = new User({
     email,
@@ -112,13 +122,17 @@ module.exports.managementRegister = async (req, res) => {
     phoneNumber,
     isStaff: true,
   });
-  // newStaff.username = newStaff.email;
-  const newStaffCreated = User.register(newStaff, password);
+  const newStaffCreated = await User.register(newStaff, password);
   if (!newStaffCreated) {
-    throw new expressError("Staff Account creation failed", 400);
+    return res.send("Account Creation Failed");
   } else {
-    const { email, firstName, lastName, isStaff } = newStaffCreated;
-    res.json({ email, firstName, lastName, isStaff });
+    const {
+      email,
+      firstName,
+      lastName,
+      message = "New Management Account has been created.",
+    } = newStaffCreated;
+    return res.json({ email, firstName, lastName, message });
   }
 };
 
@@ -135,7 +149,14 @@ module.exports.allusers = async (req, res) => {
 // @access  ADMIN
 module.exports.managementUser = async (req, res) => {
   const getManagementUsersInfo = await User.find({
-    isStaff: true,
+    $or: [
+      {
+        isStaff: true,
+      },
+      {
+        isAdmin: true,
+      },
+    ],
   });
   res.json(getManagementUsersInfo);
 };
