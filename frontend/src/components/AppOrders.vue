@@ -21,7 +21,7 @@
           <v-card-title>
             <div>Total: £{{ order.orderTotal }}</div>
           </v-card-title>
-          <v-card-subtitle> {{ Date(order.createdAt) }}</v-card-subtitle>
+          <v-card-subtitle> {{ readDate(order.createdAt) }}</v-card-subtitle>
           <v-card-text>
             <v-list class="bg-transparent">
               <v-list-item v-for="orderItem of order.orderItems" :key="orderItem">
@@ -49,7 +49,13 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    readDate(date) {
+      const fullDate = new Date(date);
+      const readableDate = `${fullDate.toDateString()}, ${fullDate.getHours()}:${fullDate.getMinutes()}`;
+      return readableDate;
+    }
+  },
   computed: {
     ...mapStores(usePageStore),
     ...mapStores(useOrdersStore)
