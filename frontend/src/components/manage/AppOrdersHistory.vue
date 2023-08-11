@@ -1,5 +1,13 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="d-flex flex-column w-100">
+    <div class="align-self-center w-50">
+      <lineChart
+        v-if="loadChart === true"
+        id="my-chart-id"
+        :options="chartOptions"
+        :data="chartData"
+      />
+    </div>
     <div class="d-flex flex-row">
       <v-date-picker
         class="ma-2 bg-black"
@@ -8,16 +16,14 @@
         @click="getOrderHistory()"
         required
       ></v-date-picker>
-      <div class="d-flex flex-column">
-        <v-card class="ma-2 pa-2 bg-black">
-          <v-card-subtitle>Total Earnings:</v-card-subtitle>
-          <v-card-title>£ {{ ordersTotal }}</v-card-title>
-        </v-card>
-        <v-card class="ma-2 pa-2 bg-black">
-          <v-card-subtitle>Total Orders:</v-card-subtitle>
-          <v-card-title>{{ noOrders }}</v-card-title>
-        </v-card>
-      </div>
+      <v-card class="ma-2 pa-2 bg-black align-self-baseline">
+        <v-card-subtitle>Total Orders:</v-card-subtitle>
+        <v-card-title>{{ noOrders }}</v-card-title>
+      </v-card>
+      <v-card class="ma-2 pa-2 bg-black align-self-baseline">
+        <v-card-subtitle>Total Earnings:</v-card-subtitle>
+        <v-card-title>£ {{ ordersTotal }}</v-card-title>
+      </v-card>
     </div>
     <div class="d-flex flex-row flex-wrap">
       <v-card
@@ -53,8 +59,11 @@
 
 <script>
 import { VDatePicker } from "vuetify/labs/VDatePicker";
-
 import axios from "axios";
+
+import { Line as lineChart } from "vue-chartjs";
+import Chart from "chart.js/auto";
+Chart.register();
 
 export default {
   data() {
@@ -65,11 +74,34 @@ export default {
       ordersTotal: 0,
       ordersTotalTemp: 0,
       date: new Date(),
-      timerFunc: null
+      timerFunc: null,
+      loadChart: false,
+      chartOptions: {
+        responsive: true,
+        xAxis: {
+          ticks: {
+            beginAtZero: false,
+            align: "end"
+          }
+        }
+      },
+      chartData: {
+        labels: ["7", "6", "5", "4", "3", "2", "1"],
+        datasets: [
+          {
+            label: "Last 7 Days",
+            data: [],
+            borderColor: "rgb(0, 0, 0)",
+            tension: 0.1
+          }
+        ]
+      },
+      orderTotalChart: []
     };
   },
   components: {
-    VDatePicker
+    VDatePicker,
+    lineChart
   },
   methods: {
     timerOrderHistory() {
@@ -79,6 +111,7 @@ export default {
     },
     async getOrderHistory() {
       const orderHistory = await axios.get(`/api/order/allorders/${this.date}`);
+      // console.log(`/api/order/allorders/${this.date}`);
       // this.orderHistory = [];
       this.orderHistory = orderHistory.data;
       this.noOrdersTemp = 0;
@@ -96,11 +129,26 @@ export default {
       const fullDate = new Date(date);
       const readableDate = `${fullDate.toDateString()}, ${fullDate.getHours()}:${fullDate.getMinutes()}`;
       return readableDate;
+    },
+    async getChartHistory() {
+      const chartHistory = await axios.get(`/api/order/chart`);
+      console.log(chartHistory.data);
+      chartHistory.data.forEach((item) => {
+        console.log(item.orderTotal);
+        this.orderTotalChart.push(parseFloat(item.orderTotal));
+      });
+      let i = this.orderTotalChart.length;
+      for (i; i < 7; i++) {
+        this.orderTotalChart.unshift(0);
+      }
+      this.chartData.datasets[0].data = this.orderTotalChart;
+      this.loadChart = true;
     }
   },
   mounted() {
     this.getOrderHistory();
     this.timerOrderHistory();
+    this.getChartHistory();
   },
   beforeUnmount() {
     clearInterval(this.timerFunc);

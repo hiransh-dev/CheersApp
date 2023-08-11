@@ -19,10 +19,12 @@
     "@mdi/font": "^7.2.96",
     "@vee-validate/rules": "^4.11.1",
     "axios": "^1.4.0",
+    "chart.js": "^4.3.3",
     "dotenv": "^16.3.1",
     "pinia": "^2.1.6",
     "vee-validate": "^4.11.1",
     "vue": "^3.3.2",
+    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.4",
     "vuetify": "^3.3.12"
   },
