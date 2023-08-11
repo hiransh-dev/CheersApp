@@ -23,7 +23,7 @@ const MenuSchema = new Schema(
     },
     subcategory: {
       type: String,
-      required: true,
+      // required: true,
       enum: [
         "Beers",
         "World Beers",
