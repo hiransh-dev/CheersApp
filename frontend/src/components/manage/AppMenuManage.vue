@@ -1,14 +1,28 @@
 <template>
   <div class="d-flex flex-column w-100 align-center">
-    <v-card
-      v-if="authStore.isAdmin === true"
-      class="ma-2 mb-4 bg-black d-flex justify-center align-center w-100"
-      style="height: 8rem; width: auto; padding: 1rem"
-      @click="dialogAddNew = true"
-    >
-      <v-icon size="x-large">mdi-plus</v-icon>
-      <label class="text-h4">Add new Menu Item</label>
-    </v-card>
+    <!-- ADD NEW MENU ITEM CARD  -->
+    <div class="d-flex flex-row w-100">
+      <v-card
+        v-if="authStore.isAdmin === true"
+        class="ma-2 mb-4 bg-black d-flex justify-center align-center w-50"
+        style="height: 8rem; width: auto; padding: 1rem"
+        @click="dialogAddNew = true"
+      >
+        <v-icon size="x-large">mdi-plus</v-icon>
+        <label class="text-h4">Add new Menu Item</label>
+      </v-card>
+      <!-- VIEW DELETED ITEMS CARD -->
+      <v-card
+        v-if="authStore.isAdmin === true"
+        class="ma-2 mb-4 bg-black d-flex justify-center align-center w-50"
+        style="height: 8rem; width: auto; padding: 1rem"
+        @click="dialogDeletedItems = true"
+      >
+        <v-icon size="x-large">mdi-delete</v-icon>
+        <label class="text-h4">Deleted Menu Items</label>
+      </v-card>
+    </div>
+    <!-- ADD NEW MENU ITEM DIALOG  -->
     <v-dialog
       v-model="dialogAddNew"
       class="bg-grey-lighten-2"
@@ -21,7 +35,7 @@
           <v-toolbar-title class="site_font">Add Menu Item</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn variant="text" @click="dialogAddNew = false"> Close </v-btn>
+            <v-btn variant="text" @click="(dialogAddNew = false), itemsInMenu()"> Close </v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <label class="site_font text-h4 text-center my-5 mx-5">Add new Item to Menu</label>
@@ -30,14 +44,39 @@
         </div>
       </v-card>
     </v-dialog>
+    <!-- VIEW DELETED ITEMS DIALOG -->
+    <v-dialog
+      v-model="dialogDeletedItems"
+      class="bg-grey-lighten-2"
+      fullscreen
+      :scrim="false"
+      transition="dialog-bottom-transition"
+    >
+      <v-card class="container">
+        <v-toolbar class="bg-black" dark>
+          <v-toolbar-title class="site_font">Deleted Menu Items</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn variant="text" @click="(dialogDeletedItems = false), itemsInMenu()">
+              Close
+            </v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <label class="site_font text-h4 text-center my-5 mx-5">Restore Deleted Items?</label>
+        <div class="desktop_container w-100">
+          <AppMenuDeleted></AppMenuDeleted>
+        </div>
+      </v-card>
+    </v-dialog>
     <div class="w-100 d-flex flex-row justify-space-evenly">
+      <!-- FULL MENU PANEL  -->
       <div class="desktop_container w-100">
         <!-- HEADER CARDS: SEARCH, SELECT SEATING etc -->
         <v-row no-gutters>
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(this.category = 'drinks'), this.cartStore.fetchMenu(this.category)"
+              @click="(category = 'drinks'), itemsInMenu()"
               rounded="lg"
             >
               <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
@@ -46,7 +85,7 @@
           <v-col cols="4">
             <v-card
               class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(this.category = 'food'), this.cartStore.fetchMenu(this.category)"
+              @click="(category = 'food'), itemsInMenu()"
               rounded="lg"
             >
               <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
@@ -55,7 +94,7 @@
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(this.category = 'softdrinks'), this.cartStore.fetchMenu(this.category)"
+              @click="(category = 'softdrinks'), itemsInMenu()"
               rounded="lg"
             >
               <v-icon icon="mdi-beer" size="x-large"></v-icon>
@@ -91,7 +130,6 @@
             Select Category
           </v-btn>
         </v-card>
-
         <!-- CATEGORY DIALOG WINDOW -->
         <v-dialog
           v-model="dialogCategory"
@@ -137,12 +175,11 @@
             </div>
           </v-card>
         </v-dialog>
-
         <!-- MENU PANELS -->
         <v-expansion-panels class="my-4">
           <v-expansion-panel
             class="bg-grey-lighten-1"
-            v-for="menuItem of cartStore.menuItems"
+            v-for="menuItem of menuItems"
             :key="menuItem._id"
             rounded="lg"
             elevation="6"
@@ -207,8 +244,13 @@
                 </div>
                 <div class="ma-2">
                   <label>Delete</label>
-                  <v-btn class="ml-1 bg-red" elevation="4" icon>
-                    <v-icon>mdi-delete-forever</v-icon>
+                  <v-btn
+                    @click="deleteMenuItem(menuItem._id)"
+                    class="ml-1 bg-red"
+                    elevation="4"
+                    icon
+                  >
+                    <v-icon>mdi-delete</v-icon>
                   </v-btn>
                 </div>
               </v-card>
@@ -216,6 +258,7 @@
           </v-expansion-panel>
         </v-expansion-panels>
       </div>
+      <!-- OUT OF STOCK MENU PANEL  -->
       <div class="desktop_container w-100">
         <label class="text-h3">Marked Out of Stock</label>
         <!-- MENU PANELS -->
@@ -276,6 +319,7 @@ import usePageStore from "@/stores/page";
 import useAuthStore from "@/stores/Auth";
 import axios from "axios";
 import AppMenuNew from "@/components/manage/AppMenuNew.vue";
+import AppMenuDeleted from "@/components/manage/AppMenuDeleted.vue";
 
 export default {
   name: "MenuView",
@@ -287,7 +331,9 @@ export default {
       dialogCategory: false,
       category: "drinks",
       dialogAddNew: false,
-      outOfStockMenuItems: []
+      dialogDeletedItems: false,
+      outOfStockMenuItems: [],
+      menuItems: []
     };
   },
   methods: {
@@ -295,19 +341,25 @@ export default {
       this.dialogCategory = false;
       if (selected) {
         this.setSubCategory = selected;
-        this.cartStore.menuItems = this.cartStore.menu.filter((item) => {
+        this.menuItems = this.cartStore.menuItems.filter((item) => {
           return item.subcategory === selected;
         });
       } else {
         this.setSubCategory = "";
-        this.cartStore.menuItems = this.cartStore.menu.filter((item) => {
-          return item.category === this.cartStore.category;
+        this.menuItems = this.cartStore.menuItems.filter((item) => {
+          return item.category === this.category;
         });
       }
     },
     itemOutofStock() {
       this.outOfStockMenuItems = this.cartStore.menu.filter((item) => {
         return item.outofstock === true;
+      });
+    },
+    async itemsInMenu() {
+      await this.cartStore.fetchMenu(this.category);
+      this.menuItems = this.cartStore.menuItems.filter((item) => {
+        return item.itemDeleted === false;
       });
     },
     async markItemStock(id) {
@@ -320,7 +372,20 @@ export default {
         this.pageStore.setGlobalSnackbar("Item Status", itemStockStatus.data);
         this.outOfStockMenuItems = [];
         this.cartStore.menuItems = [];
-        await this.cartStore.fetchMenu(this.category);
+        await this.itemsInMenu();
+        this.itemOutofStock();
+      }
+    },
+    async deleteMenuItem(id) {
+      const itemDeleteStatus = await axios.post(
+        "/api/menu/delete",
+        { id },
+        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      );
+      if (itemDeleteStatus.status === 200) {
+        this.pageStore.setGlobalSnackbar("Item Status", itemDeleteStatus.data);
+        this.cartStore.menuItems = [];
+        await this.itemsInMenu();
         this.itemOutofStock();
       }
     }
@@ -331,7 +396,7 @@ export default {
     ...mapStores(useAuthStore)
   },
   mounted() {
-    this.cartStore.fetchMenu(this.category);
+    this.itemsInMenu();
     this.itemOutofStock();
   },
   updated() {
@@ -341,7 +406,8 @@ export default {
     // this.itemOutofStock();
   },
   components: {
-    AppMenuNew
+    AppMenuNew,
+    AppMenuDeleted
   }
 };
 </script>
