@@ -327,9 +327,14 @@ export default {
             }
           }
         );
-        if (newUserCreated.status === 200) {
-          this.res_alert_message = `Your account has been created. Email: ${newUserCreated.data.email}, Name: ${newUserCreated.data.firstName} ${newUserCreated.data.lastName}`;
+        if (newUserCreated.status === 200 && newUserCreated.data.email) {
+          this.res_alert_message = `${newUserCreated.data.message} Email: ${newUserCreated.data.email}, Name: ${newUserCreated.data.firstName} ${newUserCreated.data.lastName}`;
           this.res_alert_variant = "success";
+          this.res_show_alert = true;
+          this.res_on_submit = false;
+        } else {
+          this.res_alert_message = `${newUserCreated.data}.`;
+          this.res_alert_variant = "error";
           this.res_show_alert = true;
           this.res_on_submit = false;
         }
