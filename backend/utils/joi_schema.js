@@ -27,8 +27,8 @@ const Joi = BaseJoi.extend(extension);
 
 const joiMenuSchema = Joi.object({
   menuItem: Joi.object({
-    title: Joi.string().min(1).max(20).required().escapeHTML(),
-    desc: Joi.string().min(1).max(150).allow(null, "").escapeHTML(),
+    title: Joi.string().min(1).max(30).required().escapeHTML(),
+    desc: Joi.string().min(1).max(200).allow(null, "").escapeHTML(),
     price: Joi.number().min(1).max(99).positive().precision(2).required(),
     category: Joi.string()
       .valid("Drinks", "Food", "Soft Drinks")
@@ -53,11 +53,11 @@ const joiUserSchema = Joi.object({
 
 // const joiOrdersSchema = Joi.object({
 //   order: Joi.object({
-//     orderId: Joi.array().Joi.string().required().escapeHTML(),
-//     // orderItems: Joi.object({
-//     //   // item: Joi.string().required().escapeHTML(),
-//     //   quantity: Joi.number().required(),
-//     // }),
+//     // orderId: Joi.array().Joi.string().required().escapeHTML(),
+//     orderItems: Joi.object({
+//       item: Joi.string().required().escapeHTML(),
+//       quantity: Joi.number().required(),
+//     }),
 //     // orderTotal: Joi.number().required(),
 //     // // author: Joi.string().required().escapeHTML(),
 //     // paymentStatus: joi.boolean().required(),
