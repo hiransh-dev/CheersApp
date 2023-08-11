@@ -108,15 +108,35 @@ module.exports.showAllOrders = async (req, res) => {
 };
 
 // @desc    Fetch all items on menu
-// @route   POST /api/order/chart/:date
+// @route   POST /api/order/chart
 // @access  MANAGEMENT
 module.exports.chart = async (req, res) => {
   const dateOrders = new Date();
+  const ordersTotalArr = [];
   const allOrders = await Order.find({
     orderStatus: true,
     createdAt: {
       $gte: dateOrders.setDate(dateOrders.getDate() - 7),
     },
-  }).select("orderTotal");
-  res.json(allOrders);
+  }).select("orderTotal createdAt");
+  let tempDate1;
+  let tempTotal1 = 0;
+  for (let i = allOrders.length - 1; i >= 0; i--) {
+    let tempTotal2 = 0;
+    let tempDate2 = new Date(allOrders[i].createdAt).getDate();
+    if (tempDate1 !== tempDate2) {
+      for (let j = allOrders.length - 1; j >= 0; j--) {
+        let tempDate3 = new Date(allOrders[j].createdAt).getDate();
+        if (tempDate2 === tempDate3) {
+          tempTotal2 = tempTotal2 + allOrders[j].orderTotal;
+        }
+      }
+    }
+    if (tempTotal2 !== tempTotal1) {
+      ordersTotalArr.unshift(tempTotal2);
+      tempTotal1 = tempTotal2;
+    }
+    temp1 = new Date(allOrders[i].createdAt).getDate();
+  }
+  res.json(ordersTotalArr);
 };

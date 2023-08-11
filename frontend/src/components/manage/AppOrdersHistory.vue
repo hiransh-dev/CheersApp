@@ -132,13 +132,8 @@ export default {
     },
     async getChartHistory() {
       const chartHistory = await axios.get(`/api/order/chart`);
-      console.log(chartHistory.data);
-      chartHistory.data.forEach((item) => {
-        console.log(item.orderTotal);
-        this.orderTotalChart.push(parseFloat(item.orderTotal));
-      });
-      let i = this.orderTotalChart.length;
-      for (i; i < 7; i++) {
+      this.orderTotalChart = chartHistory.data;
+      for (let i = this.orderTotalChart.length; i < 7; i++) {
         this.orderTotalChart.unshift(0);
       }
       this.chartData.datasets[0].data = this.orderTotalChart;
