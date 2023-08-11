@@ -177,16 +177,10 @@
             </v-expansion-panel-title>
             <v-expansion-panel-text>
               <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
-                <div class="ma-2">
-                  <label>Edit</label>
-                  <v-btn class="ml-1 bg-blue" elevation="4" icon>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                </div>
                 <div v-if="menuItem.outofstock === false" class="ma-2">
                   <label>Out of Stock?</label>
                   <v-btn
-                    class="ml-1 bg-red"
+                    class="ml-1 bg-yellow"
                     @click="markItemStock(menuItem._id)"
                     elevation="4"
                     icon
@@ -203,6 +197,18 @@
                     icon
                   >
                     <v-icon>mdi-plus-thick</v-icon>
+                  </v-btn>
+                </div>
+                <div class="ma-2">
+                  <label>Edit</label>
+                  <v-btn class="ml-1 bg-blue" elevation="4" icon>
+                    <v-icon>mdi-pencil</v-icon>
+                  </v-btn>
+                </div>
+                <div class="ma-2">
+                  <label>Delete</label>
+                  <v-btn class="ml-1 bg-red" elevation="4" icon>
+                    <v-icon>mdi-delete-forever</v-icon>
                   </v-btn>
                 </div>
               </v-card>
@@ -243,12 +249,6 @@
             </v-expansion-panel-title>
             <v-expansion-panel-text>
               <v-card class="d-flex flex-row align-center justify-end bg-transparent" elevation="0">
-                <div class="ma-2">
-                  <label>Edit</label>
-                  <v-btn class="ml-1 bg-blue" elevation="4" icon>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-                </div>
                 <div class="ma-2">
                   <label>Set as Available</label>
                   <v-btn

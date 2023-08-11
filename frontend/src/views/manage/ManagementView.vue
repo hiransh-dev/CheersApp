@@ -21,15 +21,15 @@
           </v-btn>
         </v-list-item>
         <v-list-item>
+          <v-btn @click="mainContentComponent = 'AppMenuManage'" variant="outlined" block>
+            Menu
+          </v-btn>
+        </v-list-item>
+        <v-list-item>
           <v-btn @click="mainContentComponent = 'AppUsers'" variant="outlined" block> Users </v-btn>
         </v-list-item>
         <v-list-item>
           <v-btn @click="mainContentComponent = 'AppStaff'" variant="outlined" block> Staff </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppMenuManage'" variant="outlined" block>
-            Menu
-          </v-btn>
         </v-list-item>
         <v-list-item>
           <v-btn class="bg-red" @click="managementLogout()" elevation="4" block> Logout </v-btn>
