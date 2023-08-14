@@ -1,8 +1,5 @@
 const User = require("../models/dbUsers");
 
-const path = require("path");
-const expressError = require(path.join(__dirname, "../utils/ExpressError"));
-
 // @desc    Register New User
 // @route   GET /api/user/register
 // @access  Public
@@ -105,8 +102,8 @@ module.exports.managementLogin = async (req, res) => {
 };
 
 // @desc    LOGIN FOR ADMIN/STAFF
-// @route   POST /api/user/registerstaff/
-// @access  ADMIN
+// @route   POST /api/user/registerstaff
+// @access  MANAGEMENT
 module.exports.managementRegister = async (req, res, next) => {
   const { email, password, firstName, lastName, phoneNumber } =
     req.body.registerUser;
