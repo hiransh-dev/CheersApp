@@ -67,14 +67,14 @@ router.post(
   isUserAdmin,
   catchAsync(userController.managementRegister)
 );
-// GET ALL USERS
+// GET ALL USERS INFO
 router.get(
   "/allusers",
   isLoggedIn,
   isManagement,
   catchAsync(userController.allusers)
 );
-// GET ALL USERS
+// GET ALL MANAGEMENT USERS INFO
 router.get(
   "/managementusers",
   isLoggedIn,
