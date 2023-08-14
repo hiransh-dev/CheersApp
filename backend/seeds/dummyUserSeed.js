@@ -1,0 +1,60 @@
+const dummyUsers = {
+  users: [
+    {
+      email: "johndoe@gmail.com",
+      phonenumber: "1234567890",
+      firstname: "John",
+      lastname: "Doe",
+      password: "JohnDoe",
+    },
+    {
+      email: "janedoe@gmail.com",
+      phonenumber: "9876543210",
+      firstname: "Jane",
+      lastname: "Doe",
+      password: "JaneDoe",
+    },
+    {
+      email: "marysmith@gmail.com",
+      phonenumber: "0123456789",
+      firstname: "Mary",
+      lastname: "Smith",
+      password: "MarySmith",
+    },
+    {
+      email: "peterjones@gmail.com",
+      phonenumber: "2134567890",
+      firstname: "Peter",
+      lastname: "Jones",
+      password: "PeterJones",
+    },
+    {
+      email: "davidwilliams@gmail.com",
+      phonenumber: "3245678901",
+      firstname: "David",
+      lastname: "Williams",
+      password: "DavidWilliams",
+    },
+    {
+      email: "sarahbrown@gmail.com",
+      phonenumber: "4356789012",
+      firstname: "Sarah",
+      lastname: "Brown",
+      password: "SarahBrown",
+    },
+    {
+      email: "jamesgreen@gmail.com",
+      phonenumber: "5467890123",
+      firstname: "James",
+      lastname: "Green",
+      password: "JamesGreen",
+    },
+    {
+      email: "michaeljackson@gmail.com",
+      phonenumber: "6578901234",
+      firstname: "Michael",
+      lastname: "Jackson",
+      password: "MichaelJackson",
+    },
+  ],
+};
