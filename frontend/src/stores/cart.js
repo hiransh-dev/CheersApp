@@ -34,12 +34,17 @@ export default defineStore("cart", {
           } else if (categoryParam === "softdrinks") {
             this.category = "Soft Drinks";
           } else {
-            console.log("Error: Invalid category in fetching Menu");
+            this.category = "Drinks";
+            // console.log("Error: Invalid category in fetching Menu");
           }
-          this.menuItems = this.menu.filter((item) => {
-            return item.category === this.category;
-          });
+          // this.menuItems = this.menu.filter((item) => {
+          //   return item.category === this.category;
+          // });
         }
+        // TRIAL
+        this.menuItems = this.menu.filter((item) => {
+          return item.category === this.category;
+        });
         this.updateCartTotal();
       } catch (e) {
         console.log("Error in fetching Menu");
@@ -80,7 +85,9 @@ export default defineStore("cart", {
       this.updateCart(id, this.menu[index].quantity, this.menu[index].price);
     },
     clearCart() {
-      this.cart = [];
+      this.cartItems = [];
+      this.cartTotal = 0;
+      this.totalItemsCounter = 0;
     },
     async placeOrder(tableNo) {
       const order = this.cartItems;
@@ -93,7 +100,9 @@ export default defineStore("cart", {
           }
         }
       );
-      if (placedOrder.status === 200 && placedOrder.data) {
+      if (placedOrder.status === 200 && placedOrder.data.id) {
+        // this.clearCart();
+        // return "Order has been placed.";
         return placedOrder.data;
       }
     }
