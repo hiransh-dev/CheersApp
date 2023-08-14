@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     async deleteMenuItem(id) {
-      const itemDeleteStatus = await axios.post(
+      const itemDeleteStatus = await axios.put(
         "/api/menu/delete",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
@@ -64,7 +64,7 @@ export default {
       }
     },
     async getDeletedMenu() {
-      const deleted = await axios.get("/api/menu/deleted");
+      const deleted = await axios.get("/api/menu/delete");
       if (deleted.status === 200) {
         this.deletedMenuItems = deleted.data;
       }

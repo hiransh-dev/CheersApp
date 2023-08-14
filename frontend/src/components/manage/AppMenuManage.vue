@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column w-100 align-center">
     <!-- ADD NEW MENU ITEM CARD  -->
-    <div class="d-flex flex-row w-100">
+    <div class="d-flex flex-row w-50">
       <v-card
         v-if="authStore.isAdmin === true"
         class="ma-2 mb-4 bg-black d-flex justify-center align-center w-50"
@@ -9,7 +9,7 @@
         @click="dialogAddNew = true"
       >
         <v-icon size="x-large">mdi-plus</v-icon>
-        <label class="text-h4">Add new Menu Item</label>
+        <label class="text-h5 ml-2">Add new Menu Item</label>
       </v-card>
       <!-- VIEW DELETED ITEMS CARD -->
       <v-card
@@ -19,7 +19,7 @@
         @click="dialogDeletedItems = true"
       >
         <v-icon size="x-large">mdi-delete</v-icon>
-        <label class="text-h4">Deleted Menu Items</label>
+        <label class="text-h5 ml-2">Deleted Menu Items</label>
       </v-card>
     </div>
     <!-- ADD NEW MENU ITEM DIALOG  -->
@@ -363,7 +363,7 @@ export default {
       });
     },
     async markItemStock(id) {
-      const itemStockStatus = await axios.post(
+      const itemStockStatus = await axios.put(
         "/api/menu/markstock",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
@@ -377,7 +377,7 @@ export default {
       }
     },
     async deleteMenuItem(id) {
-      const itemDeleteStatus = await axios.post(
+      const itemDeleteStatus = await axios.put(
         "/api/menu/delete",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
