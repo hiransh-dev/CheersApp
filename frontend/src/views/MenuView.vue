@@ -9,7 +9,7 @@
             :to="{ name: 'menu', params: { category: 'drinks' } }"
             class="router_link_decoration"
           >
-            <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-card class="mx-1 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
               <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
             </v-card>
           </RouterLink>
@@ -19,7 +19,7 @@
             :to="{ name: 'menu', params: { category: 'food' } }"
             class="router_link_decoration"
           >
-            <v-card class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-card class="mx-1 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
               <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
             </v-card>
           </RouterLink>
@@ -29,7 +29,7 @@
             :to="{ name: 'menu', params: { category: 'softdrinks' } }"
             class="router_link_decoration"
           >
-            <v-card class="mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
+            <v-card class="mx-1 mb-2 pa-4 bg-black d-flex justify-center align-center" rounded="lg">
               <v-icon icon="mdi-beer" size="x-large"></v-icon>
             </v-card>
           </RouterLink>
@@ -38,11 +38,11 @@
       <!-- SET-SUBCATEGORY, HEADER CARD-->
       <v-card
         v-if="this.$route.params.category === 'drinks'"
-        class="my-2 bg-yellow-darken-3 pa-2 text-center desktop_container"
+        class="bg-grey-darken-4 my-2 pa-2 text-center desktop_container"
         rounded="lg"
         elevation="6"
       >
-        <v-card-title class="site_font text-black"> What would you like to drink? </v-card-title>
+        <v-card-title class="site_font text-white"> What would you like to drink? </v-card-title>
         <v-btn
           v-if="setSubCategory !== ''"
           class="bg-black site_font"
@@ -220,8 +220,9 @@ export default {
   },
   updated() {
     if (this.category !== this.$route.params.category) {
-      this.cartStore.fetchMenu(this.$route.params.category);
       this.category = this.$route.params.category;
+      this.cartStore.fetchMenu(this.$route.params.category);
+      this.setSubCategory = "";
     }
   },
   components: {
