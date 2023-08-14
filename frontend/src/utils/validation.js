@@ -7,6 +7,7 @@ import {
 } from "vee-validate";
 import {
   required,
+  alpha as alpha,
   min,
   max,
   numeric,
@@ -25,13 +26,13 @@ export default {
     app.component("ErrorMessage", ErrorMessage);
 
     defineRule("required", required);
+    defineRule("alpha", alpha);
     defineRule("min", min);
     defineRule("max", max);
     defineRule("numeric", numeric);
     defineRule("min_value", minValue);
     defineRule("max_value", maxValue);
-    defineRule("category", oneOf);
-    defineRule("subcategory", oneOf);
+    defineRule("categoryOneOf", oneOf);
     defineRule("email", email);
     defineRule("confirmPassword", confirmed);
     defineRule("regex", regex);
@@ -44,8 +45,7 @@ export default {
           max: `The field ${ctx.field} is too long.`,
           min_value: `The field ${ctx.field} is too low.`,
           max_value: `The field ${ctx.field} is too high.`,
-          category: `Invalid Category`,
-          subcategory: `Invalid subcategory`
+          categoryOneOf: `Invalid Category`
         };
         if (messages[ctx.rule.name]) {
           const message = messages[ctx.rule.name];
@@ -54,7 +54,11 @@ export default {
           const message = `The ${ctx.field} is Invalid.`;
           return message;
         }
-      }
+      },
+      validateOnBlur: true,
+      validateOnChange: true,
+      validateOnInput: false,
+      validateOnModelUpdate: true
     });
   }
 };
