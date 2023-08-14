@@ -139,8 +139,8 @@ export default {
       schema: {
         Email: "required|min:3|max:100|email",
         Phone: "required|min:10|max:10|numeric",
-        Firstname: "required|min:3|max:100",
-        Lastname: "required|min:3|max:100",
+        Firstname: "required|alpha|min:3|max:100",
+        Lastname: "required|alpha|min:3|max:100",
         Password: "required|min:4|max:100",
         Confirm: "required|confirmPassword:@Password"
       },
