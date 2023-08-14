@@ -17,6 +17,21 @@ module.exports.getMenu = async (req, res) => {
   }
 };
 
+// @desc    Fetch all items on menu
+// @route   GET /api/menu/:id
+// @access  Public
+module.exports.getMenuItem = async (req, res) => {
+  const id = req.params.id;
+  const fullMenu = await Menu.findById(id).sort({
+    subcategory: "ascending",
+  });
+  if (fullMenu.itemDeleted === false) {
+    return res.json(fullMenu);
+  } else {
+    return res.send("Problem fetching menu item.");
+  }
+};
+
 // @desc    Create new item on menu
 // @route   POST /api/menu/new
 // @access  ADMIN
@@ -67,7 +82,7 @@ module.exports.itemDelete = async (req, res) => {
     const markedItem = await Menu.findByIdAndUpdate(id, {
       itemDeleted: false,
     });
-    return res.send("Item has been undeleted.");
+    return res.send("Item has been Restored.");
   } else if (selectItem.itemDeleted === false) {
     const markedItem = await Menu.findByIdAndUpdate(id, {
       itemDeleted: true,

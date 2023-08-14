@@ -27,6 +27,8 @@ const validateMenuSchema = (req, res, next) => {
 /* MENU ROUTES */
 // GET MENU
 router.get("/", catchAsync(menuController.getMenu));
+// GET MENU ITEM
+router.get("/item/:id", catchAsync(menuController.getMenuItem));
 // ADD NEW ITEM IN MENU
 router.post(
   "/new",
@@ -36,7 +38,7 @@ router.post(
   catchAsync(menuController.addMenuItem)
 );
 // MARK ITEM AS OUT OF STOCK
-router.post(
+router.put(
   "/markstock",
   isLoggedIn,
   isManagement,
@@ -44,13 +46,13 @@ router.post(
 );
 // GET DELETED ITEMS FROM MENU
 router.get(
-  "/deleted",
+  "/delete",
   isLoggedIn,
   isManagement,
   catchAsync(menuController.getDeletedMenu)
 );
 // DELETE ITEM IN MENU
-router.post(
+router.put(
   "/delete",
   isLoggedIn,
   isUserAdmin,
