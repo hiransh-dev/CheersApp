@@ -85,8 +85,8 @@ export default {
         title: "required|min:3|max:100",
         desc: "min:3|max:150",
         price: "required|min_value:1|max_value:100|regex:[0-9]",
-        category: "required|category:Drinks,Food,Soft Drinks",
-        subcategory: `category:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
+        category: "required|categoryOneOf:Drinks,Food,Soft Drinks",
+        subcategory: `categoryOneOf:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
         // subcategory: `required|category:Beers,World Beers,Ale,Whiskey,Vodka,Rum`
       },
       res_on_submit: false,
