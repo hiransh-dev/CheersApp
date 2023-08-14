@@ -33,9 +33,22 @@
           </v-list>
         </v-card-text>
         <v-card-actions class="align-self-end">
-          <v-btn variant="tonal"> View Order </v-btn>
-          <v-btn class="bg-green-darken-4" variant="tonal" @click="acceptPendingOrder(order._id)">
-            Order Fulfilled
+          <!-- View Order  -->
+          <!-- variant="tonal" -->
+          <!-- Order Fulfilled -->
+          <v-btn class="bg-yellow-darken-4" elevation="4" icon>
+            <v-icon>mdi-information</v-icon>
+          </v-btn>
+          <v-btn
+            class="bg-green-darken-4"
+            @click="acceptPendingOrder(order._id)"
+            elevation="4"
+            icon
+          >
+            <v-icon>mdi-check-all</v-icon>
+          </v-btn>
+          <v-btn class="bg-red-darken-4" @click="cancelPendingOrder(order._id)" elevation="4" icon>
+            <v-icon>mdi-cancel</v-icon>
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -64,7 +77,7 @@ export default {
       }, 3000);
     },
     async getPendingOrders() {
-      const allPendingOrders = await axios.get("/api/order/pending");
+      const allPendingOrders = await axios.get("/api/order/allpending");
       this.pendingOrders = allPendingOrders.data;
       // this.pendingOrders = [];
       this.noOrdersTemp = 0;
@@ -77,7 +90,21 @@ export default {
     },
     async acceptPendingOrder(id) {
       const acceptedOrder = await axios.post(
-        "/api/order/accept",
+        "/api/order/complete",
+        { id },
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
+        }
+      );
+      this.pageStore.setGlobalSnackbar("Order Status", acceptedOrder.data);
+      this.pendingOrders = [];
+      this.getPendingOrders();
+    },
+    async cancelPendingOrder(id) {
+      const acceptedOrder = await axios.post(
+        "/api/order/cancel",
         { id },
         {
           headers: {
