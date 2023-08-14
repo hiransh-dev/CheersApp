@@ -21,6 +21,11 @@
           </v-btn>
         </v-list-item>
         <v-list-item>
+          <v-btn @click="mainContentComponent = 'AppOrdersCancelled'" variant="outlined" block>
+            Cancelled Orders
+          </v-btn>
+        </v-list-item>
+        <v-list-item>
           <v-btn @click="mainContentComponent = 'AppMenuManage'" variant="outlined" block>
             Menu
           </v-btn>
@@ -53,6 +58,7 @@ import axios from "axios";
 import AppMenuManage from "@/components/manage/AppMenuManage.vue";
 import AppOrdersPending from "@/components/manage/AppOrdersPending.vue";
 import AppOrdersHistory from "@/components/manage/AppOrdersHistory.vue";
+import AppOrdersCancelled from "@/components/manage/AppOrdersCancelled.vue";
 import AppStaff from "@/components/manage/AppStaff.vue";
 import AppUsers from "@/components/manage/AppUsers.vue";
 
@@ -67,6 +73,7 @@ export default {
     AppMenuManage,
     AppOrdersPending,
     AppOrdersHistory,
+    AppOrdersCancelled,
     AppStaff,
     AppUsers
   },
