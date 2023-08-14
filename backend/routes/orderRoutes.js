@@ -28,12 +28,18 @@ const validateOrderSchema = (req, res, next) => {
   }
 };
 
-/* MANAGEMENT ROUTES */
+// USER ROUTES
 router.get(
   "/",
   isLoggedIn,
   isNotManagement,
   catchAsync(orderController.getOrders)
+);
+router.get(
+  "/pending",
+  isLoggedIn,
+  isNotManagement,
+  catchAsync(orderController.getPendingOrders)
 );
 router.post(
   "/new",
@@ -41,17 +47,36 @@ router.post(
   isNotManagement,
   catchAsync(orderController.newOrder)
 );
+/* MANAGEMENT ROUTES */
 router.get(
-  "/pending",
+  "/user/:id",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.getUserOrders)
+);
+router.get(
+  "/allpending",
   isLoggedIn,
   isManagement,
   catchAsync(orderController.pendingOrders)
 );
 router.post(
-  "/accept",
+  "/complete",
   isLoggedIn,
   isManagement,
-  catchAsync(orderController.acceptOrder)
+  catchAsync(orderController.completeOrder)
+);
+router.get(
+  "/cancel/:date",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.showCancelledOrders)
+);
+router.post(
+  "/cancel",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.cancelOrder)
 );
 router.get(
   "/allorders/:date",
@@ -64,6 +89,12 @@ router.get(
   isLoggedIn,
   isManagement,
   catchAsync(orderController.chart)
+);
+router.get(
+  "/chartcancel",
+  isLoggedIn,
+  isManagement,
+  catchAsync(orderController.chartcancel)
 );
 
 module.exports = router;

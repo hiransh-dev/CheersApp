@@ -36,16 +36,22 @@ const OrderSchema = new Schema(
       ref: "User",
       required: true,
     },
-    paymentStatus: {
-      type: Boolean,
-      required: true,
-      // add paypal id later
-    },
     orderStatus: {
-      // 0 = pending, 1 = complete
+      // false = pending, true = complete
       type: Boolean,
+      default: false,
       required: true,
     },
+    orderCancel: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
+    // paymentStatus: {
+    //   type: Boolean,
+    //   required: true,
+    //   // add paypal id later
+    // },
   },
   {
     timestamps: true,
