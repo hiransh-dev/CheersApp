@@ -94,7 +94,7 @@
         <div class="ma-2 mb-5">
           <v-btn
             @click="checkout()"
-            class="bg-blue w-100 site_font btn_font"
+            class="bg-blue-darken-3 w-100 site_font btn_font"
             size="x-large"
             rounded="lg"
             elevation="12"
@@ -129,9 +129,16 @@ export default {
         this.pageStore.setGlobalSnackbar("Uh oh!", "Table Number not selected");
       } else {
         const orderCheckoutStatus = await this.cartStore.placeOrder(this.pageStore.setTable);
-        if (orderCheckoutStatus) {
-          this.pageStore.setGlobalSnackbar("Order Status", orderCheckoutStatus);
+        if (orderCheckoutStatus.id) {
+          this.pageStore.setGlobalSnackbar("Order Status", "Order has been placed.");
+          this.cartStore.clearCart();
+          this.cartStore.fetchMenu();
           this.ordersStore.fetchOrders();
+          this.ordersStore.fetchPendingOrders();
+          this.pageStore.dialogCart = false;
+          // this.cartStore.clearCart();
+        } else {
+          this.pageStore.setGlobalSnackbar("Order Status", orderCheckoutStatus);
         }
       }
     }
