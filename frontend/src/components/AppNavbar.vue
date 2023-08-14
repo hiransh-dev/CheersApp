@@ -130,6 +130,8 @@
 import { mapStores } from "pinia";
 import usepageStore from "@/stores/page";
 import useauthStore from "@/stores/auth";
+import useCartStore from "@/stores/cart";
+import useOrdersStore from "@/stores/orders";
 
 export default {
   name: "AppHeader",
@@ -156,12 +158,17 @@ export default {
     },
     fnLogout() {
       this.authStore.fnAuthLogout();
+      this.ordersStore.clearOrders();
+      this.cartStore.clearCart();
+      this.cartStore.fetchMenu();
       this.notSetSnackbar = true;
     }
   },
   computed: {
     ...mapStores(usepageStore),
     ...mapStores(useauthStore),
+    ...mapStores(useOrdersStore),
+    ...mapStores(useCartStore),
     accountName() {
       if (this.authStore.email && this.authStore.email !== "") {
         return this.authStore.firstName;

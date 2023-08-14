@@ -278,6 +278,8 @@
 import { mapStores } from "pinia";
 import usepageStore from "@/stores/page";
 import useauthStore from "@/stores/auth";
+import useCartStore from "@/stores/cart";
+import useOrdersStore from "@/stores/orders";
 import axios from "axios";
 
 export default {
@@ -295,8 +297,8 @@ export default {
       schema: {
         Email: "required|min:3|max:100|email",
         Phone: "required|min:10|max:10|numeric",
-        Firstname: "required|min:3|max:100",
-        Lastname: "required|min:3|max:100",
+        Firstname: "required|alpha|min:3|max:100",
+        Lastname: "required|alpha|min:3|max:100",
         Password: "required|min:4|max:100",
         Confirm: "required|confirmPassword:@Password"
       },
@@ -371,6 +373,8 @@ export default {
           this.res_show_alert = true;
           this.res_on_submit = false;
           this.tab = "loggedin";
+          this.ordersStore.fetchOrders();
+          this.ordersStore.fetchPendingOrders();
         } else {
           this.res_alert_message = userLoggedIn.data;
           this.res_alert_variant = "error";
@@ -389,6 +393,9 @@ export default {
         const logoutStatus = await axios.get("/api/user/logout");
         if (logoutStatus.status === 200) {
           this.authStore.clearAuth();
+          this.ordersStore.clearOrders();
+          this.cartStore.clearCart();
+          this.cartStore.fetchMenu();
           this.res_on_submit = false;
           this.tab = "login";
         }
@@ -412,6 +419,8 @@ export default {
   computed: {
     ...mapStores(usepageStore),
     ...mapStores(useauthStore),
+    ...mapStores(useOrdersStore),
+    ...mapStores(useCartStore),
     phoneLength() {
       return "Phone Number: " + this.regPhone.length + "/10";
     },
