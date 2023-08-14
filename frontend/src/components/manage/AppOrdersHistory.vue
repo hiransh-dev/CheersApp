@@ -86,7 +86,7 @@ export default {
         }
       },
       chartData: {
-        labels: ["7", "6", "5", "4", "3", "2", "1"],
+        labels: ["6", "5", "4", "3", "2", "1", "Today"],
         datasets: [
           {
             label: "Last 7 Days",
@@ -133,9 +133,9 @@ export default {
     async getChartHistory() {
       const chartHistory = await axios.get(`/api/order/chart`);
       this.orderTotalChart = chartHistory.data;
-      for (let i = this.orderTotalChart.length; i < 7; i++) {
-        this.orderTotalChart.unshift(0);
-      }
+      // for (let i = this.orderTotalChart.length; i < 7; i++) {
+      //   this.orderTotalChart.unshift(0);
+      // }
       this.chartData.datasets[0].data = this.orderTotalChart;
       this.loadChart = true;
     }
