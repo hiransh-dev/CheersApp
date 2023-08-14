@@ -4,22 +4,38 @@ import axios from "axios";
 export default defineStore("orders", {
   state: () => {
     return {
-      userOrders: []
+      userOrders: [],
+      totalPendingOrders: 0
     };
   },
   actions: {
     async fetchOrders() {
       try {
-        this.userOrders = [];
         const allOrders = await axios.get("/api/order/");
-        if (allOrders.status === 200 && allOrders.data) {
-          for (let order of allOrders.data) {
-            this.userOrders.push(order);
+        if (allOrders.status === 200 && allOrders.data[0]._id) {
+          if (this.pendingUserOrders !== allOrders.data) {
+            this.userOrders = [];
+            this.userOrders = allOrders.data;
           }
         }
       } catch (e) {
         console.log(e);
       }
+    },
+    async fetchPendingOrders() {
+      try {
+        const pendingUserOrders = await axios.get("/api/order/pending");
+        if (pendingUserOrders.status === 200 && typeof pendingUserOrders.data !== String) {
+          this.totalPendingOrders = pendingUserOrders.data.length;
+        } else {
+          this.totalPendingOrders = 0;
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    clearOrders() {
+      this.userOrders = [];
     }
   }
 });
