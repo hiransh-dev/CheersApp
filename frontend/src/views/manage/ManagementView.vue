@@ -1,46 +1,45 @@
 <template>
   <v-layout class="rounded rounded-md w-100 mt-2">
-    <v-app-bar class="bg-yellow-darken-3" title="Management"></v-app-bar>
+    <v-app-bar class="bg-yellow-darken-3" title="Management">
+      <v-card class="bg-transparent d-flex justify-end" v-if="screenSmall" elevation="0">
+        <v-btn v-show="!fullscreenMenu" @click.prevent="burgerClicked" icon>
+          <v-icon>mdi-menu</v-icon>
+        </v-btn>
+        <v-btn v-show="fullscreenMenu" @click.prevent="burgerClicked" icon>
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-card>
+    </v-app-bar>
     <v-navigation-drawer class="bg-black">
-      <v-list>
-        <v-list-item>
+      <AppSidebar :managementLogout="managementLogout" :changeMainComponent="changeMainComponent">
+        <template v-slot:nameCard>
           <v-card class="bg-yellow-darken-3" elevation="8">
             <v-card-title class="text-center">
               {{ authStore.username }}
             </v-card-title>
           </v-card>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppOrdersPending'" variant="outlined" block>
-            Pending Orders
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppOrdersHistory'" variant="outlined" block>
-            Orders History
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppOrdersCancelled'" variant="outlined" block>
-            Cancelled Orders
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppMenuManage'" variant="outlined" block>
-            Menu
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppUsers'" variant="outlined" block> Users </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn @click="mainContentComponent = 'AppStaff'" variant="outlined" block> Staff </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn class="bg-red" @click="managementLogout()" elevation="4" block> Logout </v-btn>
-        </v-list-item>
-      </v-list>
+        </template>
+      </AppSidebar>
     </v-navigation-drawer>
+    <!-- MINI MENU  -->
+    <v-navigation-drawer
+      v-model="fullscreenMenu"
+      scrim="false"
+      location="top"
+      style="height: 30rem"
+      temporary
+    >
+      <AppSidebar :managementLogout="managementLogout" :changeMainComponent="changeMainComponent">
+        <template v-slot:nameCard>
+          <v-card class="bg-yellow-darken-3" elevation="8">
+            <v-card-title class="text-center">
+              {{ authStore.username }}
+            </v-card-title>
+          </v-card>
+        </template>
+      </AppSidebar>
+    </v-navigation-drawer>
+    <!-- MAIN WINDOW  -->
     <v-main class="d-flex align-start justify-start ma-5" style="min-height: 100vh">
       <v-fade-transition mode="out-in" hide-on-leave="true">
         <component :is="mainContentComponent"></component>
@@ -52,9 +51,9 @@
 <script>
 import { mapStores } from "pinia";
 import useauthStore from "@/stores/auth";
-
 import axios from "axios";
 
+import AppSidebar from "@/components/manage/AppSidebar.vue";
 import AppMenuManage from "@/components/manage/AppMenuManage.vue";
 import AppOrdersPending from "@/components/manage/AppOrdersPending.vue";
 import AppOrdersHistory from "@/components/manage/AppOrdersHistory.vue";
@@ -66,10 +65,14 @@ export default {
   name: "managementView",
   data() {
     return {
-      mainContentComponent: "AppOrdersPending"
+      screenSmall: false,
+      fullscreenMenu: false,
+      mainContentComponent: "AppOrdersPending",
+      noOfAllPendingOrders: ""
     };
   },
   components: {
+    AppSidebar,
     AppMenuManage,
     AppOrdersPending,
     AppOrdersHistory,
@@ -78,18 +81,41 @@ export default {
     AppUsers
   },
   methods: {
+    checkScreen() {
+      if (window.innerWidth <= 1280) {
+        this.screenSmall = true;
+      } else {
+        this.screenSmall = false;
+        this.fullscreenMenu = false;
+      }
+    },
+    burgerClicked() {
+      this.fullscreenMenu = !this.fullscreenMenu;
+    },
     async managementLogout() {
       const logoutStatus = await axios.get("/api/user/logout");
       if (logoutStatus.status === 200) {
         this.authStore.clearAuth();
         this.$router.push("/manage/login");
       }
+    },
+    changeMainComponent(to) {
+      this.mainContentComponent = to;
+    },
+    changeNoOfAllPendingOrders(to) {
+      this.noOfAllPendingOrders = to;
     }
   },
   computed: {
     ...mapStores(useauthStore)
   },
   mounted() {
+    /* Could use CSS media Queries with "display: contents/none" for this, but this help me check if the fullscreenMenu is open/close */
+    window.addEventListener("load", this.checkScreen);
+    window.addEventListener("resize", this.checkScreen);
+    this.authStore.checkLogin();
+  },
+  updated() {
     this.authStore.checkLogin();
   }
 };
