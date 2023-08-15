@@ -30,6 +30,7 @@ module.exports.getPendingOrders = async (req, res) => {
     const curUserOrder = await Order.find({
       author: req.user._id,
       orderStatus: false,
+      orderCancel: false,
     })
       .populate({ path: "orderItems.item" })
       .sort({ _id: -1 });
