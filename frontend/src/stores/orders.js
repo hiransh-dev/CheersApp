@@ -5,7 +5,7 @@ export default defineStore("orders", {
   state: () => {
     return {
       userOrders: [],
-      totalPendingOrders: 0
+      totalPendingOrders: 0 /* Also used this for management- all totalpendingorders */
     };
   },
   actions: {

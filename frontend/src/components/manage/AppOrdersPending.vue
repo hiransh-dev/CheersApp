@@ -60,6 +60,7 @@
 import axios from "axios";
 import { mapStores } from "pinia";
 import usePageStore from "@/stores/page";
+import useOrdersStore from "@/stores/orders";
 
 export default {
   data() {
@@ -86,6 +87,7 @@ export default {
       });
       if (this.noOrders !== this.noOrdersTemp) {
         this.noOrders = this.noOrdersTemp;
+        this.ordersStore.totalPendingOrders = this.noOrders;
       }
     },
     async acceptPendingOrder(id) {
@@ -122,7 +124,8 @@ export default {
     this.timerPendingOrders();
   },
   computed: {
-    ...mapStores(usePageStore)
+    ...mapStores(usePageStore),
+    ...mapStores(useOrdersStore)
   },
   beforeUnmount() {
     clearInterval(this.timerFunc);
