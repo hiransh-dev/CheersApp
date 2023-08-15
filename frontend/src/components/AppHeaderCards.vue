@@ -39,7 +39,7 @@
         @click="pageStore.dialogAuth = true"
         block
       >
-        Login/Register
+        Login / Register
       </v-btn>
     </v-card>
   </v-scale-transition>
