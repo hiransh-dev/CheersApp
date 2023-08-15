@@ -67,12 +67,16 @@ module.exports.getUserOrders = async (req, res) => {
 // @access  PRIVATE
 module.exports.newOrder = async (req, res) => {
   // ORDER SIDE
-  const order = req.body.order;
+  const order = req.body.order.order;
   const new_order = new Order();
   let total = 0;
-  for (let item of order.order) {
+  for (let item of order) {
     const menuItem = await Menu.findById(item.id);
-    if (menuItem && menuItem.outofstock === false) {
+    if (
+      menuItem &&
+      menuItem.outofstock === false &&
+      menuItem.itemDeleted === false
+    ) {
       new_order.orderItems.push({
         item: menuItem,
         quantity: item.quantity,
@@ -83,20 +87,20 @@ module.exports.newOrder = async (req, res) => {
         "One of the items in your order is unavailable: " + menuItem.title
       );
     }
-    new_order.tableNo = req.body.order.tableNo;
-    new_order.orderTotal = parseFloat(total);
-    new_order.orderStatus = 0;
-    new_order.paymentStatus = 1;
-    new_order.author = req.user._id;
-    // USER SIDE ORDER HISTORY
-    const curUserOrder = await User.findById(req.user._id);
-    curUserOrder.orderHistory.push(new_order);
-    // SAVE BOTH
-    const placedOrder = await new_order.save();
-    await curUserOrder.save();
-    res.json({ id: placedOrder._id });
-    // res.send("Order has been placed.");
   }
+  new_order.tableNo = req.body.order.tableNo;
+  new_order.orderTotal = parseFloat(total);
+  new_order.orderStatus = 0;
+  new_order.paymentStatus = 1;
+  new_order.author = req.user._id;
+  // USER SIDE ORDER HISTORY
+  const curUserOrder = await User.findById(req.user._id);
+  curUserOrder.orderHistory.push(new_order);
+  // SAVE BOTH
+  const placedOrder = await new_order.save();
+  await curUserOrder.save();
+  // res.send("Order has been placed.");
+  res.json({ id: placedOrder._id });
 };
 
 // @desc    FETCH ALL PENDING ORDERS
