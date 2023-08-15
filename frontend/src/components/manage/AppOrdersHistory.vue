@@ -16,14 +16,16 @@
         @click="getOrderHistory()"
         required
       ></v-date-picker>
-      <v-card class="ma-2 pa-2 bg-black align-self-baseline">
-        <v-card-subtitle>Total Orders:</v-card-subtitle>
-        <v-card-title>{{ noOrders }}</v-card-title>
-      </v-card>
-      <v-card class="ma-2 pa-2 bg-black align-self-baseline">
-        <v-card-subtitle>Total Earnings:</v-card-subtitle>
-        <v-card-title>£ {{ ordersTotal }}</v-card-title>
-      </v-card>
+      <div class="d-flex flex-column">
+        <v-card class="ma-2 pa-2 bg-black align-self-baseline">
+          <v-card-subtitle>Total Orders on {{ date.getDate() }}:</v-card-subtitle>
+          <v-card-title>{{ noOrders }}</v-card-title>
+        </v-card>
+        <v-card class="ma-2 pa-2 bg-black align-self-baseline">
+          <v-card-subtitle>Total Earnings on {{ date.getDate() }}:</v-card-subtitle>
+          <v-card-title>£ {{ ordersTotal }}</v-card-title>
+        </v-card>
+      </div>
     </div>
     <div class="d-flex flex-row flex-wrap">
       <v-card
@@ -86,7 +88,7 @@ export default {
         }
       },
       chartData: {
-        labels: ["6", "5", "4", "3", "2", "1", "Today"],
+        labels: ["Today"],
         datasets: [
           {
             label: "Last 7 Days",
@@ -111,8 +113,6 @@ export default {
     },
     async getOrderHistory() {
       const orderHistory = await axios.get(`/api/order/allorders/${this.date}`);
-      // console.log(`/api/order/allorders/${this.date}`);
-      // this.orderHistory = [];
       this.orderHistory = orderHistory.data;
       this.noOrdersTemp = 0;
       this.ordersTotalTemp = 0;
@@ -133,9 +133,9 @@ export default {
     async getChartHistory() {
       const chartHistory = await axios.get(`/api/order/chart`);
       this.orderTotalChart = chartHistory.data;
-      // for (let i = this.orderTotalChart.length; i < 7; i++) {
-      //   this.orderTotalChart.unshift(0);
-      // }
+      for (let i = 1; i <= this.orderTotalChart.length - 1; i++) {
+        this.chartData.labels.unshift(i);
+      }
       this.chartData.datasets[0].data = this.orderTotalChart;
       this.loadChart = true;
     }

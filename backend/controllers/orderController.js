@@ -189,58 +189,37 @@ module.exports.showCancelledOrders = async (req, res) => {
 // @route   GET /api/order/chart
 // @access  MANAGEMENT
 module.exports.chart = async (req, res) => {
-  const daysOfOrders = 7;
+  const daysOfOrders = 6; /* Change this to the Number of days of order total you want to plot on the chart */
   const dateOrders = new Date();
+  const dateDay = dateOrders.getDate();
+  const calcDate = dateDay - daysOfOrders;
+  const daysArr = [];
   const ordersTotalArr = [];
   const allOrders = await Order.find({
     orderStatus: true,
     createdAt: {
-      $gte: dateOrders.setDate(dateOrders.getDate() - daysOfOrders),
+      $gte: dateOrders.setDate(calcDate),
     },
   }).select("orderTotal createdAt");
-  //
-  // FIRST DRAFT OF CHART CODE
-  // BOTH HAVE SAME OUTPUT, BUT LATTER MAYBE MORE PERFORMANT WITH O(n)
-  //
-  // let tempDate1;
-  // let tempTotal1 = 0;
-  // for (let i = allOrders.length - 1; i >= 0; i--) {
-  //   let tempTotal2 = 0;
-  //   let tempDate2 = new Date(allOrders[i].createdAt).getDate();
-  //   if (tempDate1 !== tempDate2) {
-  //     for (let j = allOrders.length - 1; j >= 0; j--) {
-  //       let tempDate3 = new Date(allOrders[j].createdAt).getDate();
-  //       if (tempDate2 === tempDate3) {
-  //         tempTotal2 = tempTotal2 + allOrders[j].orderTotal;
-  //       }
-  //     }
-  //   }
-  //   if (tempTotal2 !== tempTotal1) {
-  //     ordersTotalArr.unshift(tempTotal2);
-  //     tempTotal1 = tempTotal2;
-  //   }
-  //   temp1 = new Date(allOrders[i].createdAt).getDate();
-  // }
+  for (let i = calcDate; i <= dateDay; i++) {
+    daysArr.push(i);
+  }
   if (allOrders.length !== 0) {
-    let tempDate1 = new Date(allOrders[0].createdAt).getDate();
-    let tempTotal = 0;
-    for (let i = 0; i < allOrders.length; i++) {
-      let tempDate2 = new Date(allOrders[i].createdAt).getDate();
-      if (tempDate1 === tempDate2) {
-        tempTotal = parseFloat(tempTotal + allOrders[i].orderTotal);
+    for (let i = 0; i < daysArr.length; i++) {
+      let tempTotal = 0;
+      for (let j = 0; j < allOrders.length; j++) {
+        orderDate = new Date(allOrders[j].createdAt).getDate();
+        if (orderDate === daysArr[i]) {
+          tempTotal = parseFloat(tempTotal + allOrders[j].orderTotal);
+        }
+      }
+      if (tempTotal !== 0) {
+        ordersTotalArr.push(tempTotal);
       } else {
-        ordersTotalArr.push(tempTotal);
-        tempTotal = allOrders[i].orderTotal;
-        tempDate1 = new Date(allOrders[i].createdAt).getDate();
-      }
-      if (i === allOrders.length - 1) {
-        ordersTotalArr.push(tempTotal);
+        ordersTotalArr.push(0);
       }
     }
-    for (let i = ordersTotalArr.length; i < daysOfOrders; i++) {
-      ordersTotalArr.unshift(0);
-    }
-    res.json(ordersTotalArr);
+    return res.json(ordersTotalArr);
   }
 };
 
@@ -248,57 +227,36 @@ module.exports.chart = async (req, res) => {
 // @route   GET /api/order/chartcancel
 // @access  MANAGEMENT
 module.exports.chartcancel = async (req, res) => {
-  const daysOfOrders = 7;
+  const daysOfOrders = 6; /* Change this to the Number of days of order total you want to plot on the chart */
   const dateOrders = new Date();
+  const dateDay = dateOrders.getDate();
+  const calcDate = dateDay - daysOfOrders;
+  const daysArr = [];
   const ordersTotalArr = [];
   const allOrders = await Order.find({
     orderCancel: true,
     createdAt: {
-      $gte: dateOrders.setDate(dateOrders.getDate() - daysOfOrders),
+      $gte: dateOrders.setDate(calcDate),
     },
   }).select("orderTotal createdAt");
-  //
-  // FIRST DRAFT OF CHART CODE
-  // BOTH HAVE SAME OUTPUT, BUT LATTER MAYBE MORE PERFORMANT WITH O(n)
-  //
-  // let tempDate1;
-  // let tempTotal1 = 0;
-  // for (let i = allOrders.length - 1; i >= 0; i--) {
-  //   let tempTotal2 = 0;
-  //   let tempDate2 = new Date(allOrders[i].createdAt).getDate();
-  //   if (tempDate1 !== tempDate2) {
-  //     for (let j = allOrders.length - 1; j >= 0; j--) {
-  //       let tempDate3 = new Date(allOrders[j].createdAt).getDate();
-  //       if (tempDate2 === tempDate3) {
-  //         tempTotal2 = tempTotal2 + allOrders[j].orderTotal;
-  //       }
-  //     }
-  //   }
-  //   if (tempTotal2 !== tempTotal1) {
-  //     ordersTotalArr.unshift(tempTotal2);
-  //     tempTotal1 = tempTotal2;
-  //   }
-  //   temp1 = new Date(allOrders[i].createdAt).getDate();
-  // }
+  for (let i = calcDate; i <= dateDay; i++) {
+    daysArr.push(i);
+  }
   if (allOrders.length !== 0) {
-    let tempDate1 = new Date(allOrders[0].createdAt).getDate();
-    let tempTotal = 0;
-    for (let i = 0; i < allOrders.length; i++) {
-      let tempDate2 = new Date(allOrders[i].createdAt).getDate();
-      if (tempDate1 === tempDate2) {
-        tempTotal = parseFloat(tempTotal + allOrders[i].orderTotal);
+    for (let i = 0; i < daysArr.length; i++) {
+      let tempTotal = 0;
+      for (let j = 0; j < allOrders.length; j++) {
+        orderDate = new Date(allOrders[j].createdAt).getDate();
+        if (orderDate === daysArr[i]) {
+          tempTotal = parseFloat(tempTotal + allOrders[j].orderTotal);
+        }
+      }
+      if (tempTotal !== 0) {
+        ordersTotalArr.push(tempTotal);
       } else {
-        ordersTotalArr.push(tempTotal);
-        tempTotal = allOrders[i].orderTotal;
-        tempDate1 = new Date(allOrders[i].createdAt).getDate();
-      }
-      if (i === allOrders.length - 1) {
-        ordersTotalArr.push(tempTotal);
+        ordersTotalArr.push(0);
       }
     }
-    for (let i = ordersTotalArr.length; i < daysOfOrders; i++) {
-      ordersTotalArr.unshift(0);
-    }
-    res.json(ordersTotalArr);
+    return res.json(ordersTotalArr);
   }
 };
