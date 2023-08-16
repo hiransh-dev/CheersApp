@@ -105,6 +105,14 @@
       </div>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="dialogConfirm" fullscreen>
+    <v-card class="w-100 h-100 bg-white">
+      <div class="w-100 h-100 d-flex flex-column align-center justify-center">
+        <v-icon color="green-darken-3" size="x-large">mdi-cart-check</v-icon>
+        <label class="site_font text-h4 ma-5">Your order has been placed!</label>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -115,7 +123,9 @@ import useOrdersStore from "@/stores/orders";
 
 export default {
   data() {
-    return {};
+    return {
+      dialogConfirm: false
+    };
   },
   methods: {
     addingToCart(id) {
@@ -130,17 +140,26 @@ export default {
       } else {
         const orderCheckoutStatus = await this.cartStore.placeOrder(this.pageStore.setTable);
         if (orderCheckoutStatus.id) {
-          this.pageStore.setGlobalSnackbar("Order Status", "Order has been placed.");
+          // this.pageStore.setGlobalSnackbar("Order Status", "Order has been placed.");
           this.cartStore.clearCart();
           this.cartStore.fetchMenu();
           this.ordersStore.fetchOrders();
           this.ordersStore.fetchPendingOrders();
-          this.pageStore.dialogCart = false;
-          // this.cartStore.clearCart();
+          this.orderConfirmAlert();
         } else {
           this.pageStore.setGlobalSnackbar("Order Status", orderCheckoutStatus);
         }
       }
+    },
+    orderConfirmAlertClose() {
+      this.pageStore.dialogCart = false;
+      this.dialogConfirm = false;
+    },
+    orderConfirmAlert() {
+      this.dialogConfirm = true;
+      setTimeout(() => {
+        this.orderConfirmAlertClose();
+      }, 3000);
     }
   },
   computed: {
