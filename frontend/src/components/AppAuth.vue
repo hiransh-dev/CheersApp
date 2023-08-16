@@ -1,6 +1,6 @@
 <template>
-  <v-dialog v-model="pageStore.dialogAuth" class="bg-grey-lighten-2" fullscreen :scrim="false">
-    <v-toolbar class="bg-grey-lighten-2">
+  <v-dialog v-model="pageStore.dialogAuth" class="bg-white" fullscreen :scrim="false">
+    <v-toolbar class="bg-white">
       <v-toolbar-title></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon dark @click="pageStore.dialogAuth = false">
@@ -10,7 +10,7 @@
     <div class="container">
       <div class="desktop_container w-100">
         <v-container>
-          <v-card class="pa-2 bg-transparent text-center" elevation="0">
+          <v-card class="pa-2 bg-white text-center" elevation="0">
             <v-row justify="center" v-if="tab !== 'loggedin'">
               <v-col cols="6">
                 <v-btn
@@ -69,13 +69,9 @@
           </div>
         </v-container>
         <!-- REGISTER PANEL -->
-        <v-container class="bg-grey-lighten-2">
+        <v-container class="bg-white">
           <v-slide-y-reverse-transition mode="out-in" hide-on-leave="true">
-            <v-card
-              class="bg-grey-lighten-2"
-              v-if="tab === 'register' && !authStore.email"
-              elevation="0"
-            >
+            <v-card v-if="tab === 'register' && !authStore.email" elevation="0">
               <v-card-text>
                 <veeForm @submit="fnRegister" :validation-schema="schema">
                   <v-row>
@@ -182,18 +178,13 @@
           </v-slide-y-reverse-transition>
         </v-container>
         <!-- LOGIN PANEL -->
-        <v-container class="bg-grey-lighten-2">
+        <v-container class="bg-white">
           <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
-            <v-card
-              class="bg-grey-lighten-2"
-              v-if="tab === 'login' && !authStore.email"
-              elevation="0"
-            >
+            <v-card v-if="tab === 'login' && !authStore.email" elevation="0">
               <v-card-text>
                 <veeForm @submit="fnLogin">
                   <v-row>
                     <v-col cols="12">
-                      <label class="site_font">Enter your Email</label>
                       <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
                         <v-text-field
                           prepend-inner-icon="mdi-email"
@@ -239,11 +230,11 @@
           </v-slide-y-reverse-transition>
         </v-container>
         <!-- USER LOGGED IN - PANEL -->
-        <v-container class="bg-grey-lighten-2">
+        <v-container class="bg-white">
           <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
-            <v-card class="bg-grey-lighten-2" v-if="authStore.email && authStore.email !== ''">
+            <v-card v-if="authStore.email && authStore.email !== ''">
               <v-card-text>
-                <v-list class="bg-grey-lighten-2">
+                <v-list>
                   <v-list-item>
                     <label class="text-h3">Hello, {{ authStore.fullName }}</label>
                   </v-list-item>
@@ -256,12 +247,9 @@
                 </v-list>
               </v-card-text>
             </v-card>
-            <v-card
-              class="bg-grey-lighten-2"
-              v-if="authStore.isAdmin === true || authStore.isStaff === true"
-            >
+            <v-card v-if="authStore.isAdmin === true || authStore.isStaff === true">
               <v-card-text>
-                <v-list class="bg-grey-lighten-2">
+                <v-list>
                   <v-list-item>
                     <label class="text-h3 text-yellow-darken-3"
                       >You're logged in with a management account</label
