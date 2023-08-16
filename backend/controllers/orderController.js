@@ -15,9 +15,9 @@ module.exports.getOrders = async (req, res) => {
       options: { sort: { _id: -1 }, limit: 25 },
     });
     const curUserOrderHistory = curUserOrder.orderHistory;
-    res.json(curUserOrderHistory);
+    return res.json(curUserOrderHistory);
   } else {
-    res.send("Error fetching user orders.");
+    return res.send("Error fetching user orders.");
   }
   // Need to add pagination with populate to fetch more than 25 orders
 };
@@ -42,22 +42,30 @@ module.exports.getPendingOrders = async (req, res) => {
 };
 
 // @desc    FETCH USER's ALL ORDERS FOR MANAGEMENT BY USER_ID
-// @route   GET /api/order/user/:id
+// @route   GET /api/order/user/?id=userId&date=date
 // @access  MANAGEMENT
 module.exports.getUserOrders = async (req, res) => {
-  const id = req.params.id;
+  const id = req.query.id;
+  const dateOrders = new Date(req.query.date);
   if (id) {
     const curUserOrder = await User.findById(id).populate({
       path: "orderHistory",
+      match: {
+        createdAt: {
+          $gte: dateOrders.setHours(0, 0, 0, 0),
+          $lt: dateOrders.setHours(23, 59, 59, 999),
+        },
+        // orderStatus: false,
+      },
       populate: {
         path: "orderItems.item",
       },
-      options: { sort: { _id: -1 }, limit: 25 },
+      options: { sort: { _id: -1 } },
     });
     const curUserOrderHistory = curUserOrder.orderHistory;
-    res.json(curUserOrderHistory);
+    return res.json(curUserOrderHistory);
   } else {
-    res.send("Error fetching pending user orders.");
+    return res.send("Error fetching user orders.");
   }
   // Need to add pagination with populate to fetch more than 25 orders
 };

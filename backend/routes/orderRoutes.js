@@ -49,7 +49,7 @@ router.post(
 );
 /* MANAGEMENT ROUTES */
 router.get(
-  "/user/:id",
+  "/userOrders",
   isLoggedIn,
   isManagement,
   catchAsync(orderController.getUserOrders)
