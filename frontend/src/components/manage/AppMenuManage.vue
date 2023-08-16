@@ -76,7 +76,7 @@
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(category = 'drinks'), itemsInMenu()"
+              @click="(category = 'drinks'), itemsInMenu(), (setSubCategory = '')"
               rounded="lg"
             >
               <v-icon icon="mdi-glass-mug-variant" size="x-large"></v-icon>
@@ -85,7 +85,7 @@
           <v-col cols="4">
             <v-card
               class="mx-2 mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(category = 'food'), itemsInMenu()"
+              @click="(category = 'food'), itemsInMenu(), (setSubCategory = '')"
               rounded="lg"
             >
               <v-icon icon="mdi-hamburger" size="x-large"></v-icon>
@@ -94,7 +94,7 @@
           <v-col cols="4">
             <v-card
               class="mb-2 pa-4 bg-black d-flex justify-center align-center"
-              @click="(category = 'softdrinks'), itemsInMenu()"
+              @click="(category = 'softdrinks'), itemsInMenu(), (setSubCategory = '')"
               rounded="lg"
             >
               <v-icon icon="mdi-beer" size="x-large"></v-icon>

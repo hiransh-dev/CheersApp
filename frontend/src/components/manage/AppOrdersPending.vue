@@ -13,6 +13,7 @@
         class="d-flex flex-column ma-2 pa-2 bg-blue-darken-4"
         v-for="order of pendingOrders"
         :key="order._id"
+        rounded="lg"
       >
         <v-card-title>
           <label>Table no: {{ order.tableNo }}</label
