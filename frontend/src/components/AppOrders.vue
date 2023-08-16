@@ -68,7 +68,6 @@ export default {
       const readableDate = `${fullDate.toDateString()}, ${fullDate.getHours()}:${fullDate.getMinutes()}`;
       return readableDate;
     },
-
     checkOrderStatus(status, cancel) {
       if (status === false && cancel === false) {
         return "Processing";
