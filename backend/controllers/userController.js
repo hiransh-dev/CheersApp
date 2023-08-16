@@ -141,6 +141,15 @@ module.exports.allusers = async (req, res) => {
   res.json(allUsersInfo);
 };
 
+// @desc    Get All Users
+// @route   GET /api/user/allusers
+// @access  MANAGEMENT
+module.exports.getUser = async (req, res) => {
+  const id = req.params.id;
+  const allUsersInfo = await User.findById(id);
+  res.json(allUsersInfo);
+};
+
 // @desc    Get Management
 // @route   GET /api/user/management
 // @access  ADMIN

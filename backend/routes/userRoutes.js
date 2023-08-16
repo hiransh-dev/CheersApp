@@ -74,6 +74,13 @@ router.get(
   isManagement,
   catchAsync(userController.allusers)
 );
+// GET SPECIFIC USER'S INFO
+router.get(
+  "/info/:id",
+  isLoggedIn,
+  isManagement,
+  catchAsync(userController.getUser)
+);
 // GET ALL MANAGEMENT USERS INFO
 router.get(
   "/managementusers",
