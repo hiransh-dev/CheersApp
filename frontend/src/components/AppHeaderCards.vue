@@ -113,10 +113,10 @@
   </v-dialog>
   <!-- SEARCH BAR -->
   <!-- <label class="site_font text-h4 text-center my-5">Menu</label> -->
-  <!-- <v-card id="searchbar" class="my-4 w-100 d-flex flex-row justify-end" rounded="lg" elevation="6">
+  <v-card id="searchbar" class="my-4 w-100 d-flex flex-row justify-end" rounded="lg" elevation="6">
     <v-text-field variant="outlined" label="Search Menu" single-line hide-details></v-text-field>
     <v-btn icon="mdi-magnify" elevation="0"></v-btn>
-  </v-card> -->
+  </v-card>
   <slot></slot>
 </template>
 

@@ -132,7 +132,6 @@ export default {
         this.res_alert_variant = "error";
         this.res_show_alert = true;
         this.res_on_submit = false;
-        // console.log(e);
       }
     }
   }

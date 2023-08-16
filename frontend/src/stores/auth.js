@@ -43,21 +43,15 @@ export default defineStore("auth", {
           this.isAdmin = checkLoggedIn.data.isAdmin;
           this.isStaff = checkLoggedIn.data.isStaff;
         } else {
-          this.clearAuth;
-        }
-      } catch (e) {
-        console.log("Can't fetch Logged in user information");
-      }
-    },
-    async fnAuthLogout() {
-      try {
-        const logoutStatus = await axios.get("/api/user/logout");
-        if (logoutStatus.status === 200) {
           this.clearAuth();
         }
       } catch (e) {
-        console.log(e);
+        this.clearAuth();
       }
+    },
+    async fnAuthLogout() {
+      await axios.get("/api/user/logout");
+      this.clearAuth();
     }
   }
 });

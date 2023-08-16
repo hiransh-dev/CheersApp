@@ -117,7 +117,6 @@ export default {
           this.res_on_submit = false;
         }
       } catch (e) {
-        console.log(e);
         this.res_alert_message = "Something went wrong. Account Login Failed.";
         this.res_alert_variant = "error";
         this.res_show_alert = true;

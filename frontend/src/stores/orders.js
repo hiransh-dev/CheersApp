@@ -19,7 +19,7 @@ export default defineStore("orders", {
           }
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     async fetchPendingOrders() {
@@ -31,7 +31,7 @@ export default defineStore("orders", {
           this.totalPendingOrders = 0;
         }
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     },
     clearOrders() {

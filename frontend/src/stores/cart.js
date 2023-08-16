@@ -35,19 +35,14 @@ export default defineStore("cart", {
             this.category = "Soft Drinks";
           } else {
             this.category = "Drinks";
-            // console.log("Error: Invalid category in fetching Menu");
           }
-          // this.menuItems = this.menu.filter((item) => {
-          //   return item.category === this.category;
-          // });
         }
-        // TRIAL
         this.menuItems = this.menu.filter((item) => {
           return item.category === this.category;
         });
         this.updateCartTotal();
       } catch (e) {
-        console.log("Error in fetching Menu");
+        // console.log("Error in fetching Menu");
       }
     },
     updateCart(id, quantity, price) {

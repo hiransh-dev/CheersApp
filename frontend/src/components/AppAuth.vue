@@ -71,7 +71,11 @@
         <!-- REGISTER PANEL -->
         <v-container class="bg-grey-lighten-2">
           <v-slide-y-reverse-transition mode="out-in" hide-on-leave="true">
-            <v-card class="bg-grey-lighten-2" v-if="tab === 'register' && !authStore.email">
+            <v-card
+              class="bg-grey-lighten-2"
+              v-if="tab === 'register' && !authStore.email"
+              elevation="0"
+            >
               <v-card-text>
                 <veeForm @submit="fnRegister" :validation-schema="schema">
                   <v-row>
@@ -180,11 +184,16 @@
         <!-- LOGIN PANEL -->
         <v-container class="bg-grey-lighten-2">
           <v-slide-y-reverse-transition mode="in-out" hide-on-leave="true">
-            <v-card class="bg-grey-lighten-2" v-if="tab === 'login' && !authStore.email">
+            <v-card
+              class="bg-grey-lighten-2"
+              v-if="tab === 'login' && !authStore.email"
+              elevation="0"
+            >
               <v-card-text>
                 <veeForm @submit="fnLogin">
                   <v-row>
                     <v-col cols="12">
+                      <label class="site_font">Enter your Email</label>
                       <veeField id="loginEmail" name="Email" v-slot="{ field, errorMessage }">
                         <v-text-field
                           prepend-inner-icon="mdi-email"
@@ -400,7 +409,7 @@ export default {
           this.tab = "login";
         }
       } catch (e) {
-        console.log(e);
+        this.pageStore.setGlobalSnackbar("Uh Oh!", "Error logging out.");
       }
     },
     setTab() {

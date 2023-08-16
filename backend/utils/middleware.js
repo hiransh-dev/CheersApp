@@ -35,11 +35,9 @@ const isUserAdmin = (req, res, next) => {
     if (req.user.isAdmin === true) {
       next();
     } else {
-      console.log("User is not an Admin"); /* REMOVE LATER */
       return res.send("User is not an Admin");
     }
   } else {
-    console.log("User is not an Admin"); /* REMOVE LATER */
     return res.send("User is not an Admin");
   }
 };

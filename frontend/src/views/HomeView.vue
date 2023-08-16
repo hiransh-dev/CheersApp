@@ -2,7 +2,7 @@
   <!-- HEADER CARDS: SEARCh, SELECT PUB, SELECT SEATING etc -->
   <div class="desktop_container w-100">
     <AppHeaderCards> </AppHeaderCards>
-    <RouterLink :to="linkTo" class="router_link_decoration">
+    <RouterLink :to="linkTo" class="router_link_decoration" v-cloak>
       <v-row no-gutters>
         <v-col cols="6">
           <v-card class="my-2 ma-1" rounded="lg">
