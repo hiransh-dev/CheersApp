@@ -166,3 +166,21 @@ module.exports.managementUser = async (req, res) => {
   });
   res.json(getManagementUsersInfo);
 };
+
+// @desc    Get Management
+// @route   GET /api/user/deletestaff
+// @access  ADMIN
+module.exports.deleteStaffAcc = async (req, res) => {
+  const id = req.body.id;
+  const staffToDelete = await User.findById(id);
+  if (staffToDelete.isStaff === true && staffToDelete.isAdmin === false) {
+    const staffDeleted = await User.findByIdAndDelete(id);
+    if (staffDeleted) {
+      return res.send("Staff Accound Deleted:" + staffToDelete.email);
+    } else {
+      return res.send("Error deleting staff Account.");
+    }
+  } else {
+    return res.send("User is not a staff Account.");
+  }
+};

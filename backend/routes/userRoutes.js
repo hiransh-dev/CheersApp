@@ -88,5 +88,12 @@ router.get(
   isManagement,
   catchAsync(userController.managementUser)
 );
+// GET ALL MANAGEMENT USERS INFO
+router.post(
+  "/deletestaff",
+  isLoggedIn,
+  isUserAdmin,
+  catchAsync(userController.deleteStaffAcc)
+);
 
 module.exports = router;
