@@ -8,14 +8,10 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 
-/* CORS */
-// const cors = require("cors");
-// app.use(cors());
-
 const expressError = require(path.join(__dirname, "/utils/ExpressError"));
 const catchAsync = require(path.join(__dirname, "/utils/catchAsync"));
 const mongoSanitize = require("express-mongo-sanitize");
-// const helmet = require("helmet");
+const helmet = require("helmet");
 
 const mongoose = require("mongoose");
 const db_con = require(path.join(__dirname, "/utils/dbcon"));
@@ -32,6 +28,8 @@ const orderRoutes = require(path.join(__dirname, "/routes/orderRoutes"));
 
 // TO SANITIZE MONGO QUERIES IN URL
 app.use(mongoSanitize());
+// HELMET FOR SECURITY
+app.use(helmet());
 
 app.use(methodOverride("_method")); /* To process PUT & DELETE requests */
 app.use(express.urlencoded({ extended: true })); //to read req.body.example in app.post for POST methods
