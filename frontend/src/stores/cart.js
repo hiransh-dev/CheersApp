@@ -95,7 +95,7 @@ export default defineStore("cart", {
           }
         }
       );
-      if (placedOrder.status === 200 && placedOrder.data.id) {
+      if (placedOrder.status === 200 && placedOrder.data) {
         // this.clearCart();
         // return "Order has been placed.";
         return placedOrder.data;
