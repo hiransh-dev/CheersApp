@@ -75,10 +75,10 @@ module.exports.getUserOrders = async (req, res) => {
 // @access  PRIVATE
 module.exports.newOrder = async (req, res) => {
   // ORDER SIDE
-  const order = req.body.order.order;
+  const order = req.body.order;
   const new_order = new Order();
   let total = 0;
-  for (let item of order) {
+  for (let item of order.order) {
     const menuItem = await Menu.findById(item.id);
     if (
       menuItem &&
