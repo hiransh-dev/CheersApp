@@ -53,7 +53,9 @@ An Open-source and online solution for local pubs.
 - Add Items to menu, delete items and mark as out-of-stock.
 - Add/Delete staff accounts.
 
-<!-- ## Video -->
+## 🎬 Demo Video
+
+[![CheersApp Demo Video](https://img.youtube.com/vi/tttuFNQKWh4/maxresdefault.jpg)](https://www.youtube.com/watch?v=tttuFNQKWh4)
 
 <!-- video embed -->
 
