@@ -64,109 +64,109 @@ An Open-source and online solution for local pubs.
 - ### Homepage
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers1.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers2.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_loggedin_home.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers1.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers2.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_loggedin_home.png">
 </div>
 
 - ### Auth
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth_signup.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth2.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth_loggedin.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth_signup.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth2.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_auth_loggedin.png">
 </div>
 
 - ### Menu
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu1.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu2.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu3.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu1.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu2.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu3.png">
 </div>
 
 - ### Menu Out-of-Stock
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu_outofstock.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_menu_outofstock.png">
 </div>
 
 - ### Orders
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_cart.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_cart2.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_orders.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_cart.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_cart2.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_orders.png">
 </div>
 
 - ### UI Dialogs
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_sidemenu.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_choose_subcategory.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_choosetable.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_sidemenu.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_choose_subcategory.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_choosetable.png">
 </div>
 
 - ### Others
 
 <div style="display:flex">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_pendingOrders.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_home_footer.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_pendingOrders.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/user/cheers_home_footer.png">
 </div>
 
 ## Admin Dashboard
 
 - ### Admin Auth
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_login.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_auth.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_login.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_auth.png">
 
 - ### Admin Orders
 
   Pending Orders <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_pending.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_pending.png">
 
   Completed Orders <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_complete.png">
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_complete2.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_complete.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_complete2.png">
 
   Cancelled Orders <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_cancel.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_cancel.png">
 
 - ### Menu Manage
 
   Menu <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_menu.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_menu.png">
 
   Add to menu <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_addmenu.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_addmenu.png">
 
   Deleted Menu <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_deletemenu.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_deletemenu.png">
 
 - ### Accounts
 
   User Accounts <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_users.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_users.png">
 
   Staff Accounts <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staff.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staff.png">
 
   Delete staff account <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staffdelete.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staffdelete.png">
 
   Add staff account <br>
 
-  <img style="height:40rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staffregister.png">
+  <img style="height:30rem;width:auto;margin:1rem;" src="readme_res/cheers_screenshots/admin/cheers_staffregister.png">
 
 ## ⚗️ Implementation
 
