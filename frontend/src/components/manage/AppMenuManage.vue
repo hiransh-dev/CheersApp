@@ -363,7 +363,7 @@ export default {
       });
     },
     async markItemStock(id) {
-      const itemStockStatus = await axios.put(
+      const itemStockStatus = await axios.patch(
         "/api/menu/markstock",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
@@ -377,7 +377,7 @@ export default {
       }
     },
     async deleteMenuItem(id) {
-      const itemDeleteStatus = await axios.put(
+      const itemDeleteStatus = await axios.patch(
         "/api/menu/delete",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }

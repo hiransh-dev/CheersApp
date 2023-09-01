@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     async deleteMenuItem(id) {
-      const itemDeleteStatus = await axios.put(
+      const itemDeleteStatus = await axios.patch(
         "/api/menu/delete",
         { id },
         { headers: { "Content-Type": "application/x-www-form-urlencoded" } }

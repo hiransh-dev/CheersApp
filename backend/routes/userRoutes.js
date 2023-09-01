@@ -35,8 +35,8 @@ const validateUserSchema = (req, res, next) => {
 // REGISTER ROUTE
 router.post(
   "/register",
-  validateUserSchema,
   isNotLoggedIn,
+  validateUserSchema,
   catchAsync(userController.registerUser)
 );
 // LOGIN ROUTE
@@ -62,9 +62,9 @@ router.post(
 // STAFF REGISTER ROUTE
 router.post(
   "/registerstaff",
-  validateUserSchema,
   isLoggedIn,
   isUserAdmin,
+  validateUserSchema,
   catchAsync(userController.managementRegister)
 );
 // GET ALL USERS INFO

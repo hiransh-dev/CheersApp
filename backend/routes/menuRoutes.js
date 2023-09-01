@@ -12,10 +12,20 @@ const { isLoggedIn, isManagement, isUserAdmin } = require(path.join(
   "../utils/middleware.js"
 ));
 
-const { joiMenuSchema } = require("../utils/joi_schema");
+const { joiMenuSchema, JoiMenuId } = require("../utils/joi_schema");
 
 const validateMenuSchema = (req, res, next) => {
   const { error } = joiMenuSchema.validate(req.body);
+  if (error) {
+    const err_msg = error.details.map((er) => er.message).join(",");
+    throw new expressError(err_msg, 400); /* 400 stand for bad request */
+  } else {
+    next();
+  }
+};
+
+const validateMenuIdSchema = (req, res, next) => {
+  const { error } = JoiMenuId.validate(req.body);
   if (error) {
     const err_msg = error.details.map((er) => er.message).join(",");
     throw new expressError(err_msg, 400); /* 400 stand for bad request */
@@ -38,10 +48,11 @@ router.post(
   catchAsync(menuController.addMenuItem)
 );
 // MARK ITEM AS OUT OF STOCK
-router.put(
+router.patch(
   "/markstock",
   isLoggedIn,
   isManagement,
+  validateMenuIdSchema,
   catchAsync(menuController.markStock)
 );
 // GET DELETED ITEMS FROM MENU
@@ -52,10 +63,11 @@ router.get(
   catchAsync(menuController.getDeletedMenu)
 );
 // DELETE ITEM IN MENU
-router.put(
+router.patch(
   "/delete",
   isLoggedIn,
   isUserAdmin,
+  validateMenuIdSchema,
   catchAsync(menuController.itemDelete)
 );
 module.exports = router;

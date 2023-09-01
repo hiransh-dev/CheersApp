@@ -92,7 +92,7 @@ export default {
       }
     },
     async acceptPendingOrder(id) {
-      const acceptedOrder = await axios.post(
+      const acceptedOrder = await axios.patch(
         "/api/order/complete",
         { id },
         {
@@ -106,7 +106,7 @@ export default {
       this.getPendingOrders();
     },
     async cancelPendingOrder(id) {
-      const acceptedOrder = await axios.post(
+      const cancelledOrder = await axios.patch(
         "/api/order/cancel",
         { id },
         {
@@ -115,7 +115,7 @@ export default {
           }
         }
       );
-      this.pageStore.setGlobalSnackbar("Order Status", acceptedOrder.data);
+      this.pageStore.setGlobalSnackbar("Order Status", cancelledOrder.data);
       this.pendingOrders = [];
       this.getPendingOrders();
     }

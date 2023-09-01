@@ -64,4 +64,18 @@ const joiOrdersSchema = Joi.object({
   }).required(),
 });
 
-module.exports = { joiMenuSchema, joiUserSchema, joiOrdersSchema };
+const JoiOrderId = Joi.object({
+  id: Joi.string().required().escapeHTML(),
+});
+
+const JoiMenuId = Joi.object({
+  id: Joi.string().required().escapeHTML(),
+});
+
+module.exports = {
+  joiMenuSchema,
+  joiUserSchema,
+  joiOrdersSchema,
+  JoiOrderId,
+  JoiMenuId,
+};
