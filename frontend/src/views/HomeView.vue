@@ -8,7 +8,7 @@
           <v-card class="my-2 ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
-              src="../src/assets/images/drinks.png"
+              :src="drinksImg"
             ></v-img>
             <v-btn
               @click="linkTo = { name: 'menu', params: { category: 'drinks' } }"
@@ -24,7 +24,7 @@
           <v-card class="my-2 ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'food' } }"
-              src="../src/assets/images/food.png"
+              :src="foodImg"
             ></v-img>
             <v-btn
               @click="linkTo = { name: 'menu', params: { category: 'food' } }"
@@ -40,7 +40,7 @@
           <v-card class="ma-1" rounded="lg">
             <v-img
               @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
-              src="../src/assets/images/soft_drinks.png"
+              :src="softDrinksImg"
             ></v-img>
             <v-btn
               @click="linkTo = { name: 'menu', params: { category: 'softdrinks' } }"
@@ -59,12 +59,18 @@
 
 <script>
 import AppHeaderCards from "@/components/AppHeaderCards.vue";
+import foodImg from "/src/assets/images/food.png";
+import drinksImg from "/src/assets/images/drinks.png";
+import softDrinksImg from "/src/assets/images/soft_drinks.png";
 
 export default {
   name: "HomeView",
   data() {
     return {
-      linkTo: "/"
+      linkTo: "/",
+      foodImg,
+      drinksImg,
+      softDrinksImg
     };
   },
   components: {
