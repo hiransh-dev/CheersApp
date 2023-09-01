@@ -16,10 +16,10 @@ const { isLoggedIn, isNotManagement, isManagement } = require(path.join(
 ));
 
 /* JOI Schema for Middleware */
-const { joiOrderSchema } = require("../utils/joi_schema");
+const { joiOrdersSchema } = require("../utils/joi_schema");
 
 const validateOrderSchema = (req, res, next) => {
-  const { error } = joiOrderSchema.validate(req.body);
+  const { error } = joiOrdersSchema.validate(req.body);
   if (error) {
     const err_msg = error.details.map((er) => er.message).join(",");
     throw new expressError(err_msg, 400); /* 400 stand for bad request */
@@ -45,6 +45,7 @@ router.post(
   "/new",
   isLoggedIn,
   isNotManagement,
+  validateOrderSchema,
   catchAsync(orderController.newOrder)
 );
 /* MANAGEMENT ROUTES */
