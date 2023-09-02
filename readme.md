@@ -197,10 +197,17 @@ An Open-source and online solution for local pubs.
 1. Install MongoDB.
 2. Install NodeJS.
 3. Run mongod.
-4. In your terminal run command `npm install` from root and frontend folder, to install all the dependencies.
-5. To start the server run `npm run server` from root. @ localhost:3000.
-6. To start the client run to `npm run client` from root. @ localhost:5173.
-7. In your browser head to `localhost:5173`.
+4. In your terminal run command `npm install` from project root folder to install all the dependencies for the backend.
+5. In your terminal run command `npm install` from frontend folder, to install all the dependencies for the frontend.
+6. In the project root folder create a dotenv file with `PORT`,`DB_URL`,`SESSION_SECRET` variables with Port number, Database URL & a string for session secret, respectively.
+7. In vite.config.js file, change the API port number to match the one you entered.
+8. To start the server run `npm run server` from root.
+9. To start the client run to `npm run client` from root.
+10. In your browser head to the local link provided by Vite.
+
+### Optional
+
+- You can run the JS file inside the /backend/seeds folder with node command to create an Admin account and Menu seeds.
 
 ## 🎯 To-do
 
