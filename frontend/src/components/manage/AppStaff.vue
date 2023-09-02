@@ -92,7 +92,7 @@
 import axios from "axios";
 import { mapStores } from "pinia";
 import usePageStore from "@/stores/page";
-import useAuthStore from "@/stores/Auth";
+import useAuthStore from "@/stores/auth";
 import AppStaffNew from "@/components/manage/AppStaffNew.vue";
 
 export default {

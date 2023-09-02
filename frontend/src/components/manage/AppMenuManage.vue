@@ -316,7 +316,7 @@
 import { mapStores } from "pinia";
 import useCartStore from "@/stores/cart";
 import usePageStore from "@/stores/page";
-import useAuthStore from "@/stores/Auth";
+import useAuthStore from "@/stores/auth";
 import axios from "axios";
 import AppMenuNew from "@/components/manage/AppMenuNew.vue";
 import AppMenuDeleted from "@/components/manage/AppMenuDeleted.vue";
